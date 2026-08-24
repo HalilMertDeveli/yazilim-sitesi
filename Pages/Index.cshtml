@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Yazılım Geliştirici · CV";
+    ViewData["Title"] = "Yazılım Sitesi";
     var repoIndex = 0;
 }
 
@@ -49,8 +49,9 @@
                 <circle cx="760" cy="200" r="6" class="circuit-node circuit-node--delay" />
                 <circle cx="360" cy="520" r="6" class="circuit-node" />
                 <circle cx="620" cy="520" r="6" class="circuit-node circuit-node--slow" />
-                <rect x="520" y="300" width="160" height="96" rx="4" class="circuit-chip" />
-                <text x="540" y="356" class="circuit-label">.NET 8</text>
+                <rect x="480" y="300" width="240" height="96" rx="4" class="circuit-chip" />
+                <text x="505" y="345" class="circuit-label">Flutter</text>
+                <text x="520" y="375" class="circuit-label circuit-label--sub">.NET · Kotlin</text>
             </svg>
             <div class="hero__scan"></div>
         </div>
@@ -58,15 +59,14 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                Odak: ASP.NET Core + Flutter / mobil
+                Yazılım sitem · mobil · web · ürün
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                <span class="type-line" data-type words="Backend’de ASP.NET Core.|Mobilde Flutter ve Kotlin.|İkisi birden — yazılım vitrinim."></span>
+                <span class="type-line" data-type words="Komple yazılım vitrinim.|Flutter mobil uygulamalar.|.NET, Kotlin, Mevora — hepsi."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                Ana omurga ASP.NET Core; buna ek olarak Flutter ve mobil uygulamalar da burada.
-                Projelerimin toplandığı yazılım sitesi.
+                Burası sadece .NET sitesi değil — Flutter mobil, Kotlin, web, ürün (Mevora) ve saha yazılımlarımın olduğu yazılım sitem.
             </p>
             <div class="hero__actions reveal" data-reveal>
                 <a class="btn btn--primary" href="#projeler" data-magnetic>Projelerime bak</a>
@@ -98,29 +98,29 @@
 
     <section id="hakkimda" class="section section--about">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Hakkımda · CV</p>
-            <h2 class="section__title reveal" data-reveal>Merhaba — ben Halil Mert Develi.</h2>
+            <p class="section__eyebrow reveal" data-reveal>Hakkımda</p>
+            <h2 class="section__title reveal" data-reveal>Yazılım üreten bir geliştiriciyim.</h2>
             <p class="section__copy reveal" data-reveal>
-                İstanbul’da yaşayan bir yazılım geliştiriciyim. <strong>Odak:</strong> ASP.NET Core ile backend / web;
-                <strong>ek olarak</strong> Flutter ve Kotlin ile mobil uygulamalar. Colorlight tarafında LED işleri de var.
-                Temiz mimari ve canlıya alınabilir ürün peşindeyim.
+                İstanbul’dayım. İşlerim <strong>Flutter mobil</strong>, <strong>ASP.NET Core</strong> web/backend,
+                <strong>Kotlin</strong> Android ve ürün tarafında <strong>Mevora</strong>’ya yayılıyor.
+                Tek stack’e kilitli değilim — yazılım neyi gerektiriyorsa onu kuruyorum.
             </p>
             <p class="section__copy reveal" data-reveal>
-                GitHub’da ~@Model.PublicRepoCount açık repo: ClearPay (.NET + Flutter mobil istemci), finans / VPN mobil uygulamaları,
-                bitirme projesi, LED yazılımları. Bu sayfa hepsinin vitrini.
+                Bu site bütün yazılımlarımın evi: mobil uygulamalar, API’ler, LED saha araçları, bitirme ve mülakat repoları.
+                Giren kişi “ne yapıyor?” sorusunun cevabını burada alsın.
             </p>
             <dl class="facts">
                 <div class="reveal" data-reveal>
-                    <dt>Odak 1</dt>
+                    <dt>Mobil</dt>
+                    <dd>Flutter · Dart · Kotlin</dd>
+                </div>
+                <div class="reveal" data-reveal>
+                    <dt>Web / backend</dt>
                     <dd>ASP.NET Core · C# · SQL</dd>
                 </div>
                 <div class="reveal" data-reveal>
-                    <dt>Odak 2</dt>
-                    <dd>Flutter · Kotlin · mobil</dd>
-                </div>
-                <div class="reveal" data-reveal>
-                    <dt>Konum</dt>
-                    <dd>İstanbul, Türkiye</dd>
+                    <dt>Ürün</dt>
+                    <dd>Mevora · ClearPay · LED</dd>
                 </div>
             </dl>
         </div>
@@ -128,11 +128,10 @@
 
     <section id="deneyim" class="section section--skills">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>GitHub analizi</p>
-            <h2 class="section__title reveal" data-reveal>Repolardaki dil dağılımı</h2>
+            <p class="section__eyebrow reveal" data-reveal>Yığın</p>
+            <h2 class="section__title reveal" data-reveal>Bütün yazılımlar için araçlarım</h2>
             <p class="section__copy reveal" data-reveal>
-                @@HalilMertDeveli hesabındaki public repolardan çıkarılan özet@(Model.ReposFromApi ? " (canlı)" : "").
-                C# baskın; Flutter/Dart ve Kotlin mobil tarafta görünür.
+                GitHub dil dağılımı — Flutter/Dart ve Kotlin mobil; C# / .NET web ve backend. Tek teknolojiye sıkışmış bir site değil.
             </p>
 
             <div class="lang-bars reveal" data-reveal>
@@ -151,12 +150,12 @@
             </div>
 
             <ul class="skill-rail" style="margin-top: 2.5rem">
-                <li class="reveal" data-reveal>ASP.NET Core</li>
-                <li class="reveal" data-reveal>C# / .NET 8</li>
                 <li class="reveal" data-reveal>Flutter</li>
                 <li class="reveal" data-reveal>Dart</li>
                 <li class="reveal" data-reveal>Kotlin / Android</li>
-                <li class="reveal" data-reveal>EF Core / SQL</li>
+                <li class="reveal" data-reveal>ASP.NET Core</li>
+                <li class="reveal" data-reveal>C# / .NET</li>
+                <li class="reveal" data-reveal>SQL / EF Core</li>
                 <li class="reveal" data-reveal>Identity &amp; JWT</li>
                 <li class="reveal" data-reveal>Docker</li>
             </ul>
@@ -221,6 +220,26 @@
                     <h3>VPNAppWithCompose</h3>
                     <p>Jetpack Compose ile VPN arayüz / akış — Android native mobil.</p>
                     <a class="text-link" href="https://github.com/HalilMertDeveli/VPNAppWithCompose" target="_blank" rel="noopener noreferrer">GitHub →</a>
+                </article>
+
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mobile"><em></em></div>
+                    </div>
+                    <p class="project-tile__tag">Mobil · Flutter</p>
+                    <h3>ETradeAppWithVideos</h3>
+                    <p>Flutter ile e-ticaret mobil uygulama çalışması — ürün listesi / alışveriş akışı.</p>
+                    <a class="text-link" href="https://github.com/HalilMertDeveli/ETradeAppWithVideos-" target="_blank" rel="noopener noreferrer">GitHub →</a>
+                </article>
+
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mobile"><em></em></div>
+                    </div>
+                    <p class="project-tile__tag">Mobil · Android</p>
+                    <h3>ReelFindingPeople</h3>
+                    <p>Kotlin / XML Android uygulaması — reel / kişi bulma mobil deneyimi.</p>
+                    <a class="text-link" href="https://github.com/HalilMertDeveli/ReelFindingPeopleAndoridApp" target="_blank" rel="noopener noreferrer">GitHub →</a>
                 </article>
 
                 <article class="project-tile reveal" data-reveal>
@@ -409,7 +428,7 @@
 
 <footer class="site-footer">
     <div class="site-footer__inner">
-        <p>© @DateTime.UtcNow.Year Halil Mert Develi · İstanbul</p>
-        <p>ASP.NET Core 8 · CV / portföy</p>
+        <p>© @DateTime.UtcNow.Year Halil Mert Develi · yazılım sitesi</p>
+        <p>Flutter · .NET · mobil · ürün</p>
     </div>
 </footer>

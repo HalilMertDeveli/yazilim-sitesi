@@ -419,8 +419,14 @@ main,
 .circuit-label {
   fill: var(--sea);
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
+}
+
+.circuit-label--sub {
+  fill: var(--copper);
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .hero__content {
