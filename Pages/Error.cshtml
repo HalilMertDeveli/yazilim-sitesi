@@ -1,0 +1,22 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Bir şeyler ters gitti";
+}
+
+<section class="section">
+    <div class="section__inner section__inner--narrow">
+        <p class="section__eyebrow">Hata</p>
+        <h1 class="section__title">Sayfa yüklenemedi</h1>
+        <p class="section__copy">
+            Geçici bir sorun oluşmuş olabilir. Ana sayfaya dönüp tekrar dene.
+        </p>
+        @if (Model.ShowRequestId)
+        {
+            <p class="contact-email"><strong>İstek kimliği:</strong> <code>@Model.RequestId</code></p>
+        }
+        <p style="margin-top: 2rem">
+            <a class="btn btn--primary" asp-page="/Index">Ana sayfaya dön</a>
+        </p>
+    </div>
+</section>

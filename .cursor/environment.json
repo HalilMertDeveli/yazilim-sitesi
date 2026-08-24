@@ -1,0 +1,9 @@
+{
+  "install": "curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh\nbash /tmp/dotnet-install.sh --channel 8.0\necho 'export DOTNET_ROOT=$HOME/.dotnet' >> $HOME/.bashrc\necho 'export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools' >> $HOME/.bashrc\nexport DOTNET_ROOT=$HOME/.dotnet\nexport PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools\ndotnet --info\ndotnet restore\ndotnet build --no-restore -c Release",
+  "terminals": [
+    {
+      "name": "portfolio",
+      "command": "export DOTNET_ROOT=$HOME/.dotnet; export PATH=$PATH:$HOME/.dotnet:$HOME/.dotnet/tools; dotnet run --urls http://0.0.0.0:45217"
+    }
+  ]
+}

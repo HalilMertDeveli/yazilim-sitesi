@@ -1,0 +1,175 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Yazılım Geliştirici";
+}
+
+<header class="site-nav" data-nav>
+    <a class="site-nav__brand" href="#ust">Halil Mert Develi</a>
+    <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
+        <span class="sr-only">Menü</span>
+        <span></span><span></span>
+    </button>
+    <nav id="site-menu" class="site-nav__links" aria-label="Sayfa bölümleri">
+        <a href="#hakkimda">Hakkımda</a>
+        <a href="#yetenekler">Yetenekler</a>
+        <a href="#projeler">Projeler</a>
+        <a href="#iletisim">İletişim</a>
+    </nav>
+</header>
+
+<main id="icerik">
+    <section id="ust" class="hero" aria-label="Giriş">
+        <div class="hero__plane" aria-hidden="true">
+            <div class="hero__glow hero__glow--a"></div>
+            <div class="hero__glow hero__glow--b"></div>
+            <div class="hero__grid"></div>
+            <svg class="hero__circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" role="img">
+                <title>Soyut kod ve bağlantı görseli</title>
+                <path class="circuit-line" d="M80 120 H340 L420 200 H760 L840 120 H1120" />
+                <path class="circuit-line circuit-line--delay" d="M60 640 H280 L360 520 H620 L700 640 H1140" />
+                <path class="circuit-line circuit-line--slow" d="M200 40 V280 L320 400 V760" />
+                <path class="circuit-line" d="M980 40 V220 L860 340 V720" />
+                <circle cx="420" cy="200" r="6" class="circuit-node" />
+                <circle cx="760" cy="200" r="6" class="circuit-node circuit-node--delay" />
+                <circle cx="360" cy="520" r="6" class="circuit-node" />
+                <circle cx="620" cy="520" r="6" class="circuit-node circuit-node--slow" />
+                <rect x="520" y="300" width="160" height="96" rx="4" class="circuit-chip" />
+                <text x="540" y="356" class="circuit-label">.NET 8</text>
+            </svg>
+        </div>
+
+        <div class="hero__content">
+            <p class="hero__brand reveal" data-reveal>Halil Mert Develi</p>
+            <h1 class="hero__headline reveal" data-reveal>
+                Kodla şekillenen<br />ürünler üreten<br />yazılımcı.
+            </h1>
+            <p class="hero__lede reveal" data-reveal>
+                İş başvurularında “bu da benim sitem” diyebileceğim, ASP.NET Core ile kurduğum tek sayfalık portföyüm.
+            </p>
+            <div class="hero__actions reveal" data-reveal>
+                <a class="btn btn--primary" href="#projeler">Çalışmalara bak</a>
+                <a class="btn btn--ghost" href="#iletisim">İletişime geç</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="hakkimda" class="section section--about">
+        <div class="section__inner">
+            <p class="section__eyebrow reveal" data-reveal>Hakkımda</p>
+            <h2 class="section__title reveal" data-reveal>Sistemleri temiz, okunaklı ve canlıya hazır kurarım.</h2>
+            <p class="section__copy reveal" data-reveal>
+                Ben Halil Mert Develi. Backend ağırlıklı düşünür, arayüzü de ihmal etmem.
+                ASP.NET Core, modern web yığınları ve temiz mimari ile uçtan uca çalışan ürünler çıkarırım.
+                Bu site hem kendimi tanıttığım vitrin hem de .NET ekosisteminde üretebildiklerimin canlı örneği.
+            </p>
+            <dl class="facts reveal" data-reveal>
+                <div>
+                    <dt>Odak</dt>
+                    <dd>ASP.NET Core &amp; web ürünleri</dd>
+                </div>
+                <div>
+                    <dt>Yaklaşım</dt>
+                    <dd>Sade arayüz, sağlam altyapı</dd>
+                </div>
+                <div>
+                    <dt>Hedef</dt>
+                    <dd>Canlıya alınan, bakımı kolay kod</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <section id="yetenekler" class="section section--skills">
+        <div class="section__inner">
+            <p class="section__eyebrow reveal" data-reveal>Yetenekler</p>
+            <h2 class="section__title reveal" data-reveal>Günlük kullandığım araçlar</h2>
+            <p class="section__copy reveal" data-reveal>
+                Portföyümün omurgası ASP.NET Core. Yanında frontend, API ve dağıtım pratiği.
+            </p>
+            <ul class="skill-rail reveal" data-reveal>
+                <li>C# / .NET 8</li>
+                <li>ASP.NET Core</li>
+                <li>Razor Pages &amp; MVC</li>
+                <li>REST API</li>
+                <li>SQL &amp; Entity Framework</li>
+                <li>HTML / CSS / JS</li>
+                <li>Git &amp; CI</li>
+                <li>Docker</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="projeler" class="section section--work">
+        <div class="section__inner">
+            <p class="section__eyebrow reveal" data-reveal>Projeler</p>
+            <h2 class="section__title reveal" data-reveal>Seçili çalışmalar</h2>
+            <p class="section__copy reveal" data-reveal>
+                Her satır, gerçek bir ürün ihtiyacından doğdu. Aşağıdakiler vitrindeki ilk dilim; Mevora ve sonraki işlerle burayı doldurmaya devam edeceğiz.
+            </p>
+
+            <div class="work-list">
+                <article class="work-item reveal" data-reveal>
+                    <div class="work-item__meta">
+                        <span>01</span>
+                        <span>ASP.NET Core</span>
+                    </div>
+                    <h3>Kişisel Portföy</h3>
+                    <p>
+                        Tek sayfalık, görsel odaklı tanıtım sitesi. Razor Pages, özel tipografi ve hareketli bir hero düzlemi.
+                        Canlıya alınmaya hazır Dockerfile ile birlikte gelir.
+                    </p>
+                    <a class="text-link" href="#ust">Bu sayfa · canlı önizleme</a>
+                </article>
+
+                <article class="work-item reveal" data-reveal>
+                    <div class="work-item__meta">
+                        <span>02</span>
+                        <span>Ürün</span>
+                    </div>
+                    <h3>Mevora</h3>
+                    <p>
+                        Paralel geliştirdiğimiz ürün hattı. Portföyde yerini aldıkça mimari kararlar, ekranlar ve canlı linkler burada belirecek.
+                    </p>
+                    <span class="text-link text-link--muted">Yakında</span>
+                </article>
+
+                <article class="work-item reveal" data-reveal>
+                    <div class="work-item__meta">
+                        <span>03</span>
+                        <span>Backend</span>
+                    </div>
+                    <h3>API &amp; servis katmanları</h3>
+                    <p>
+                        Kimlik, veri erişimi ve dağıtım akışlarını sade tutan .NET servisleri. Başvurularda anlatılabilir, repoda gösterilebilir parçalar.
+                    </p>
+                    <span class="text-link text-link--muted">Geliştiriliyor</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="iletisim" class="section section--contact">
+        <div class="section__inner section__inner--narrow">
+            <p class="section__eyebrow reveal" data-reveal>İletişim</p>
+            <h2 class="section__title reveal" data-reveal>Birlikte bir şey kuralım.</h2>
+            <p class="section__copy reveal" data-reveal>
+                İş ilanı, staj veya yan proje — yazman yeterli. Bu siteyi de referans olarak iletebilirsin.
+            </p>
+            <div class="contact-actions reveal" data-reveal>
+                <a class="btn btn--primary" href="mailto:halilmertdeveliii&#64;gmail.com">E-posta gönder</a>
+                <a class="btn btn--ghost" href="https://github.com/halil-mert-develi" rel="noopener noreferrer" target="_blank">GitHub</a>
+            </div>
+            <p class="contact-email reveal" data-reveal>
+                <a href="mailto:halilmertdeveliii&#64;gmail.com">halilmertdeveliii&#64;gmail.com</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <p>© @DateTime.UtcNow.Year Halil Mert Develi</p>
+        <p>ASP.NET Core 8 · tek sayfa portföy</p>
+    </div>
+</footer>

@@ -1,0 +1,10 @@
+**/.git
+**/.vs
+**/bin
+**/obj
+**/out
+**/publish
+**/.cursor
+**/README.md
+**/.dockerignore
+Dockerfile
