@@ -88,7 +88,7 @@ public class IndexModel : PageModel
                     .OrderByDescending(r => FeaturedRank(r.Name))
                     .ThenByDescending(r => r.Stars)
                     .ThenByDescending(r => r.UpdatedAt)
-                    .Take(7));
+                    .Take(9));
 
             Repos = merged;
             ReposFromApi = true;
@@ -119,11 +119,15 @@ public class IndexModel : PageModel
     {
         "clearpay" => 100,
         "taskmanagementsystem" => 90,
-        "asp.net-app-for-led" => 80,
-        "led-teknik-destek" => 75,
+        "personal-finance-tracker" => 85,
+        "fluttervpnapp" => 82,
+        "vpnappwithcompose" => 80,
+        "asp.net-app-for-led" => 78,
+        "led-teknik-destek" => 76,
+        "etradeappwithvideos-" => 72,
         "bankappasp" => 70,
         "asp-net-e-trade" => 65,
-        "personal-finance-tracker" => 55,
+        "reelfindingpeopleandoridapp" => 60,
         "asp.net-learning-porject" => 50,
         "identitycourse" => 45,
         "nlayerdapp" => 40,
@@ -138,7 +142,12 @@ public class IndexModel : PageModel
         "bankappasp" => "ASP.NET ile bankacılık senaryolarına odaklı uygulama denemesi.",
         "asp-net-e-trade" => "ASP.NET tabanlı e-ticaret vitrin / alışveriş akışı.",
         "led-teknik-destek" => "Colorlight, Novastar ve Huudi için LED teknik destek sitesi.",
-        "personal-finance-tracker" => "Flutter ile kişisel finans takip uygulaması.",
+        "personal-finance-tracker" => "Flutter mobil: kişisel finans takip uygulaması.",
+        "fluttervpnapp" => "Flutter ile tasarlayıp kodladığım VPN uygulama denemesi.",
+        "vpnappwithcompose" => "Jetpack Compose (Kotlin) ile VPN arayüz / akış denemesi.",
+        "vpnappwithtutorial" => "VPN uygulaması öğrenme / tutorial serisi (Java).",
+        "etradeappwithvideos-" => "Flutter ile e-ticaret mobil uygulama çalışması.",
+        "reelfindingpeopleandoridapp" => "Android Kotlin/XML ile reel / kişi bulma uygulaması.",
         "asp.net-learning-porject" => "ASP.NET öğrenme sürecindeki uygulamalı çalışmalar.",
         "identitycourse" => "ASP.NET Identity ile kimlik ve yetkilendirme pratikleri.",
         "nlayerdapp" => "C# ile n-katmanlı mimari ve Windows uygulama yapısı.",
@@ -216,10 +225,28 @@ public class IndexModel : PageModel
         {
             Name = "personal-Finance-Tracker",
             Url = "https://github.com/HalilMertDeveli/personal-Finance-Tracker",
-            Description = "Flutter ile kişisel finans takip uygulaması.",
+            Description = "Flutter mobil: kişisel finans takip uygulaması.",
             Language = "Dart",
             Stars = 0,
             UpdatedAt = "2024-09-07"
+        },
+        new()
+        {
+            Name = "FlutterVpnApp",
+            Url = "https://github.com/HalilMertDeveli/FlutterVpnApp",
+            Description = "Flutter ile tasarlayıp kodladığım VPN uygulama denemesi.",
+            Language = "Dart",
+            Stars = 0,
+            UpdatedAt = "2023-10-13"
+        },
+        new()
+        {
+            Name = "VPNAppWithCompose",
+            Url = "https://github.com/HalilMertDeveli/VPNAppWithCompose",
+            Description = "Jetpack Compose (Kotlin) ile VPN arayüz / akış denemesi.",
+            Language = "Kotlin",
+            Stars = 0,
+            UpdatedAt = "2023-10-09"
         }
     ];
 }
