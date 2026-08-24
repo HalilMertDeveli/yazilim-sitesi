@@ -49,9 +49,20 @@
                 <circle cx="760" cy="200" r="6" class="circuit-node circuit-node--delay" />
                 <circle cx="360" cy="520" r="6" class="circuit-node" />
                 <circle cx="620" cy="520" r="6" class="circuit-node circuit-node--slow" />
-                <rect x="480" y="300" width="240" height="96" rx="4" class="circuit-chip" />
-                <text x="505" y="345" class="circuit-label">Flutter</text>
-                <text x="520" y="375" class="circuit-label circuit-label--sub">.NET · Kotlin</text>
+
+                <!-- Üç yığın, .NET rozeti gibi eşit ağırlıkta -->
+                <g class="stack-chip stack-chip--flutter">
+                    <rect x="170" y="280" width="170" height="88" rx="4" class="circuit-chip circuit-chip--flutter" />
+                    <text x="205" y="335" class="circuit-label circuit-label--flutter">Flutter</text>
+                </g>
+                <g class="stack-chip stack-chip--dotnet">
+                    <rect x="515" y="250" width="170" height="88" rx="4" class="circuit-chip circuit-chip--dotnet" />
+                    <text x="560" y="305" class="circuit-label circuit-label--dotnet">.NET</text>
+                </g>
+                <g class="stack-chip stack-chip--kotlin">
+                    <rect x="860" y="300" width="170" height="88" rx="4" class="circuit-chip circuit-chip--kotlin" />
+                    <text x="900" y="355" class="circuit-label circuit-label--kotlin">Kotlin</text>
+                </g>
             </svg>
             <div class="hero__scan"></div>
         </div>

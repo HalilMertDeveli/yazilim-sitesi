@@ -416,11 +416,66 @@ main,
   stroke-width: 1.5;
 }
 
+.circuit-chip--flutter {
+  stroke: var(--sea);
+  filter: drop-shadow(0 0 12px rgba(61, 255, 224, 0.25));
+}
+
+.circuit-chip--dotnet {
+  stroke: var(--copper);
+  filter: drop-shadow(0 0 12px rgba(255, 155, 92, 0.25));
+}
+
+.circuit-chip--kotlin {
+  stroke: var(--violet-soft);
+  filter: drop-shadow(0 0 12px rgba(122, 162, 255, 0.28));
+}
+
 .circuit-label {
   fill: var(--sea);
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
+}
+
+.circuit-label--flutter {
+  fill: var(--sea);
+}
+
+.circuit-label--dotnet {
+  fill: var(--copper);
+}
+
+.circuit-label--kotlin {
+  fill: var(--violet-soft);
+}
+
+.stack-chip {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: chip-float 5.5s var(--ease) infinite;
+}
+
+.stack-chip--dotnet {
+  animation-delay: -1.8s;
+  animation-duration: 6.2s;
+}
+
+.stack-chip--kotlin {
+  animation-delay: -3.2s;
+  animation-duration: 5.8s;
+}
+
+@keyframes chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
 }
 
 .circuit-label--sub {
@@ -1430,6 +1485,7 @@ main,
   .fx-aurora,
   .circuit-line,
   .circuit-node,
+  .stack-chip,
   .hero__scan,
   .hero__grid,
   .marquee__track,
