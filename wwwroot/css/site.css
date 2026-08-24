@@ -833,6 +833,137 @@ main,
   }
 }
 
+
+/* ——— Project board (Mevora + mobile) ——— */
+.stack-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0 0 2rem;
+}
+
+.stack-tabs span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sea);
+  border: 1px solid rgba(61, 255, 224, 0.28);
+  padding: 0.4rem 0.7rem;
+}
+
+.project-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.project-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  background: rgba(7, 9, 13, 0.55);
+  transition: border-color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.project-tile:hover {
+  border-color: rgba(61, 255, 224, 0.35);
+  transform: translateY(-3px);
+}
+
+.project-tile--mevora {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto auto auto;
+  column-gap: 1.25rem;
+  border-color: rgba(255, 155, 92, 0.35);
+  background:
+    radial-gradient(80% 120% at 0% 0%, rgba(255, 155, 92, 0.12), transparent 55%),
+    rgba(7, 9, 13, 0.7);
+}
+
+.project-tile--mevora .project-tile__viz {
+  grid-row: 1 / span 4;
+  align-self: center;
+}
+
+.project-tile__viz {
+  min-height: 4.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.project-tile__tag {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+
+.project-tile h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.project-tile p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.viz--mevora {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.viz--mevora i {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--copper);
+  transform: rotate(45deg);
+  animation: mevora-spin 6s linear infinite;
+}
+
+.viz--mevora i:nth-child(2) {
+  inset: 18%;
+  border-color: var(--sea);
+  animation-direction: reverse;
+  animation-duration: 4.5s;
+}
+
+.viz--mevora i:nth-child(3) {
+  inset: 36%;
+  border-color: var(--violet-soft);
+  animation-duration: 3.2s;
+}
+
+@keyframes mevora-spin {
+  to { transform: rotate(405deg); }
+}
+
+@media (max-width: 760px) {
+  .project-board {
+    grid-template-columns: 1fr;
+  }
+
+  .project-tile--mevora {
+    grid-template-columns: 1fr;
+  }
+
+  .project-tile--mevora .project-tile__viz {
+    grid-row: auto;
+  }
+}
+
 .work-list {
   display: grid;
   gap: 0;

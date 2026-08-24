@@ -59,15 +59,15 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                İstanbul · ASP.NET Core + Flutter
+                Yazılım · .NET · Flutter · Mobil
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                <span class="type-line" data-type words="CV’m: ne yaptığımı burada gör.|Backend + mobil ürünler.|ClearPay, Mevora, LED, Flutter."></span>
+                <span class="type-line" data-type words="Mevora, mobil ve .NET bir arada.|Yazılım işlerimin vitrini.|Flutter’dan ledger’a kadar."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                Siteye giren, kim olduğumu ve neler ürettiğimi görsün diye kuruldu.
-                GitHub’daki gerçek projeler analiz edilip burada anlatılıyor — tek sayfalık koyu temalı CV.
+                Sadece ASP.NET değil — Mevora, Flutter / Kotlin mobil uygulamalar ve saha yazılımları da burada.
+                Tek sayfalık koyu temalı yazılım CV’m.
             </p>
             <div class="hero__actions reveal" data-reveal>
                 <a class="btn btn--primary" href="#projeler" data-magnetic>Projelerime bak</a>
@@ -92,8 +92,8 @@
 
     <div class="marquee" aria-hidden="true">
         <div class="marquee__track">
-            <span>C#</span><span>ASP.NET Core</span><span>SQL Ledger</span><span>Flutter</span><span>Onion Architecture</span><span>Identity</span><span>LED / Colorlight</span><span>Docker</span>
-            <span>C#</span><span>ASP.NET Core</span><span>SQL Ledger</span><span>Flutter</span><span>Onion Architecture</span><span>Identity</span><span>LED / Colorlight</span><span>Docker</span>
+            <span>Mevora</span><span>Flutter</span><span>Kotlin</span><span>ASP.NET Core</span><span>ClearPay</span><span>LED</span><span>SQL Ledger</span><span>Docker</span>
+            <span>Mevora</span><span>Flutter</span><span>Kotlin</span><span>ASP.NET Core</span><span>ClearPay</span><span>LED</span><span>SQL Ledger</span><span>Docker</span>
         </div>
     </div>
 
@@ -168,74 +168,81 @@
     <section id="projeler" class="section section--work">
         <div class="section__inner">
             <p class="section__eyebrow reveal" data-reveal>Projeler</p>
-            <h2 class="section__title reveal" data-reveal>Yaptıklarımın toplandığı yer</h2>
+            <h2 class="section__title reveal" data-reveal>Yazılım işlerimin toplandığı yer</h2>
             <p class="section__copy reveal" data-reveal>
-                Sadece .NET değil — mobil, ürün ve saha işleri de burada. Bu sayfa CV’m; sana ulaşmak isteyenler ne yaptığımı görsün.
+                .NET, Flutter, Kotlin, ürün — hepsi bir arada. Mevora ve mobil uygulamalar da vitrinde.
             </p>
 
-            <div class="work-list">
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>01</span>
-                        <span>Ürün</span>
+            <div class="stack-tabs reveal" data-reveal aria-hidden="true">
+                <span>Mevora</span>
+                <span>Flutter</span>
+                <span>Kotlin</span>
+                <span>ASP.NET Core</span>
+                <span>LED</span>
+            </div>
+
+            <div class="project-board">
+                <article class="project-tile project-tile--mevora reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mevora"><i></i><i></i><i></i></div>
                     </div>
+                    <p class="project-tile__tag">Ürün</p>
                     <h3>Mevora</h3>
                     <p>
-                        Paralel geliştirdiğimiz ürün hattı. Portföyde yerini aldıkça ekranlar, mimari ve canlı link buraya gelecek —
-                        mobil + web birlikte düşünülen dilim.
+                        Asıl ürün hattı. Mobil + web birlikte; portföyde ekranlar ve canlı link geldikçe burası dolacak.
+                        Sadece .NET değil — ürünün kendisi.
                     </p>
                     <span class="text-link text-link--muted">Geliştiriliyor</span>
                 </article>
 
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>02</span>
-                        <span>.NET + Flutter</span>
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mobile"><em></em></div>
                     </div>
+                    <p class="project-tile__tag">Mobil · Flutter</p>
+                    <h3>personal-Finance-Tracker</h3>
+                    <p>Flutter ile kişisel finans takip uygulaması — harcama / bütçe mobil deneyimi.</p>
+                    <a class="text-link" href="https://github.com/HalilMertDeveli/personal-Finance-Tracker" target="_blank" rel="noopener noreferrer">GitHub →</a>
+                </article>
+
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mobile"><em></em></div>
+                    </div>
+                    <p class="project-tile__tag">Mobil · Flutter</p>
+                    <h3>FlutterVpnApp</h3>
+                    <p>Flutter ile tasarlayıp kodladığım VPN uygulama denemesi.</p>
+                    <a class="text-link" href="https://github.com/HalilMertDeveli/FlutterVpnApp" target="_blank" rel="noopener noreferrer">GitHub →</a>
+                </article>
+
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--mobile"><em></em></div>
+                    </div>
+                    <p class="project-tile__tag">Mobil · Kotlin</p>
+                    <h3>VPNAppWithCompose</h3>
+                    <p>Jetpack Compose ile VPN arayüz / akış — Android native mobil.</p>
+                    <a class="text-link" href="https://github.com/HalilMertDeveli/VPNAppWithCompose" target="_blank" rel="noopener noreferrer">GitHub →</a>
+                </article>
+
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--ledger"><span></span><span></span><span></span><span></span></div>
+                    </div>
+                    <p class="project-tile__tag">.NET + Flutter</p>
                     <h3>ClearPay</h3>
-                    <p>
-                        Mülakat reposu: ASP.NET Core 8 web + Flutter JWT mobil istemci, tek SQL ledger.
-                        Bakiye UPDATE yok; idempotent transfer ve mock banka gateway.
-                    </p>
+                    <p>ASP.NET Core 8 web + Flutter JWT mobil istemci; SQL ledger, idempotent transfer.</p>
                     <a class="text-link" href="https://github.com/HalilMertDeveli/clearpay" target="_blank" rel="noopener noreferrer">GitHub →</a>
                 </article>
 
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>03</span>
-                        <span>Mobil</span>
+                <article class="project-tile reveal" data-reveal>
+                    <div class="project-tile__viz" aria-hidden="true">
+                        <div class="viz viz--onion"><i></i><i></i><i></i></div>
                     </div>
-                    <h3>Flutter &amp; Kotlin uygulamaları</h3>
-                    <p>
-                        Kişisel finans takipçisi, VPN denemeleri (Flutter / Jetpack Compose), e-ticaret Flutter akışı —
-                        mobil tarafta da ürün çıkarma pratiği.
-                    </p>
-                    <a class="text-link" href="#github" data-filter="mobile">Repositories’te mobil →</a>
-                </article>
-
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>04</span>
-                        <span>ASP.NET Core</span>
-                    </div>
-                    <h3>Task Management · LED · Banka</h3>
-                    <p>
-                        Bitirme projesi (Onion MVC), LED saha / teknik destek siteleri ve banka / e-ticaret senaryoları —
-                        backend omurgası.
-                    </p>
-                    <a class="text-link" href="#one-cikan">Öne çıkan analiz →</a>
-                </article>
-
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>05</span>
-                        <span>Bu site</span>
-                    </div>
-                    <h3>Kişisel portföy / CV</h3>
-                    <p>
-                        Şu an baktığın sayfa — ASP.NET Core 8, koyu tema, animasyonlar. Domain + hosting alınca canlıya geçecek.
-                    </p>
-                    <a class="text-link" href="#ust">Başa dön</a>
+                    <p class="project-tile__tag">ASP.NET Core</p>
+                    <h3>Task Management · LED</h3>
+                    <p>Bitirme (Onion MVC), LED saha / teknik destek ve banka–e-ticaret senaryoları.</p>
+                    <a class="text-link" href="#one-cikan">Öne çıkan →</a>
                 </article>
             </div>
         </div>
