@@ -24,10 +24,9 @@
         <span></span><span></span>
     </button>
     <nav id="site-menu" class="site-nav__links" aria-label="Sayfa bölümleri">
-        <a href="#hakkimda">Hakkımda</a>
-        <a href="#deneyim">Deneyim</a>
         <a href="#projeler">Projeler</a>
-        <a href="#github">Repositories</a>
+        <a href="#hakkimda">Hakkımda</a>
+        <a href="#deneyim">Yığın</a>
         <a href="#one-cikan">Öne çıkan</a>
         <a href="#iletisim">İletişim</a>
     </nav>
@@ -59,15 +58,15 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                Yazılım · .NET · Flutter · Mobil
+                Projelerimin evi · yazılım vitrini
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                <span class="type-line" data-type words="Mevora, mobil ve .NET bir arada.|Yazılım işlerimin vitrini.|Flutter’dan ledger’a kadar."></span>
+                <span class="type-line" data-type words="Burası projelerimin olduğu yer.|Mevora, mobil, .NET — hepsi.|Tek adreste tüm işlerim."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                Sadece ASP.NET değil — Mevora, Flutter / Kotlin mobil uygulamalar ve saha yazılımları da burada.
-                Tek sayfalık koyu temalı yazılım CV’m.
+                Genel olarak yazılım projelerimin toplandığı yer: Mevora, Flutter / Kotlin mobil, ASP.NET Core, LED.
+                Giren kişi ne yaptığımı buradan görür.
             </p>
             <div class="hero__actions reveal" data-reveal>
                 <a class="btn btn--primary" href="#projeler" data-magnetic>Projelerime bak</a>
@@ -168,9 +167,9 @@
     <section id="projeler" class="section section--work">
         <div class="section__inner">
             <p class="section__eyebrow reveal" data-reveal>Projeler</p>
-            <h2 class="section__title reveal" data-reveal>Yazılım işlerimin toplandığı yer</h2>
+            <h2 class="section__title reveal" data-reveal>Burası projelerimin olduğu yer</h2>
             <p class="section__copy reveal" data-reveal>
-                .NET, Flutter, Kotlin, ürün — hepsi bir arada. Mevora ve mobil uygulamalar da vitrinde.
+                Hepsi burada: ürün, mobil, backend, saha. Aşağıda öne çıkanlar; hemen altında GitHub’daki liste.
             </p>
 
             <div class="stack-tabs reveal" data-reveal aria-hidden="true">
@@ -245,45 +244,41 @@
                     <a class="text-link" href="#one-cikan">Öne çıkan →</a>
                 </article>
             </div>
-        </div>
-    </section>
 
-    <section id="github" class="section section--github">
-        <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>GitHub · Repositories</p>
-            <h2 class="section__title reveal" data-reveal>Repositories altındaki işlerim</h2>
-            <p class="section__copy reveal" data-reveal>
-                Profildeki
-                <a class="inline-link" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer">Repositories</a>
-                sekmesindeki gerçek repolar. En üstte bu portföy sitesi;
-                ardından ClearPay, bitirme projesi ve LED / finans çalışmaları@(Model.ReposFromApi ? " (canlı API)" : "").
-            </p>
+            <div class="hub-divider reveal" data-reveal>
+                <p class="section__eyebrow">Tüm projeler</p>
+                <h3 class="hub-divider__title">GitHub’dan gelen tam liste</h3>
+                <p class="section__copy" style="margin-bottom: 1.25rem">
+                    @@HalilMertDeveli repositories@(Model.ReposFromApi ? " · canlı" : "") —
+                    <a class="inline-link" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer">profilde aç</a>
+                </p>
+            </div>
 
-            <ol class="gh-steps" aria-label="GitHub yolculuğu">
+            <ol class="gh-steps" aria-label="Proje yolculuğu" style="margin-bottom: 1.75rem">
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">01</span>
                     <div>
                         <h3>Keşif</h3>
-                        <p>Flutter, Kotlin, Spring ve C# ile temel atılan öğrenme repoları.</p>
+                        <p>Flutter, Kotlin ve C# öğrenme repoları.</p>
                     </div>
                 </li>
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">02</span>
                     <div>
                         <h3>Derinleşme</h3>
-                        <p>Identity, EF Core, n-katman, e-ticaret / banka senaryoları.</p>
+                        <p>Identity, EF Core, e-ticaret / banka, LED.</p>
                     </div>
                 </li>
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">03</span>
                     <div>
-                        <h3>Ürün &amp; mülakat</h3>
-                        <p>ClearPay ledger, Task Management bitirme, LED saha yazılımları.</p>
+                        <h3>Ürün</h3>
+                        <p>Mevora, ClearPay, mobil uygulamalar, bu site.</p>
                     </div>
                 </li>
             </ol>
 
-            <div class="gh-grid">
+            <div class="gh-grid" id="github">
                 @foreach (var repo in Model.Repos)
                 {
                     repoIndex++;
@@ -301,15 +296,15 @@
                             {
                                 <span>@repo.UpdatedAt</span>
                             }
-                            <span class="gh-card__cta">Repoyu aç →</span>
+                            <span class="gh-card__cta">Aç →</span>
                         </div>
                     </a>
                 }
             </div>
 
             <div class="gh-cta reveal" data-reveal>
-                <a class="btn btn--primary" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer" data-magnetic>
-                    GitHub Repositories’e git
+                <a class="btn btn--ghost" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer" data-magnetic>
+                    Tüm GitHub Repositories
                 </a>
             </div>
         </div>
