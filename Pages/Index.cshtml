@@ -2,10 +2,23 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Yazılım Geliştirici";
+    var repoIndex = 0;
 }
 
+<div class="fx-root" aria-hidden="true">
+    <div class="fx-aurora fx-aurora--a"></div>
+    <div class="fx-aurora fx-aurora--b"></div>
+    <div class="fx-noise"></div>
+    <canvas class="fx-particles" data-particles></canvas>
+    <div class="fx-cursor" data-cursor></div>
+    <div class="fx-progress" data-progress></div>
+</div>
+
 <header class="site-nav" data-nav>
-    <a class="site-nav__brand" href="#ust">Halil Mert Develi</a>
+    <a class="site-nav__brand" href="#ust" data-magnetic>
+        <span class="brand-mark"></span>
+        Halil Mert Develi
+    </a>
     <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
         <span class="sr-only">Menü</span>
         <span></span><span></span>
@@ -13,7 +26,8 @@
     <nav id="site-menu" class="site-nav__links" aria-label="Sayfa bölümleri">
         <a href="#hakkimda">Hakkımda</a>
         <a href="#yetenekler">Yetenekler</a>
-        <a href="#projeler">Projeler</a>
+        <a href="#github">GitHub</a>
+        <a href="#projeler">Vitrin</a>
         <a href="#iletisim">İletişim</a>
     </nav>
 </header>
@@ -23,6 +37,7 @@
         <div class="hero__plane" aria-hidden="true">
             <div class="hero__glow hero__glow--a"></div>
             <div class="hero__glow hero__glow--b"></div>
+            <div class="hero__glow hero__glow--c"></div>
             <div class="hero__grid"></div>
             <svg class="hero__circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" role="img">
                 <title>Soyut kod ve bağlantı görseli</title>
@@ -37,22 +52,49 @@
                 <rect x="520" y="300" width="160" height="96" rx="4" class="circuit-chip" />
                 <text x="540" y="356" class="circuit-label">.NET 8</text>
             </svg>
+            <div class="hero__scan"></div>
         </div>
 
         <div class="hero__content">
-            <p class="hero__brand reveal" data-reveal>Halil Mert Develi</p>
+            <p class="hero__kicker reveal" data-reveal>
+                <span class="pulse-dot"></span>
+                ASP.NET Core Developer · GitHub açık
+            </p>
+            <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                Kodla şekillenen<br />ürünler üreten<br />yazılımcı.
+                <span class="type-line" data-type words="Kodla şekillenen ürünler.|Koyu arayüz, net mimari.|GitHub’dan canlıya kadar."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                İş başvurularında “bu da benim sitem” diyebileceğim, ASP.NET Core ile kurduğum tek sayfalık portföyüm.
+                İş başvurularında “bu da benim sitem” diyebileceğim, ASP.NET Core ile kurduğum tek sayfalık portföyüm —
+                animasyonlu, koyu temalı ve gerçek GitHub çalışmalarımla.
             </p>
             <div class="hero__actions reveal" data-reveal>
-                <a class="btn btn--primary" href="#projeler">Çalışmalara bak</a>
-                <a class="btn btn--ghost" href="#iletisim">İletişime geç</a>
+                <a class="btn btn--primary" href="#github" data-magnetic>GitHub projeleri</a>
+                <a class="btn btn--ghost" href="#iletisim" data-magnetic>İletişime geç</a>
+            </div>
+            <div class="hero__stats reveal" data-reveal>
+                <div>
+                    <strong data-count="36">0</strong>
+                    <span>Açık repo</span>
+                </div>
+                <div>
+                    <strong data-count="8">0</strong>
+                    <span>Öne çıkan</span>
+                </div>
+                <div>
+                    <strong data-count="1">0</strong>
+                    <span>Tek sayfa vitrin</span>
+                </div>
             </div>
         </div>
     </section>
+
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+            <span>C#</span><span>ASP.NET Core</span><span>Entity Framework</span><span>Flutter</span><span>Kotlin</span><span>SQL</span><span>Docker</span><span>Identity</span>
+            <span>C#</span><span>ASP.NET Core</span><span>Entity Framework</span><span>Flutter</span><span>Kotlin</span><span>SQL</span><span>Docker</span><span>Identity</span>
+        </div>
+    </div>
 
     <section id="hakkimda" class="section section--about">
         <div class="section__inner">
@@ -63,16 +105,16 @@
                 ASP.NET Core, modern web yığınları ve temiz mimari ile uçtan uca çalışan ürünler çıkarırım.
                 Bu site hem kendimi tanıttığım vitrin hem de .NET ekosisteminde üretebildiklerimin canlı örneği.
             </p>
-            <dl class="facts reveal" data-reveal>
-                <div>
+            <dl class="facts">
+                <div class="reveal" data-reveal>
                     <dt>Odak</dt>
                     <dd>ASP.NET Core &amp; web ürünleri</dd>
                 </div>
-                <div>
+                <div class="reveal" data-reveal>
                     <dt>Yaklaşım</dt>
                     <dd>Sade arayüz, sağlam altyapı</dd>
                 </div>
-                <div>
+                <div class="reveal" data-reveal>
                     <dt>Hedef</dt>
                     <dd>Canlıya alınan, bakımı kolay kod</dd>
                 </div>
@@ -85,27 +127,92 @@
             <p class="section__eyebrow reveal" data-reveal>Yetenekler</p>
             <h2 class="section__title reveal" data-reveal>Günlük kullandığım araçlar</h2>
             <p class="section__copy reveal" data-reveal>
-                Portföyümün omurgası ASP.NET Core. Yanında frontend, API ve dağıtım pratiği.
+                Portföyümün omurgası ASP.NET Core. Yanında mobil, API ve dağıtım pratiği.
             </p>
-            <ul class="skill-rail reveal" data-reveal>
-                <li>C# / .NET 8</li>
-                <li>ASP.NET Core</li>
-                <li>Razor Pages &amp; MVC</li>
-                <li>REST API</li>
-                <li>SQL &amp; Entity Framework</li>
-                <li>HTML / CSS / JS</li>
-                <li>Git &amp; CI</li>
-                <li>Docker</li>
+            <ul class="skill-rail">
+                <li class="reveal" data-reveal>C# / .NET 8</li>
+                <li class="reveal" data-reveal>ASP.NET Core</li>
+                <li class="reveal" data-reveal>Razor Pages &amp; MVC</li>
+                <li class="reveal" data-reveal>REST API</li>
+                <li class="reveal" data-reveal>SQL &amp; EF Core</li>
+                <li class="reveal" data-reveal>Flutter / Kotlin</li>
+                <li class="reveal" data-reveal>Git &amp; CI</li>
+                <li class="reveal" data-reveal>Docker</li>
             </ul>
+        </div>
+    </section>
+
+    <section id="github" class="section section--github">
+        <div class="section__inner">
+            <p class="section__eyebrow reveal" data-reveal>Adım · GitHub</p>
+            <h2 class="section__title reveal" data-reveal>GitHub’daki gerçek projelerim</h2>
+            <p class="section__copy reveal" data-reveal>
+                Öğrenme repolarından üretim odaklı ASP.NET Core işlerine uzanan açık geçmiş.
+                Aşağıdaki kartlar <a class="inline-link" href="@Model.GitHubProfileUrl" target="_blank" rel="noopener noreferrer">@@HalilMertDeveli</a>
+                hesabımdan geliyor@(Model.ReposFromApi ? " (canlı API)" : "").
+            </p>
+
+            <ol class="gh-steps" aria-label="GitHub yolculuğu">
+                <li class="gh-step reveal" data-reveal>
+                    <span class="gh-step__num">01</span>
+                    <div>
+                        <h3>Keşif &amp; öğrenme</h3>
+                        <p>Flutter, Kotlin, Spring ve C# ile temel atılan deneme repoları.</p>
+                    </div>
+                </li>
+                <li class="gh-step reveal" data-reveal>
+                    <span class="gh-step__num">02</span>
+                    <div>
+                        <h3>ASP.NET Core derinleşme</h3>
+                        <p>Identity, EF Core, n-katmanlı mimari ve e-ticaret / banka senaryoları.</p>
+                    </div>
+                </li>
+                <li class="gh-step reveal" data-reveal>
+                    <span class="gh-step__num">03</span>
+                    <div>
+                        <h3>Ürün odaklı işler</h3>
+                        <p>ClearPay cüzdan, görev yönetimi, LED teknik destek — canlıya yakın parçalar.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="gh-grid">
+                @foreach (var repo in Model.Repos)
+                {
+                    repoIndex++;
+                    <a class="gh-card reveal" data-reveal data-tilt href="@repo.Url" target="_blank" rel="noopener noreferrer">
+                        <div class="gh-card__top">
+                            <span class="gh-card__index">@repoIndex.ToString("00")</span>
+                            <span class="gh-card__lang">@(repo.Language ?? "Repo")</span>
+                        </div>
+                        <h3>@repo.Name</h3>
+                        <p>@(repo.Description ?? "GitHub üzerinde açık kaynak çalışma.")</p>
+                        <div class="gh-card__meta">
+                            <span>★ @repo.Stars</span>
+                            @if (!string.IsNullOrEmpty(repo.UpdatedAt))
+                            {
+                                <span>@repo.UpdatedAt</span>
+                            }
+                            <span class="gh-card__cta">Repoyu aç →</span>
+                        </div>
+                    </a>
+                }
+            </div>
+
+            <div class="gh-cta reveal" data-reveal>
+                <a class="btn btn--primary" href="@Model.GitHubProfileUrl" target="_blank" rel="noopener noreferrer" data-magnetic>
+                    Tüm GitHub profilini gör
+                </a>
+            </div>
         </div>
     </section>
 
     <section id="projeler" class="section section--work">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Projeler</p>
-            <h2 class="section__title reveal" data-reveal>Seçili çalışmalar</h2>
+            <p class="section__eyebrow reveal" data-reveal>Vitrin</p>
+            <h2 class="section__title reveal" data-reveal>Bu site ve sıradaki ürün</h2>
             <p class="section__copy reveal" data-reveal>
-                Her satır, gerçek bir ürün ihtiyacından doğdu. Aşağıdakiler vitrindeki ilk dilim; Mevora ve sonraki işlerle burayı doldurmaya devam edeceğiz.
+                Portföyün kendisi de bir ASP.NET Core parçası. Mevora ile burayı büyütmeye devam ediyoruz.
             </p>
 
             <div class="work-list">
@@ -116,8 +223,7 @@
                     </div>
                     <h3>Kişisel Portföy</h3>
                     <p>
-                        Tek sayfalık, görsel odaklı tanıtım sitesi. Razor Pages, özel tipografi ve hareketli bir hero düzlemi.
-                        Canlıya alınmaya hazır Dockerfile ile birlikte gelir.
+                        Tek sayfalık, koyu temalı ve animasyonlu tanıtım. Razor Pages, GitHub entegrasyonu ve Docker ile canlıya hazır.
                     </p>
                     <a class="text-link" href="#ust">Bu sayfa · canlı önizleme</a>
                 </article>
@@ -129,21 +235,9 @@
                     </div>
                     <h3>Mevora</h3>
                     <p>
-                        Paralel geliştirdiğimiz ürün hattı. Portföyde yerini aldıkça mimari kararlar, ekranlar ve canlı linkler burada belirecek.
+                        Paralel geliştirdiğimiz ürün hattı. Portföyde yerini aldıkça mimari kararlar ve canlı linkler burada belirecek.
                     </p>
                     <span class="text-link text-link--muted">Yakında</span>
-                </article>
-
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>03</span>
-                        <span>Backend</span>
-                    </div>
-                    <h3>API &amp; servis katmanları</h3>
-                    <p>
-                        Kimlik, veri erişimi ve dağıtım akışlarını sade tutan .NET servisleri. Başvurularda anlatılabilir, repoda gösterilebilir parçalar.
-                    </p>
-                    <span class="text-link text-link--muted">Geliştiriliyor</span>
                 </article>
             </div>
         </div>
@@ -154,11 +248,11 @@
             <p class="section__eyebrow reveal" data-reveal>İletişim</p>
             <h2 class="section__title reveal" data-reveal>Birlikte bir şey kuralım.</h2>
             <p class="section__copy reveal" data-reveal>
-                İş ilanı, staj veya yan proje — yazman yeterli. Bu siteyi de referans olarak iletebilirsin.
+                İş ilanı, staj veya yan proje — yazman yeterli. Bu siteyi ve GitHub’ımı referans olarak iletebilirsin.
             </p>
             <div class="contact-actions reveal" data-reveal>
-                <a class="btn btn--primary" href="mailto:halilmertdeveliii&#64;gmail.com">E-posta gönder</a>
-                <a class="btn btn--ghost" href="https://github.com/halil-mert-develi" rel="noopener noreferrer" target="_blank">GitHub</a>
+                <a class="btn btn--primary" href="mailto:halilmertdeveliii&#64;gmail.com" data-magnetic>E-posta gönder</a>
+                <a class="btn btn--ghost" href="@Model.GitHubProfileUrl" rel="noopener noreferrer" target="_blank" data-magnetic>GitHub</a>
             </div>
             <p class="contact-email reveal" data-reveal>
                 <a href="mailto:halilmertdeveliii&#64;gmail.com">halilmertdeveliii&#64;gmail.com</a>
@@ -170,6 +264,6 @@
 <footer class="site-footer">
     <div class="site-footer__inner">
         <p>© @DateTime.UtcNow.Year Halil Mert Develi</p>
-        <p>ASP.NET Core 8 · tek sayfa portföy</p>
+        <p>ASP.NET Core 8 · koyu tema portföy</p>
     </div>
 </footer>

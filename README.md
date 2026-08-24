@@ -1,6 +1,6 @@
 # Halil Mert Develi — Kişisel Portföy
 
-ASP.NET Core 8 (Razor Pages) ile kurulmuş **tek sayfalık** kişisel tanıtım sitesi. İş başvurularında paylaşılacak görsel odaklı bir vitrin; Mevora ve sonraki çalışmalar buraya eklenecek.
+ASP.NET Core 8 (Razor Pages) ile kurulmuş **tek sayfalık**, koyu temalı kişisel tanıtım sitesi. Animasyonlu hero, GitHub projeleri adımı (`@HalilMertDeveli` canlı API + fallback) ve Mevora vitrin bölümü içerir.
 
 ## Yerel çalıştırma
 
