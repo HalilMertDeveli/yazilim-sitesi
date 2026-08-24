@@ -6,7 +6,7 @@ builder.Services.AddRazorPages();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    // Domain / reverse-proxy (nginx, IIS, cPanel) arkasında çalışırken gerekli
+    // Domain + nginx/IIS / hosting paneli reverse-proxy arkası
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
 });
@@ -25,4 +25,5 @@ app.UseStaticFiles();
 app.UseRouting();
 app.MapRazorPages();
 
+// Hosting paneli / Docker PORT veya ASPNETCORE_URLS ile dinler (varsayılan 8080 Dockerfile'da)
 app.Run();

@@ -1,49 +1,69 @@
-# Canlıya alma — Azure yok, domain + hosting
+# Canlıya alma — Azure YOK
 
-Bu uygulama ASP.NET Core 8 Razor Pages. Statik HTML hosting yetmez; ya **Linux VPS + Docker/nginx**, ya da **Windows ASP.NET Core / IIS** destekli hosting gerekir.
+Bu site **ASP.NET Core 8**. Sadece HTML hosting olmaz. Domain + (VPS veya Windows ASP.NET Core hosting) gerekir.
 
-## Senin alman gerekenler (sırayla)
+Uygulama buna göre ayarlı: `ForwardedHeaders`, `web.config` (IIS), `Dockerfile`, `deploy/nginx.conf.example`.
 
-1. **Alan adı (domain)**  
-   Örn. `halilmertsites.com` — Nic.tr, Namecheap, Cloudflare Registrar, Turhost domain vb.
+---
 
-2. **Hosting (birini seç)**  
-   - **Önerilen:** Linux VPS (1 vCPU / 1 GB RAM yeterli başlangıç) — Hetzner, Contabo, DigitalOcean, Turhost VPS  
-   - **Alternatif:** Windows hosting + **ASP.NET Core 8** / IIS desteği açıkça yazan paket (klasik “ASP.NET” paylaşımlı paket bazen sadece Framework dönemi olur — Core yazdığından emin ol)
+## Sırayla al (tek tek)
 
-3. **DNS yönetimi**  
-   Domain’i hosting/VPS IP’sine `A` kaydı ile bağla (`@` ve isteğe `www`).
+### 1) Şimdi al: Alan adı (domain)
 
-4. **SSL (HTTPS)**  
-   Let’s Encrypt (Certbot veya Cloudflare proxy) — çoğu VPS panelinde tek tık.
+Örnek: `halilmertdeveli.com` / `hmd.dev` — ne bulursan.
 
-Azure App Service / Azure Domain **gerekmiyor**.
+Nereden: Nic.tr, Turhost, Natro, Namecheap, Cloudflare Registrar…
 
-## Bu repoda hazır olanlar
+Alınca bana **sadece domain adını** yaz (örn. `ornek.com`). DNS’e henüz dokunma.
 
-| Dosya | Ne işe yarar |
+---
+
+### 2) Sonra al: Hosting (birini seç)
+
+**A — Önerilen: Linux VPS**  
+- 1 vCPU, **1 GB RAM**, 20 GB disk yeterli  
+- Ubuntu 22.04 / 24.04  
+- Örnek: Hetzner CX22, Contabo, DigitalOcean Basic, Turhost VPS  
+
+Alınca bana ver: **sunucu IP** + **SSH kullanıcı/şifre veya key** (güvenli şekilde).  
+Ben Docker + nginx + SSL kurulumunu yönlendiririm.
+
+**B — Alternatif: Windows hosting**  
+- Pakette açıkça **ASP.NET Core 8** / .NET 8 yazmalı  
+- Klasik “ASP.NET” (sadece Framework) yetmez  
+
+Alınca bana ver: **FTP/panel bilgisi** + .NET Core desteklediğini doğrulayan ekran görüntüsü/metin.
+
+---
+
+### 3) Birlikte yapacağız (alma, ayar)
+
+| Adım | Ne |
 | --- | --- |
-| `Dockerfile` | VPS’te `docker build` + `docker run -p 8080:8080` |
-| `deploy/nginx.conf.example` | Domain → uygulama reverse proxy |
-| `web.config` | Windows / IIS publish çıktısı |
-| `Program.cs` | `ForwardedHeaders` (HTTPS proxy arkası) |
+| DNS | Domain `A` kaydı → VPS/hosting IP |
+| SSL | Let’s Encrypt / panel SSL (HTTPS) |
+| Publish | `dotnet publish` veya Docker image |
+| `PublicBaseUrl` | `appsettings.Production.json` içine senin domain |
 
-## VPS + Docker (kısa)
+---
+
+## Almaman gerekenler
+
+- Azure App Service / Azure Domain  
+- Ayrı veritabanı (bu portföy şu an DB’siz)  
+- Pahalı “sınırsız” paketler — 1 GB VPS yeter
+
+---
+
+## Teknik not (benim tarafım hazır)
 
 ```bash
+# Linux VPS
 docker build -t hmd-portfolio .
 docker run -d --restart unless-stopped -p 8080:8080 --name portfolio hmd-portfolio
-# nginx conf örneğini domain’inle kopyala, certbot ile SSL al
-```
 
-## Windows hosting
-
-```bash
+# Windows / IIS
 dotnet publish -c Release -o ./publish
 ```
 
-`publish` klasörünü panele yükle; `web.config` yanında gelsin. Application Pool → **No Managed Code** + ASP.NET Core Module V2.
-
-## Domain’i alınca bana yaz
-
-Aldığın domain + hosting tipini (VPS mi, Windows mu) söyle; `nginx` / DNS / publish adımlarını senin seçimine göre netleştiririm.
+Domain’i alınca yaz → 2. adıma geçeriz.
