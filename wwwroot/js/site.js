@@ -197,6 +197,29 @@
     requestAnimationFrame(loopCursor);
   }
 
+
+  // Language bar fills
+  const bars = document.querySelectorAll("[data-bar-width]");
+  if ("IntersectionObserver" in window && !reduce) {
+    const barObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const w = el.getAttribute("data-bar-width") || "0";
+          el.style.width = `${w}%`;
+          barObserver.unobserve(el);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    bars.forEach((el) => barObserver.observe(el));
+  } else {
+    bars.forEach((el) => {
+      el.style.width = `${el.getAttribute("data-bar-width") || 0}%`;
+    });
+  }
+
   // Particles
   if (canvas instanceof HTMLCanvasElement && !reduce) {
     const ctx = canvas.getContext("2d");

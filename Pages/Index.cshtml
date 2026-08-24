@@ -59,15 +59,15 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                İstanbul · ASP.NET Core Developer
+                İstanbul · ASP.NET Core + Flutter
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                <span class="type-line" data-type words="Backend odaklı yazılım geliştirici.|ClearPay ile ledger disiplinli.|LED’den cüzdana ürün çıkaran."></span>
+                <span class="type-line" data-type words="CV’m: ne yaptığımı burada gör.|Backend + mobil ürünler.|ClearPay, Mevora, LED, Flutter."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                Bana ulaşmak isteyenler için tek sayfalık CV / portföy.
-                GitHub’daki gerçek işlerim, bitirme projem ve mülakat reposum burada — koyu tema, ASP.NET Core 8.
+                Siteye giren, kim olduğumu ve neler ürettiğimi görsün diye kuruldu.
+                GitHub’daki gerçek projeler analiz edilip burada anlatılıyor — tek sayfalık koyu temalı CV.
             </p>
             <div class="hero__actions reveal" data-reveal>
                 <a class="btn btn--primary" href="#projeler" data-magnetic>Projelerime bak</a>
@@ -75,16 +75,16 @@
             </div>
             <div class="hero__stats reveal" data-reveal>
                 <div>
-                    <strong data-count="43">0</strong>
+                    <strong data-count="@Model.PublicRepoCount">0</strong>
                     <span>Açık repo</span>
                 </div>
                 <div>
-                    <strong data-count="8">0</strong>
-                    <span>Öne çıkan</span>
+                    <strong data-count="@Model.Repos.Count">0</strong>
+                    <span>Vitrinde</span>
                 </div>
                 <div>
-                    <strong data-count="4">0</strong>
-                    <span>Canlı dil (ClearPay)</span>
+                    <strong data-count="@Model.LanguageStats.Count">0</strong>
+                    <span>Ana dil</span>
                 </div>
             </div>
         </div>
@@ -99,17 +99,17 @@
 
     <section id="hakkimda" class="section section--about">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Hakkımda</p>
-            <h2 class="section__title reveal" data-reveal>Kimim, ne yaparım, neden buradayım.</h2>
+            <p class="section__eyebrow reveal" data-reveal>Hakkımda · CV</p>
+            <h2 class="section__title reveal" data-reveal>Merhaba — ben Halil Mert Develi.</h2>
             <p class="section__copy reveal" data-reveal>
-                Ben Halil Mert Develi — İstanbul’da yaşayan, ASP.NET Core ve backend teknolojilerine odaklı bir yazılım geliştiriciyim.
-                Temiz mimari, okunaklı C# ve canlıya alınabilir ürünler peşindeyim. Colorlight tarafında LED / teknik işlerle de iç içeyim;
-                GitHub’da öğrenmeden ürünleşmeye uzanan açık bir geçmiş bırakıyorum.
+                İstanbul’da yaşayan bir yazılım geliştiriciyim. Omurgam <strong>ASP.NET Core</strong>; yanında
+                <strong>Flutter</strong> ve Kotlin ile mobil, Colorlight ekosisteminde LED / teknik destek işleri var.
+                Temiz mimari, okunaklı C# ve “canlıya alınabilir” ürün peşindeyim.
             </p>
             <p class="section__copy reveal" data-reveal>
-                Bu site; iş başvurusunda “bakın burası benim” diyebileceğim vitrin.
-                ClearPay mülakat reposundan bitirme projem Task Management’a, LED teknik destekten Flutter finans takipçisine kadar
-                ne yaptığımı anlatır — sonra da mail atman için kapıyı açık bırakır.
+                GitHub’da ~@Model.PublicRepoCount açık repo bıraktım: öğrenme serilerinden Softtech / Intertech mülakatında
+                savunduğum <em>ClearPay</em> cüzdanına, bitirme projem <em>Task Management</em>’a ve saha LED yazılımlarına kadar.
+                Bu sayfa o geçmişin CV özeti — sana ulaşmak isteyenler ne yaptığımı buradan görsün.
             </p>
             <dl class="facts">
                 <div class="reveal" data-reveal>
@@ -117,12 +117,12 @@
                     <dd>İstanbul, Türkiye</dd>
                 </div>
                 <div class="reveal" data-reveal>
-                    <dt>Odak</dt>
+                    <dt>Ana odak</dt>
                     <dd>ASP.NET Core · SQL · API</dd>
                 </div>
                 <div class="reveal" data-reveal>
-                    <dt>Yan alan</dt>
-                    <dd>Flutter · LED / Colorlight</dd>
+                    <dt>Mobil &amp; saha</dt>
+                    <dd>Flutter · Kotlin · LED</dd>
                 </div>
             </dl>
         </div>
@@ -130,12 +130,29 @@
 
     <section id="deneyim" class="section section--skills">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Yetkinlik &amp; yol</p>
-            <h2 class="section__title reveal" data-reveal>CV’de görünen yığın</h2>
+            <p class="section__eyebrow reveal" data-reveal>GitHub analizi</p>
+            <h2 class="section__title reveal" data-reveal>Repolardaki dil dağılımı</h2>
             <p class="section__copy reveal" data-reveal>
-                Günlük dilim C# / .NET. Yanında mobil istemciler, kimlik, ledger ve saha LED yazılımları.
+                @@HalilMertDeveli hesabındaki public repolardan çıkarılan özet@(Model.ReposFromApi ? " (canlı)" : "").
+                C# baskın; Flutter/Dart ve Kotlin mobil tarafta görünür.
             </p>
-            <ul class="skill-rail">
+
+            <div class="lang-bars reveal" data-reveal>
+                @foreach (var lang in Model.LanguageStats)
+                {
+                    <div class="lang-bar">
+                        <div class="lang-bar__label">
+                            <span>@lang.Name</span>
+                            <span>@lang.Count repo · %@lang.Percent</span>
+                        </div>
+                        <div class="lang-bar__track">
+                            <span class="lang-bar__fill" data-bar-width="@lang.Percent"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <ul class="skill-rail" style="margin-top: 2.5rem">
                 <li class="reveal" data-reveal>C# / .NET 8</li>
                 <li class="reveal" data-reveal>ASP.NET Core</li>
                 <li class="reveal" data-reveal>Flutter</li>
@@ -294,9 +311,9 @@
     <section id="one-cikan" class="section section--spotlight">
         <div class="section__inner">
             <p class="section__eyebrow reveal" data-reveal>Öne çıkan analiz</p>
-            <h2 class="section__title reveal" data-reveal>Üç repo, üç hikâye</h2>
+            <h2 class="section__title reveal" data-reveal>Projelerden çıkan hikâyeler</h2>
             <p class="section__copy reveal" data-reveal>
-                GitHub’daki işlerden seçilmiş dilimler — mülakat, bitirme ve saha.
+                GitHub’daki işleri okuyup buraya indirdim — mülakat, bitirme, saha ve mobil.
             </p>
 
             <div class="spotlight-list">
@@ -348,6 +365,23 @@
                             <em>ASP.NET-APP-FOR-LED</em> ve <em>led-teknik-destek</em> (Novastar, Huudi).
                         </p>
                         <a class="text-link" href="https://github.com/HalilMertDeveli/ASP.NET-APP-FOR-LED" target="_blank" rel="noopener noreferrer">ASP.NET-APP-FOR-LED →</a>
+                    </div>
+                </article>
+
+                <article class="spotlight reveal" data-reveal>
+                    <div class="spotlight__visual" aria-hidden="true">
+                        <div class="viz viz--mobile">
+                            <em></em>
+                        </div>
+                    </div>
+                    <div class="spotlight__body">
+                        <p class="spotlight__tag">Mobil</p>
+                        <h3>Flutter &amp; Kotlin</h3>
+                        <p>
+                            Finans takipçisi, VPN (Flutter + Compose), e-ticaret Flutter ve Android Kotlin denemeleri —
+                            ClearPay’in Flutter JWT istemcisiyle de mobil tarafı ürün dilimine bağlıyorum.
+                        </p>
+                        <a class="text-link" href="https://github.com/HalilMertDeveli/personal-Finance-Tracker" target="_blank" rel="noopener noreferrer">personal-Finance-Tracker →</a>
                     </div>
                 </article>
             </div>

@@ -15,7 +15,9 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
-    public IReadOnlyList<GitHubRepoView> Repos { get; private set; } = FeaturedFallback;
+    public IReadOnlyList<GitHubRepoView> Repos { get; private set; } = BuildFallback();
+    public IReadOnlyList<LanguageStat> LanguageStats { get; private set; } = FallbackLanguageStats;
+    public int PublicRepoCount { get; private set; } = 36;
     public string GitHubProfileUrl { get; } = "https://github.com/HalilMertDeveli";
     public string GitHubReposUrl { get; } = "https://github.com/HalilMertDeveli?tab=repositories";
     public bool ReposFromApi { get; private set; }
@@ -33,7 +35,6 @@ public class IndexModel : PageModel
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogWarning("GitHub API returned {Status}", response.StatusCode);
-                Repos = BuildFallback();
                 return;
             }
 
@@ -41,6 +42,8 @@ public class IndexModel : PageModel
             using var document = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
 
             var repos = new List<GitHubRepoView>();
+            var languageCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var item in document.RootElement.EnumerateArray())
             {
                 if (item.TryGetProperty("fork", out var fork) && fork.GetBoolean())
@@ -54,7 +57,6 @@ public class IndexModel : PageModel
                     continue;
                 }
 
-                // Bu site kartı her zaman en üstte; API'den gelirse çiftlemeyelim
                 if (string.Equals(name, ThisPortfolioCard.Name, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
@@ -72,6 +74,11 @@ public class IndexModel : PageModel
                     ? pushed.GetString()?[..Math.Min(10, pushed.GetString()!.Length)]
                     : null;
 
+                if (!string.IsNullOrWhiteSpace(language))
+                {
+                    languageCounts[language] = languageCounts.GetValueOrDefault(language) + 1;
+                }
+
                 repos.Add(new GitHubRepoView
                 {
                     Name = name,
@@ -82,6 +89,9 @@ public class IndexModel : PageModel
                     UpdatedAt = updated
                 });
             }
+
+            PublicRepoCount = repos.Count;
+            LanguageStats = BuildLanguageStats(languageCounts);
 
             merged.AddRange(
                 repos
@@ -99,6 +109,34 @@ public class IndexModel : PageModel
             Repos = BuildFallback();
         }
     }
+
+    private static IReadOnlyList<LanguageStat> BuildLanguageStats(Dictionary<string, int> counts)
+    {
+        if (counts.Count == 0)
+        {
+            return FallbackLanguageStats;
+        }
+
+        var total = counts.Values.Sum();
+        return counts
+            .OrderByDescending(kv => kv.Value)
+            .Take(6)
+            .Select(kv => new LanguageStat
+            {
+                Name = NormalizeLanguageLabel(kv.Key),
+                Count = kv.Value,
+                Percent = total == 0 ? 0 : (int)Math.Round(kv.Value * 100.0 / total)
+            })
+            .ToList();
+    }
+
+    private static string NormalizeLanguageLabel(string language) => language switch
+    {
+        "C#" => "C# / .NET",
+        "Dart" => "Dart / Flutter",
+        "C++" => "C++ (Flutter native)",
+        _ => language
+    };
 
     private static IReadOnlyList<GitHubRepoView> BuildFallback()
     {
@@ -164,6 +202,16 @@ public class IndexModel : PageModel
         Stars = 0,
         UpdatedAt = DateTime.UtcNow.ToString("yyyy-MM-dd")
     };
+
+    private static readonly IReadOnlyList<LanguageStat> FallbackLanguageStats =
+    [
+        new() { Name = "C# / .NET", Count = 10, Percent = 28 },
+        new() { Name = "Kotlin", Count = 5, Percent = 14 },
+        new() { Name = "Java", Count = 5, Percent = 14 },
+        new() { Name = "C++ (Flutter native)", Count = 6, Percent = 17 },
+        new() { Name = "Dart / Flutter", Count = 3, Percent = 8 },
+        new() { Name = "HTML", Count = 3, Percent = 8 }
+    ];
 
     private static readonly IReadOnlyList<GitHubRepoView> FeaturedFallback =
     [
