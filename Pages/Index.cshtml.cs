@@ -17,10 +17,13 @@ public class IndexModel : PageModel
 
     public IReadOnlyList<GitHubRepoView> Repos { get; private set; } = FeaturedFallback;
     public string GitHubProfileUrl { get; } = "https://github.com/HalilMertDeveli";
+    public string GitHubReposUrl { get; } = "https://github.com/HalilMertDeveli?tab=repositories";
     public bool ReposFromApi { get; private set; }
 
     public async Task OnGetAsync(CancellationToken cancellationToken)
     {
+        var merged = new List<GitHubRepoView> { ThisPortfolioCard };
+
         try
         {
             using var request = new HttpRequestMessage(
@@ -30,6 +33,7 @@ public class IndexModel : PageModel
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogWarning("GitHub API returned {Status}", response.StatusCode);
+                Repos = BuildFallback();
                 return;
             }
 
@@ -46,6 +50,12 @@ public class IndexModel : PageModel
 
                 var name = item.GetProperty("name").GetString() ?? string.Empty;
                 if (string.Equals(name, "HalilMertDeveli", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                // Bu site kartı her zaman en üstte; API'den gelirse çiftlemeyelim
+                if (string.Equals(name, ThisPortfolioCard.Name, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -73,23 +83,28 @@ public class IndexModel : PageModel
                 });
             }
 
-            if (repos.Count == 0)
-            {
-                return;
-            }
+            merged.AddRange(
+                repos
+                    .OrderByDescending(r => FeaturedRank(r.Name))
+                    .ThenByDescending(r => r.Stars)
+                    .ThenByDescending(r => r.UpdatedAt)
+                    .Take(7));
 
-            Repos = repos
-                .OrderByDescending(r => FeaturedRank(r.Name))
-                .ThenByDescending(r => r.Stars)
-                .ThenByDescending(r => r.UpdatedAt)
-                .Take(8)
-                .ToList();
+            Repos = merged;
             ReposFromApi = true;
         }
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)
         {
             _logger.LogWarning(ex, "GitHub repos could not be loaded; using curated fallback.");
+            Repos = BuildFallback();
         }
+    }
+
+    private static IReadOnlyList<GitHubRepoView> BuildFallback()
+    {
+        var list = new List<GitHubRepoView> { ThisPortfolioCard };
+        list.AddRange(FeaturedFallback);
+        return list;
     }
 
     private static HttpClient CreateClient()
@@ -105,9 +120,9 @@ public class IndexModel : PageModel
         "clearpay" => 100,
         "taskmanagementsystem" => 90,
         "asp.net-app-for-led" => 80,
+        "led-teknik-destek" => 75,
         "bankappasp" => 70,
         "asp-net-e-trade" => 65,
-        "led-teknik-destek" => 60,
         "personal-finance-tracker" => 55,
         "asp.net-learning-porject" => 50,
         "identitycourse" => 45,
@@ -117,9 +132,9 @@ public class IndexModel : PageModel
 
     private static string? LocalizeDescription(string name, string? apiDescription) => name.ToLowerInvariant() switch
     {
-        "clearpay" => "ASP.NET Core 8 dijital cüzdan: idempotent transferler, SQL ledger ve mock banka gateway.",
-        "taskmanagementsystem" => "Onion mimarili görev yönetim sistemi — ASP.NET Core MVC ile katmanlı yapı.",
-        "asp.net-app-for-led" => "LED paneller için ASP.NET Core web uygulaması.",
+        "clearpay" => "Mülakat reposu: ASP.NET Core 8 + Flutter dijital cüzdan. Bakiye UPDATE yok — double-entry SQL ledger, idempotent transfer, mock banka gateway.",
+        "taskmanagementsystem" => "Bitirme projesi: Onion mimarili görev yönetimi. Admin/Member rolleri, MediatR, cookie auth, raporlama.",
+        "asp.net-app-for-led" => "LED paneller için ASP.NET Core web uygulaması — sahada kullanılan teknik vitrin.",
         "bankappasp" => "ASP.NET ile bankacılık senaryolarına odaklı uygulama denemesi.",
         "asp-net-e-trade" => "ASP.NET tabanlı e-ticaret vitrin / alışveriş akışı.",
         "led-teknik-destek" => "Colorlight, Novastar ve Huudi için LED teknik destek sitesi.",
@@ -127,7 +142,18 @@ public class IndexModel : PageModel
         "asp.net-learning-porject" => "ASP.NET öğrenme sürecindeki uygulamalı çalışmalar.",
         "identitycourse" => "ASP.NET Identity ile kimlik ve yetkilendirme pratikleri.",
         "nlayerdapp" => "C# ile n-katmanlı mimari ve Windows uygulama yapısı.",
+        "kisisel-portfolyo" => "Bu site: koyu temalı, animasyonlu tek sayfa ASP.NET Core 8 portföy / CV.",
         _ => string.IsNullOrWhiteSpace(apiDescription) ? "GitHub üzerinde açık kaynak çalışma." : apiDescription
+    };
+
+    private static readonly GitHubRepoView ThisPortfolioCard = new()
+    {
+        Name = "kisisel-portfolyo",
+        Url = "https://github.com/HalilMertDeveli/kisisel-portfolyo",
+        Description = "Bu site: koyu temalı, animasyonlu tek sayfa ASP.NET Core 8 portföy / CV. Domain + hosting ile canlıya alınacak.",
+        Language = "C#",
+        Stars = 0,
+        UpdatedAt = DateTime.UtcNow.ToString("yyyy-MM-dd")
     };
 
     private static readonly IReadOnlyList<GitHubRepoView> FeaturedFallback =
@@ -136,7 +162,7 @@ public class IndexModel : PageModel
         {
             Name = "clearpay",
             Url = "https://github.com/HalilMertDeveli/clearpay",
-            Description = "ASP.NET Core 8 dijital cüzdan: idempotent transferler, SQL ledger ve mock banka gateway.",
+            Description = "Mülakat reposu: ASP.NET Core 8 + Flutter dijital cüzdan. Bakiye UPDATE yok — double-entry SQL ledger, idempotent transfer, mock banka gateway.",
             Language = "C#",
             Stars = 1,
             UpdatedAt = "2026-08-18"
@@ -145,7 +171,7 @@ public class IndexModel : PageModel
         {
             Name = "TaskManagementSystem",
             Url = "https://github.com/HalilMertDeveli/TaskManagementSystem",
-            Description = "Onion mimarili görev yönetim sistemi — ASP.NET Core MVC ile katmanlı yapı.",
+            Description = "Bitirme projesi: Onion mimarili görev yönetimi. Admin/Member rolleri, MediatR, cookie auth, raporlama.",
             Language = "C#",
             Stars = 0,
             UpdatedAt = "2026-05-12"
@@ -154,10 +180,19 @@ public class IndexModel : PageModel
         {
             Name = "ASP.NET-APP-FOR-LED",
             Url = "https://github.com/HalilMertDeveli/ASP.NET-APP-FOR-LED",
-            Description = "LED paneller için ASP.NET Core web uygulaması.",
+            Description = "LED paneller için ASP.NET Core web uygulaması — sahada kullanılan teknik vitrin.",
             Language = "C#",
             Stars = 0,
             UpdatedAt = "2026-04-17"
+        },
+        new()
+        {
+            Name = "led-teknik-destek",
+            Url = "https://github.com/HalilMertDeveli/led-teknik-destek",
+            Description = "Colorlight, Novastar ve Huudi için LED teknik destek sitesi.",
+            Language = "HTML",
+            Stars = 0,
+            UpdatedAt = "2026-08-12"
         },
         new()
         {
@@ -179,30 +214,12 @@ public class IndexModel : PageModel
         },
         new()
         {
-            Name = "led-teknik-destek",
-            Url = "https://github.com/HalilMertDeveli/led-teknik-destek",
-            Description = "Colorlight, Novastar ve Huudi için LED teknik destek sitesi.",
-            Language = "HTML",
-            Stars = 0,
-            UpdatedAt = "2026-08-12"
-        },
-        new()
-        {
             Name = "personal-Finance-Tracker",
             Url = "https://github.com/HalilMertDeveli/personal-Finance-Tracker",
             Description = "Flutter ile kişisel finans takip uygulaması.",
             Language = "Dart",
             Stars = 0,
             UpdatedAt = "2024-09-07"
-        },
-        new()
-        {
-            Name = "ASP.NET-Learning-Porject",
-            Url = "https://github.com/HalilMertDeveli/ASP.NET-Learning-Porject",
-            Description = "ASP.NET öğrenme sürecindeki uygulamalı çalışmalar.",
-            Language = "SCSS",
-            Stars = 1,
-            UpdatedAt = "2024-06-07"
         }
     ];
 }

@@ -1,6 +1,6 @@
-# Halil Mert Develi — Kişisel Portföy
+# Halil Mert Develi — Kişisel Portföy / CV
 
-ASP.NET Core 8 (Razor Pages) ile kurulmuş **tek sayfalık**, koyu temalı kişisel tanıtım sitesi. Animasyonlu hero, GitHub projeleri adımı (`@HalilMertDeveli` canlı API + fallback) ve Mevora vitrin bölümü içerir.
+ASP.NET Core 8 (Razor Pages) ile kurulmuş **tek sayfalık**, koyu temalı kişisel tanıtım sitesi. Animasyonlu hero, GitHub **Repositories** adımı (`@HalilMertDeveli` canlı API + bu site kartı), ClearPay / bitirme / LED analizleri ve Mevora’ya açık vitrin.
 
 ## Yerel çalıştırma
 
@@ -13,31 +13,35 @@ dotnet run --urls http://0.0.0.0:45217
 
 Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 
-## Docker ile canlıya alma
+## GitHub’a ekleme (Repositories)
+
+```bash
+export GH_TOKEN=ghp_xxx   # repo yetkili classic PAT
+bash scripts/publish-github.sh
+```
+
+Repo adı varsayılan: `HalilMertDeveli/kisisel-portfolyo` → profilde [Repositories](https://github.com/HalilMertDeveli?tab=repositories) altında görünür.
+
+## Canlıya alma (Azure yok)
+
+Alan adı + VPS veya Windows ASP.NET Core hosting al. Detay: [HOSTING.md](./HOSTING.md)
 
 ```bash
 docker build -t hmd-portfolio .
 docker run --rm -p 8080:8080 hmd-portfolio
 ```
 
-Ardından container’ı Azure App Service, Railway, Fly.io veya herhangi bir container host’a push edebilirsin.
-
 ## Cursor Cloud ortamı
 
-Bu repo `.cursor/environment.json` ile Cloud Agent ortamını tanımlar:
-
-- **install:** .NET 8 SDK kurulumu, `restore` + `build`
-- **terminals:** port `45217` üzerinde `dotnet run`
-
-Ortam, Cursor dashboard’daki **Environments → e/…** konumunda tutulur. Builds’i etkinleştirmek için ortam sayfasını kullan.
+`.cursor/environment.json` — .NET 8 install + port `45217` terminal.
 
 ## Yapı
 
 | Yol | Açıklama |
 | --- | --- |
-| `Pages/Index.cshtml` | Tek sayfa içerik (hero, hakkımda, yetenekler, projeler, iletişim) |
-| `wwwroot/css/site.css` | Tipografi ve görsel dil |
-| `wwwroot/js/site.js` | Menü + scroll reveal |
-| `Dockerfile` | Üretim imajı |
-
-İçerik metinlerini `Pages/Index.cshtml` içinde güncelle.
+| `Pages/Index.cshtml` | CV / portföy tek sayfa |
+| `wwwroot/css/site.css` | Koyu tema + animasyonlar |
+| `wwwroot/js/site.js` | Typewriter, particles, tilt |
+| `scripts/publish-github.sh` | GitHub Repositories publish |
+| `HOSTING.md` | Domain + hosting alış listesi |
+| `Dockerfile` / `web.config` / `deploy/nginx.conf.example` | Canlıya alma |

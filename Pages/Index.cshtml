@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Yazılım Geliştirici";
+    ViewData["Title"] = "Yazılım Geliştirici · CV";
     var repoIndex = 0;
 }
 
@@ -25,9 +25,9 @@
     </button>
     <nav id="site-menu" class="site-nav__links" aria-label="Sayfa bölümleri">
         <a href="#hakkimda">Hakkımda</a>
-        <a href="#yetenekler">Yetenekler</a>
-        <a href="#github">GitHub</a>
-        <a href="#projeler">Vitrin</a>
+        <a href="#deneyim">Deneyim</a>
+        <a href="#github">Repositories</a>
+        <a href="#one-cikan">Öne çıkan</a>
         <a href="#iletisim">İletişim</a>
     </nav>
 </header>
@@ -58,23 +58,23 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                ASP.NET Core Developer · GitHub açık
+                İstanbul · ASP.NET Core Developer
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
-                <span class="type-line" data-type words="Kodla şekillenen ürünler.|Koyu arayüz, net mimari.|GitHub’dan canlıya kadar."></span>
+                <span class="type-line" data-type words="Backend odaklı yazılım geliştirici.|ClearPay ile ledger disiplinli.|LED’den cüzdana ürün çıkaran."></span>
             </h1>
             <p class="hero__lede reveal" data-reveal>
-                İş başvurularında “bu da benim sitem” diyebileceğim, ASP.NET Core ile kurduğum tek sayfalık portföyüm —
-                animasyonlu, koyu temalı ve gerçek GitHub çalışmalarımla.
+                Bana ulaşmak isteyenler için tek sayfalık CV / portföy.
+                GitHub’daki gerçek işlerim, bitirme projem ve mülakat reposum burada — koyu tema, ASP.NET Core 8.
             </p>
             <div class="hero__actions reveal" data-reveal>
-                <a class="btn btn--primary" href="#github" data-magnetic>GitHub projeleri</a>
+                <a class="btn btn--primary" href="#github" data-magnetic>Repositories</a>
                 <a class="btn btn--ghost" href="#iletisim" data-magnetic>İletişime geç</a>
             </div>
             <div class="hero__stats reveal" data-reveal>
                 <div>
-                    <strong data-count="36">0</strong>
+                    <strong data-count="43">0</strong>
                     <span>Açık repo</span>
                 </div>
                 <div>
@@ -82,8 +82,8 @@
                     <span>Öne çıkan</span>
                 </div>
                 <div>
-                    <strong data-count="1">0</strong>
-                    <span>Tek sayfa vitrin</span>
+                    <strong data-count="4">0</strong>
+                    <span>Canlı dil (ClearPay)</span>
                 </div>
             </div>
         </div>
@@ -91,87 +91,93 @@
 
     <div class="marquee" aria-hidden="true">
         <div class="marquee__track">
-            <span>C#</span><span>ASP.NET Core</span><span>Entity Framework</span><span>Flutter</span><span>Kotlin</span><span>SQL</span><span>Docker</span><span>Identity</span>
-            <span>C#</span><span>ASP.NET Core</span><span>Entity Framework</span><span>Flutter</span><span>Kotlin</span><span>SQL</span><span>Docker</span><span>Identity</span>
+            <span>C#</span><span>ASP.NET Core</span><span>SQL Ledger</span><span>Flutter</span><span>Onion Architecture</span><span>Identity</span><span>LED / Colorlight</span><span>Docker</span>
+            <span>C#</span><span>ASP.NET Core</span><span>SQL Ledger</span><span>Flutter</span><span>Onion Architecture</span><span>Identity</span><span>LED / Colorlight</span><span>Docker</span>
         </div>
     </div>
 
     <section id="hakkimda" class="section section--about">
         <div class="section__inner">
             <p class="section__eyebrow reveal" data-reveal>Hakkımda</p>
-            <h2 class="section__title reveal" data-reveal>Sistemleri temiz, okunaklı ve canlıya hazır kurarım.</h2>
+            <h2 class="section__title reveal" data-reveal>Kimim, ne yaparım, neden buradayım.</h2>
             <p class="section__copy reveal" data-reveal>
-                Ben Halil Mert Develi. Backend ağırlıklı düşünür, arayüzü de ihmal etmem.
-                ASP.NET Core, modern web yığınları ve temiz mimari ile uçtan uca çalışan ürünler çıkarırım.
-                Bu site hem kendimi tanıttığım vitrin hem de .NET ekosisteminde üretebildiklerimin canlı örneği.
+                Ben Halil Mert Develi — İstanbul’da yaşayan, ASP.NET Core ve backend teknolojilerine odaklı bir yazılım geliştiriciyim.
+                Temiz mimari, okunaklı C# ve canlıya alınabilir ürünler peşindeyim. Colorlight tarafında LED / teknik işlerle de iç içeyim;
+                GitHub’da öğrenmeden ürünleşmeye uzanan açık bir geçmiş bırakıyorum.
+            </p>
+            <p class="section__copy reveal" data-reveal>
+                Bu site; iş başvurusunda “bakın burası benim” diyebileceğim vitrin.
+                ClearPay mülakat reposundan bitirme projem Task Management’a, LED teknik destekten Flutter finans takipçisine kadar
+                ne yaptığımı anlatır — sonra da mail atman için kapıyı açık bırakır.
             </p>
             <dl class="facts">
                 <div class="reveal" data-reveal>
+                    <dt>Konum</dt>
+                    <dd>İstanbul, Türkiye</dd>
+                </div>
+                <div class="reveal" data-reveal>
                     <dt>Odak</dt>
-                    <dd>ASP.NET Core &amp; web ürünleri</dd>
+                    <dd>ASP.NET Core · SQL · API</dd>
                 </div>
                 <div class="reveal" data-reveal>
-                    <dt>Yaklaşım</dt>
-                    <dd>Sade arayüz, sağlam altyapı</dd>
-                </div>
-                <div class="reveal" data-reveal>
-                    <dt>Hedef</dt>
-                    <dd>Canlıya alınan, bakımı kolay kod</dd>
+                    <dt>Yan alan</dt>
+                    <dd>Flutter · LED / Colorlight</dd>
                 </div>
             </dl>
         </div>
     </section>
 
-    <section id="yetenekler" class="section section--skills">
+    <section id="deneyim" class="section section--skills">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Yetenekler</p>
-            <h2 class="section__title reveal" data-reveal>Günlük kullandığım araçlar</h2>
+            <p class="section__eyebrow reveal" data-reveal>Yetkinlik &amp; yol</p>
+            <h2 class="section__title reveal" data-reveal>CV’de görünen yığın</h2>
             <p class="section__copy reveal" data-reveal>
-                Portföyümün omurgası ASP.NET Core. Yanında mobil, API ve dağıtım pratiği.
+                Günlük dilim C# / .NET. Yanında mobil istemciler, kimlik, ledger ve saha LED yazılımları.
             </p>
             <ul class="skill-rail">
                 <li class="reveal" data-reveal>C# / .NET 8</li>
-                <li class="reveal" data-reveal>ASP.NET Core</li>
-                <li class="reveal" data-reveal>Razor Pages &amp; MVC</li>
-                <li class="reveal" data-reveal>REST API</li>
-                <li class="reveal" data-reveal>SQL &amp; EF Core</li>
-                <li class="reveal" data-reveal>Flutter / Kotlin</li>
-                <li class="reveal" data-reveal>Git &amp; CI</li>
-                <li class="reveal" data-reveal>Docker</li>
+                <li class="reveal" data-reveal>ASP.NET Core MVC &amp; Razor</li>
+                <li class="reveal" data-reveal>EF Core / SQL Server</li>
+                <li class="reveal" data-reveal>Identity &amp; JWT</li>
+                <li class="reveal" data-reveal>Onion / N-Layer</li>
+                <li class="reveal" data-reveal>Flutter</li>
+                <li class="reveal" data-reveal>Kotlin</li>
+                <li class="reveal" data-reveal>Docker &amp; CI</li>
             </ul>
         </div>
     </section>
 
     <section id="github" class="section section--github">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Adım · GitHub</p>
-            <h2 class="section__title reveal" data-reveal>GitHub’daki gerçek projelerim</h2>
+            <p class="section__eyebrow reveal" data-reveal>GitHub · Repositories</p>
+            <h2 class="section__title reveal" data-reveal>Repositories altındaki işlerim</h2>
             <p class="section__copy reveal" data-reveal>
-                Öğrenme repolarından üretim odaklı ASP.NET Core işlerine uzanan açık geçmiş.
-                Aşağıdaki kartlar <a class="inline-link" href="@Model.GitHubProfileUrl" target="_blank" rel="noopener noreferrer">@@HalilMertDeveli</a>
-                hesabımdan geliyor@(Model.ReposFromApi ? " (canlı API)" : "").
+                Profildeki
+                <a class="inline-link" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer">Repositories</a>
+                sekmesindeki gerçek repolar. En üstte bu portföy sitesi;
+                ardından ClearPay, bitirme projesi ve LED / finans çalışmaları@(Model.ReposFromApi ? " (canlı API)" : "").
             </p>
 
             <ol class="gh-steps" aria-label="GitHub yolculuğu">
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">01</span>
                     <div>
-                        <h3>Keşif &amp; öğrenme</h3>
-                        <p>Flutter, Kotlin, Spring ve C# ile temel atılan deneme repoları.</p>
+                        <h3>Keşif</h3>
+                        <p>Flutter, Kotlin, Spring ve C# ile temel atılan öğrenme repoları.</p>
                     </div>
                 </li>
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">02</span>
                     <div>
-                        <h3>ASP.NET Core derinleşme</h3>
-                        <p>Identity, EF Core, n-katmanlı mimari ve e-ticaret / banka senaryoları.</p>
+                        <h3>Derinleşme</h3>
+                        <p>Identity, EF Core, n-katman, e-ticaret / banka senaryoları.</p>
                     </div>
                 </li>
                 <li class="gh-step reveal" data-reveal>
                     <span class="gh-step__num">03</span>
                     <div>
-                        <h3>Ürün odaklı işler</h3>
-                        <p>ClearPay cüzdan, görev yönetimi, LED teknik destek — canlıya yakın parçalar.</p>
+                        <h3>Ürün &amp; mülakat</h3>
+                        <p>ClearPay ledger, Task Management bitirme, LED saha yazılımları.</p>
                     </div>
                 </li>
             </ol>
@@ -180,10 +186,11 @@
                 @foreach (var repo in Model.Repos)
                 {
                     repoIndex++;
-                    <a class="gh-card reveal" data-reveal data-tilt href="@repo.Url" target="_blank" rel="noopener noreferrer">
+                    var isThisSite = string.Equals(repo.Name, "kisisel-portfolyo", StringComparison.OrdinalIgnoreCase);
+                    <a class="gh-card @(isThisSite ? "gh-card--featured" : "") reveal" data-reveal data-tilt href="@repo.Url" target="_blank" rel="noopener noreferrer">
                         <div class="gh-card__top">
                             <span class="gh-card__index">@repoIndex.ToString("00")</span>
-                            <span class="gh-card__lang">@(repo.Language ?? "Repo")</span>
+                            <span class="gh-card__lang">@(isThisSite ? "Bu site" : (repo.Language ?? "Repo"))</span>
                         </div>
                         <h3>@repo.Name</h3>
                         <p>@(repo.Description ?? "GitHub üzerinde açık kaynak çalışma.")</p>
@@ -200,44 +207,71 @@
             </div>
 
             <div class="gh-cta reveal" data-reveal>
-                <a class="btn btn--primary" href="@Model.GitHubProfileUrl" target="_blank" rel="noopener noreferrer" data-magnetic>
-                    Tüm GitHub profilini gör
+                <a class="btn btn--primary" href="@Model.GitHubReposUrl" target="_blank" rel="noopener noreferrer" data-magnetic>
+                    GitHub Repositories’e git
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="projeler" class="section section--work">
+    <section id="one-cikan" class="section section--spotlight">
         <div class="section__inner">
-            <p class="section__eyebrow reveal" data-reveal>Vitrin</p>
-            <h2 class="section__title reveal" data-reveal>Bu site ve sıradaki ürün</h2>
+            <p class="section__eyebrow reveal" data-reveal>Öne çıkan analiz</p>
+            <h2 class="section__title reveal" data-reveal>Üç repo, üç hikâye</h2>
             <p class="section__copy reveal" data-reveal>
-                Portföyün kendisi de bir ASP.NET Core parçası. Mevora ile burayı büyütmeye devam ediyoruz.
+                GitHub’daki işlerden seçilmiş dilimler — mülakat, bitirme ve saha.
             </p>
 
-            <div class="work-list">
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>01</span>
-                        <span>ASP.NET Core</span>
+            <div class="spotlight-list">
+                <article class="spotlight reveal" data-reveal>
+                    <div class="spotlight__visual" aria-hidden="true">
+                        <div class="viz viz--ledger">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
                     </div>
-                    <h3>Kişisel Portföy</h3>
-                    <p>
-                        Tek sayfalık, koyu temalı ve animasyonlu tanıtım. Razor Pages, GitHub entegrasyonu ve Docker ile canlıya hazır.
-                    </p>
-                    <a class="text-link" href="#ust">Bu sayfa · canlı önizleme</a>
+                    <div class="spotlight__body">
+                        <p class="spotlight__tag">Mülakat reposu</p>
+                        <h3>ClearPay</h3>
+                        <p>
+                            ASP.NET Core 8 + Flutter demo cüzdan. Bakiye kolonu yok; <strong>LedgerPair.NetOf</strong> ile türetilen bakiye,
+                            idempotent HTTP, fake banka gateway, TR/EN/DE/FR arayüz. Softtech / Intertech mülakatında savunduğum repo.
+                        </p>
+                        <a class="text-link" href="https://github.com/HalilMertDeveli/clearpay" target="_blank" rel="noopener noreferrer">clearpay →</a>
+                    </div>
                 </article>
 
-                <article class="work-item reveal" data-reveal>
-                    <div class="work-item__meta">
-                        <span>02</span>
-                        <span>Ürün</span>
+                <article class="spotlight reveal" data-reveal>
+                    <div class="spotlight__visual" aria-hidden="true">
+                        <div class="viz viz--onion">
+                            <i></i><i></i><i></i>
+                        </div>
                     </div>
-                    <h3>Mevora</h3>
-                    <p>
-                        Paralel geliştirdiğimiz ürün hattı. Portföyde yerini aldıkça mimari kararlar ve canlı linkler burada belirecek.
-                    </p>
-                    <span class="text-link text-link--muted">Yakında</span>
+                    <div class="spotlight__body">
+                        <p class="spotlight__tag">Bitirme projesi</p>
+                        <h3>Task Management System</h3>
+                        <p>
+                            Onion mimarili ASP.NET Core MVC. Admin paneli, üye görevleri, öncelikler, bildirimler, MediatR ve cookie auth ile
+                            uçtan uca dikey dilim.
+                        </p>
+                        <a class="text-link" href="https://github.com/HalilMertDeveli/TaskManagementSystem" target="_blank" rel="noopener noreferrer">TaskManagementSystem →</a>
+                    </div>
+                </article>
+
+                <article class="spotlight reveal" data-reveal>
+                    <div class="spotlight__visual" aria-hidden="true">
+                        <div class="viz viz--led">
+                            <b></b><b></b><b></b><b></b><b></b><b></b>
+                        </div>
+                    </div>
+                    <div class="spotlight__body">
+                        <p class="spotlight__tag">Saha / LED</p>
+                        <h3>LED uygulamaları</h3>
+                        <p>
+                            Colorlight ekosistemine yakın LED web ve teknik destek işleri —
+                            <em>ASP.NET-APP-FOR-LED</em> ve <em>led-teknik-destek</em> (Novastar, Huudi).
+                        </p>
+                        <a class="text-link" href="https://github.com/HalilMertDeveli/ASP.NET-APP-FOR-LED" target="_blank" rel="noopener noreferrer">ASP.NET-APP-FOR-LED →</a>
+                    </div>
                 </article>
             </div>
         </div>
@@ -246,13 +280,13 @@
     <section id="iletisim" class="section section--contact">
         <div class="section__inner section__inner--narrow">
             <p class="section__eyebrow reveal" data-reveal>İletişim</p>
-            <h2 class="section__title reveal" data-reveal>Birlikte bir şey kuralım.</h2>
+            <h2 class="section__title reveal" data-reveal>Sana ulaşmak isteyenler buradan yazsın.</h2>
             <p class="section__copy reveal" data-reveal>
-                İş ilanı, staj veya yan proje — yazman yeterli. Bu siteyi ve GitHub’ımı referans olarak iletebilirsin.
+                İş ilanı, staj, freelance veya soru — mail yeterli. GitHub Repositories ve bu site referansın olsun.
             </p>
             <div class="contact-actions reveal" data-reveal>
                 <a class="btn btn--primary" href="mailto:halilmertdeveliii&#64;gmail.com" data-magnetic>E-posta gönder</a>
-                <a class="btn btn--ghost" href="@Model.GitHubProfileUrl" rel="noopener noreferrer" target="_blank" data-magnetic>GitHub</a>
+                <a class="btn btn--ghost" href="@Model.GitHubProfileUrl" rel="noopener noreferrer" target="_blank" data-magnetic>GitHub profil</a>
             </div>
             <p class="contact-email reveal" data-reveal>
                 <a href="mailto:halilmertdeveliii&#64;gmail.com">halilmertdeveliii&#64;gmail.com</a>
@@ -263,7 +297,7 @@
 
 <footer class="site-footer">
     <div class="site-footer__inner">
-        <p>© @DateTime.UtcNow.Year Halil Mert Develi</p>
-        <p>ASP.NET Core 8 · koyu tema portföy</p>
+        <p>© @DateTime.UtcNow.Year Halil Mert Develi · İstanbul</p>
+        <p>ASP.NET Core 8 · CV / portföy</p>
     </div>
 </footer>
