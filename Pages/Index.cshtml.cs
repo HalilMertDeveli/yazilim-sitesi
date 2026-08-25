@@ -10,9 +10,18 @@ public class IndexModel : PageModel
     private static readonly HttpClient SharedClient = CreateClient();
     private readonly ILogger<IndexModel> _logger;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
     {
         _logger = logger;
+        var configured = configuration["Site:PublicBaseUrl"]?.Trim().TrimEnd('/');
+        if (!string.IsNullOrWhiteSpace(configured))
+        {
+            SiteUrl = configured;
+            if (Uri.TryCreate(configured, UriKind.Absolute, out var uri) && !string.IsNullOrWhiteSpace(uri.Host))
+            {
+                SiteHost = uri.Host;
+            }
+        }
     }
 
     public IReadOnlyList<GitHubRepoView> Repos { get; private set; } = BuildFallback();
@@ -20,6 +29,8 @@ public class IndexModel : PageModel
     public int PublicRepoCount { get; private set; } = 36;
     public string GitHubProfileUrl { get; } = "https://github.com/HalilMertDeveli";
     public string GitHubReposUrl { get; } = "https://github.com/HalilMertDeveli?tab=repositories";
+    public string SiteUrl { get; private set; } = "https://halilmertdeveli.com.tr";
+    public string SiteHost { get; private set; } = "halilmertdeveli.com.tr";
     public bool ReposFromApi { get; private set; }
 
     public async Task OnGetAsync(CancellationToken cancellationToken)

@@ -70,7 +70,7 @@
         <div class="hero__content">
             <p class="hero__kicker reveal" data-reveal>
                 <span class="pulse-dot"></span>
-                Yazılım sitem · mobil · web · ürün
+                @Model.SiteHost · yazılım sitem
             </p>
             <p class="hero__brand reveal" data-reveal data-split>Halil Mert Develi</p>
             <h1 class="hero__headline reveal" data-reveal>
@@ -456,7 +456,8 @@
             <p class="section__eyebrow reveal" data-reveal>İletişim</p>
             <h2 class="section__title reveal" data-reveal>Sana ulaşmak isteyenler buradan yazsın.</h2>
             <p class="section__copy reveal" data-reveal>
-                İş ilanı, staj, freelance veya soru — mail yeterli. GitHub Repositories ve bu site referansın olsun.
+                İş ilanı, staj, freelance veya soru — mail yeterli.
+                Site adresim: <a class="inline-link" href="@Model.SiteUrl">@Model.SiteHost</a>
             </p>
             <div class="contact-actions reveal" data-reveal>
                 <a class="btn btn--primary" href="mailto:halilmertdeveliii&#64;gmail.com" data-magnetic>E-posta gönder</a>
@@ -465,13 +466,16 @@
             <p class="contact-email reveal" data-reveal>
                 <a href="mailto:halilmertdeveliii&#64;gmail.com">halilmertdeveliii&#64;gmail.com</a>
             </p>
+            <p class="contact-domain reveal" data-reveal>
+                <a href="@Model.SiteUrl">@Model.SiteUrl</a>
+            </p>
         </div>
     </section>
 </main>
 
 <footer class="site-footer">
     <div class="site-footer__inner">
-        <p>© @DateTime.UtcNow.Year Halil Mert Develi · yazılım sitesi</p>
-        <p>Flutter · .NET · mobil · ürün</p>
+        <p>© @DateTime.UtcNow.Year Halil Mert Develi · <a href="@Model.SiteUrl">@Model.SiteHost</a></p>
+        <p>Flutter · .NET · mobil · Mevora</p>
     </div>
 </footer>
