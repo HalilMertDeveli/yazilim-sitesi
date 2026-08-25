@@ -29,8 +29,8 @@ public class IndexModel : PageModel
     public int PublicRepoCount { get; private set; } = 36;
     public string GitHubProfileUrl { get; } = "https://github.com/HalilMertDeveli";
     public string GitHubReposUrl { get; } = "https://github.com/HalilMertDeveli?tab=repositories";
-    public string SiteUrl { get; private set; } = "https://halilmertdeveli.com.tr";
-    public string SiteHost { get; private set; } = "halilmertdeveli.com.tr";
+    public string SiteUrl { get; private set; } = "https://www.halilmertdeveli.com.tr";
+    public string SiteHost { get; private set; } = "www.halilmertdeveli.com.tr";
     public bool ReposFromApi { get; private set; }
 
     public async Task OnGetAsync(CancellationToken cancellationToken)

@@ -21,7 +21,7 @@ Sadece .NET değil — **Flutter mobil**, **Kotlin**, LED ve GitHub’daki gerç
 | **Framework** | ASP.NET Core 8 · Razor Pages · C# |
 | **UI** | Özel CSS/JS (animasyonlu hero, particles, typewriter…) |
 | **İçerik** | Hakkımda, yığın, projeler, GitHub listesi, iletişim |
-| **Canlıya alma** | **Vercel** (Docker container) · domain: halilmertdeveli.com.tr |
+| **Canlıya alma** | **Vercel** · production: www.halilmertdeveli.com.tr |
 
 ---
 

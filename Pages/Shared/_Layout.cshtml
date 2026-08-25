@@ -1,9 +1,9 @@
 ﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
-    var publicBase = (Configuration["Site:PublicBaseUrl"] ?? "https://halilmertdeveli.com.tr").TrimEnd('/');
+    var publicBase = (Configuration["Site:PublicBaseUrl"] ?? "https://www.halilmertdeveli.com.tr").TrimEnd('/');
     var pageTitle = ViewData["Title"] as string ?? "Yazılım Sitesi";
     var fullTitle = $"{pageTitle} — Halil Mert Develi";
-    var description = "Halil Mert Develi — Flutter eşleşme uygulaması Mevora, mobil, ASP.NET Core ve kişisel yazılım projeleri. Canlı site: https://halilmertdeveli.com.tr";
+    var description = "Halil Mert Develi — Flutter eşleşme uygulaması Mevora, mobil, ASP.NET Core ve kişisel yazılım projeleri. Canlı site: https://www.halilmertdeveli.com.tr";
 }
 <!DOCTYPE html>
 <html lang="tr">
