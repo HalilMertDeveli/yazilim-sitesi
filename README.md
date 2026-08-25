@@ -87,6 +87,8 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 - **Domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr) (alındı)  
 - **Hosting:** **Vercel** — GitHub `yazilim-sitesi` → Import → Deploy  
 - **Dosyalar:** `Dockerfile.vercel` + `vercel.json`  
+- **Önizleme:** https://yazilim-sitesi.vercel.app (deploy OK)  
+- **DNS:** apex/`www` hâlâ İsimTescil `93.89.230.125` ise site açılmaz → kayıtları Vercel’e çevir ([HOSTING.md](./HOSTING.md))
 
 Detaylı adımlar: **[HOSTING.md](./HOSTING.md)**
 
