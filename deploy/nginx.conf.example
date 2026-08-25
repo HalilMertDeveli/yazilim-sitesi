@@ -3,7 +3,7 @@
 
 server {
     listen 80;
-    server_name www.halilmertdeveli.com.tr halilmertdeveli.com.tr;
+    server_name halilmertdeveli.com.tr www.halilmertdeveli.com.tr;
 
     location / {
         proxy_pass         http://127.0.0.1:8080;

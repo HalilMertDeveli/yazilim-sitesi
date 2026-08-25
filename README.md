@@ -20,7 +20,7 @@ Sadece .NET değil — **Flutter mobil**, **Kotlin**, **Mevora / Mevora 2**, LED
 | **Framework** | ASP.NET Core 8 · Razor Pages · C# |
 | **UI** | Özel CSS/JS (animasyonlu hero, particles, typewriter…) |
 | **İçerik** | Hakkımda, yığın, projeler, GitHub listesi, iletişim |
-| **Canlıya alma** | **Vercel** (Docker container) · domain: www.halilmertdeveli.com.tr |
+| **Canlıya alma** | **Vercel** (Docker container) · domain: halilmertdeveli.com.tr |
 
 ---
 
@@ -83,7 +83,7 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 
 ## Canlıya alma (özet)
 
-- **Domain:** [www.halilmertdeveli.com.tr](https://www.halilmertdeveli.com.tr) (alındı)  
+- **Domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr) (alındı)  
 - **Hosting:** **Vercel** — GitHub `yazilim-sitesi` → Import → Deploy  
 - **Dosyalar:** `Dockerfile.vercel` + `vercel.json`  
 
