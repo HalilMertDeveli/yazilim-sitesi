@@ -1,13 +1,33 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    var publicBase = (Configuration["Site:PublicBaseUrl"] ?? "https://halilmertdeveli.com.tr").TrimEnd('/');
+    var pageTitle = ViewData["Title"] as string ?? "Yazılım Sitesi";
+    var fullTitle = $"{pageTitle} — Halil Mert Develi";
+    var description = "Halil Mert Develi — Flutter mobil, ASP.NET Core, Kotlin ve kişisel yazılım projeleri. Canlı site: https://halilmertdeveli.com.tr";
+}
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#07090d" />
-    <meta name="description" content="Halil Mert Develi yazılım sitesi — Flutter mobil, ASP.NET Core, Kotlin, Mevora, Mevora 2 ve tüm projeler tek yerde." />
+    <meta name="description" content="@description" />
     <meta name="author" content="Halil Mert Develi" />
-    <title>@ViewData["Title"] — Halil Mert Develi</title>
+    <link rel="canonical" href="@publicBase/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content="Halil Mert Develi" />
+    <meta property="og:title" content="@fullTitle" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:url" content="@publicBase/" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@fullTitle" />
+    <meta name="twitter:description" content="@description" />
+
+    <title>@fullTitle</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
