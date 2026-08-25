@@ -948,21 +948,52 @@ main,
   transform: translateY(-3px);
 }
 
-.project-tile--mevora {
+.mevora-row {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto auto auto;
-  column-gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.project-tile--mevora,
+.project-tile--mevora2 {
   border-color: rgba(255, 155, 92, 0.35);
   background:
     radial-gradient(80% 120% at 0% 0%, rgba(255, 155, 92, 0.12), transparent 55%),
     rgba(7, 9, 13, 0.7);
 }
 
-.project-tile--mevora .project-tile__viz {
-  grid-row: 1 / span 4;
-  align-self: center;
+.project-tile--mevora2 {
+  border-color: rgba(61, 255, 224, 0.38);
+  background:
+    radial-gradient(80% 120% at 100% 0%, rgba(61, 255, 224, 0.14), transparent 55%),
+    rgba(7, 9, 13, 0.7);
+}
+
+.viz--mevora2 {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.viz--mevora2 i {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--sea);
+  border-radius: 50%;
+  animation: onion-pulse 2.8s var(--ease) infinite;
+}
+
+.viz--mevora2 i:nth-child(2) {
+  inset: 18%;
+  border-color: var(--copper);
+  animation-delay: 0.35s;
+}
+
+.viz--mevora2 i:nth-child(3) {
+  inset: 36%;
+  border-color: var(--violet-soft);
+  animation-delay: 0.7s;
 }
 
 .project-tile__viz {
@@ -1044,12 +1075,8 @@ main,
     grid-template-columns: 1fr;
   }
 
-  .project-tile--mevora {
+  .mevora-row {
     grid-template-columns: 1fr;
-  }
-
-  .project-tile--mevora .project-tile__viz {
-    grid-row: auto;
   }
 }
 
