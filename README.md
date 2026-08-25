@@ -81,9 +81,8 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 
 ## Canlıya alma (özet)
 
-1. **Alan adı** al (domain)  
-2. **Hosting** al → Linux VPS (önerilen) veya Windows + ASP.NET Core 8  
-3. DNS + SSL + publish  
+- **Domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr) (alındı)  
+- **Sıradaki:** Linux VPS (Natro XCloud Mini) → DNS + SSL + publish  
 
 Detaylı adımlar: **[HOSTING.md](./HOSTING.md)**
 

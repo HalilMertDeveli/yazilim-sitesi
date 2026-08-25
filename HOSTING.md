@@ -2,23 +2,25 @@
 
 Bu site **ASP.NET Core 8** (Razor Pages). WordPress / sadece HTML hosting yetmez.
 
-Senin planın:
-1. **Alan adı** → [İsimTescil](https://www.isimtescil.net/)
-2. **Hosting** → Natro (önerilen: XCloud VPS)
+| | |
+| --- | --- |
+| **Alan adı** | **`halilmertdeveli.com.tr`** (alındı) |
+| **Canlı URL** | `https://halilmertdeveli.com.tr` |
+| **Hosting** | Natro XCloud Mini (Linux VPS) — henüz bekleniyor |
 
 ---
 
-## 1) Şimdi: İsimTescil’den domain al
+## 1) Domain — tamam
 
-1. [isimtescil.net](https://www.isimtescil.net/) → beğendiğin adı ara (örn. `halilmertdeveli.com`)
-2. Sepete ekle → satın al / tescil et
-3. Alınca bana **sadece domain adını** yaz (örn. `ornek.com`)
+- Domain: **halilmertdeveli.com.tr**
+- Production ayarı: `appsettings.Production.json` → `Site:PublicBaseUrl`
+- nginx örneği: `deploy/nginx.conf.example`
 
-**Şimdilik DNS’e dokunma.** Hosting IP’si gelince yönlendireceğiz.
+**Şimdilik DNS’e dokunma** (A kaydı / NS). VPS IP’si gelince birlikte bağlayacağız.
 
 ---
 
-## 2) Sonra: Natro’dan hosting al
+## 2) Sıradaki: Natro VPS (sunucu)
 
 ### Önerilen: Natro **XCloud Mini** (Linux VPS)
 
@@ -30,24 +32,27 @@ Senin planın:
 
 Link: [Natro VPS / XCloud](https://www.natro.com/sunucu-kiralama/vps-cloud-server)
 
-Alınca bana ver: **IP** + **SSH (root şifre veya key)**
+Alınca bana yaz: **IP adresi** + **SSH (root şifre veya key)**
 
-> Natro paylaşımlı Windows “sınırsız” paketlerde ASP.NET Core sık sorun çıkarıyor. Bu proje için VPS daha güvenli.
+> Not: Sadece domain aldın; siteyi yayınlamak için ayrıca bir **sunucu (VPS)** gerekir. Paylaşımlı “sınırsız Windows” paketlerde ASP.NET Core sık sorun çıkarır — bu proje için Linux VPS daha güvenli.
+
+Eğer İsimTescil / Natro’da domain ile birlikte bir hosting paketi de aldıysan, panelde **IP** veya **sunucu bilgisi** var mı bak; varsa onu da yaz.
 
 ---
 
-## 3) Birlikte: Domain’i sunucuya bağlama (İsimTescil paneli)
+## 3) Birlikte: Domain → sunucu (İsimTescil DNS)
 
-Hosting IP’si elimizde olunca İsimTescil’de:
+VPS IP’si elimizde olunca İsimTescil’de:
 
 1. Giriş → **Kontrol Paneli** → **Domain Yönetimi**
-2. Domain yanında **Detaylı Yönetim**
-3. **DNS Yönetimi** → müşteri özel DNS / kayıt ekle
-4. **A kaydı**: `@` (ve isteğe `www`) → Natro VPS **IP**
-5. Birkaç dakika–birkaç saat yayılır
-6. SSL (Let’s Encrypt) + siteyi Docker ile koyarız
+2. **halilmertdeveli.com.tr** → **Detaylı Yönetim**
+3. **DNS Yönetimi**
+4. **A kaydı**: `@` → VPS **IP**  
+   İsteğe bağlı: `www` → aynı IP (veya CNAME → `@`)
+5. Yayılmayı bekle (dakika–saat)
+6. SSL (Let’s Encrypt) + Docker ile siteyi koyarız
 
-(İsimTescil DNS rehberi: [Domain DNS yönlendirme](https://www.isimtescil.net/bilgibankasi/domain-dns-yonlendirme))
+Rehber: [Domain DNS yönlendirme](https://www.isimtescil.net/bilgibankasi/domain-dns-yonlendirme)
 
 ---
 
@@ -61,11 +66,13 @@ Hosting IP’si elimizde olunca İsimTescil’de:
 
 ## Checklist
 
-- [ ] İsimTescil’den **domain** → bana adı yaz  
+- [x] Domain: **halilmertdeveli.com.tr**  
 - [ ] Natro **XCloud Mini (Ubuntu)** → IP + SSH ver  
 - [ ] Birlikte DNS (İsimTescil) + SSL + yayın  
 
 ```bash
 docker build -t hmd-portfolio .
-docker run -d --restart unless-stopped -p 8080:8080 --name portfolio hmd-portfolio
+docker run -d --restart unless-stopped -p 8080:8080 \
+  -e Site__PublicBaseUrl=https://halilmertdeveli.com.tr \
+  --name portfolio hmd-portfolio
 ```
