@@ -1,69 +1,88 @@
-# Canlıya alma — Azure YOK
+# Canlıya alma — Natro
 
-Bu site **ASP.NET Core 8**. Sadece HTML hosting olmaz. Domain + (VPS veya Windows ASP.NET Core hosting) gerekir.
+Bu site **ASP.NET Core 8** (Razor Pages). WordPress / sadece HTML hosting yetmez.
 
-Uygulama buna göre ayarlı: `ForwardedHeaders`, `web.config` (IIS), `Dockerfile`, `deploy/nginx.conf.example`.
-
----
-
-## Sırayla al (tek tek)
-
-### 1) Şimdi al: Alan adı (domain)
-
-Örnek: `halilmertdeveli.com` / `hmd.dev` — ne bulursan.
-
-Nereden: Nic.tr, Turhost, Natro, Namecheap, Cloudflare Registrar…
-
-Alınca bana **sadece domain adını** yaz (örn. `ornek.com`). DNS’e henüz dokunma.
+Satın almayı **Natro** üzerinden yapacaksan aşağıdaki sırayı izle.
 
 ---
 
-### 2) Sonra al: Hosting (birini seç)
+## Natro’dan sırayla al
 
-**A — Önerilen: Linux VPS**  
-- 1 vCPU, **1 GB RAM**, 20 GB disk yeterli  
-- Ubuntu 22.04 / 24.04  
-- Örnek: Hetzner CX22, Contabo, DigitalOcean Basic, Turhost VPS  
+### 1) Şimdi: Alan adı (domain)
 
-Alınca bana ver: **sunucu IP** + **SSH kullanıcı/şifre veya key** (güvenli şekilde).  
-Ben Docker + nginx + SSL kurulumunu yönlendiririm.
+Natro → **Alan Adı** / Domain kaydı  
+Örnek: `halilmertdeveli.com`
 
-**B — Alternatif: Windows hosting**  
-- Pakette açıkça **ASP.NET Core 8** / .NET 8 yazmalı  
-- Klasik “ASP.NET” (sadece Framework) yetmez  
-
-Alınca bana ver: **FTP/panel bilgisi** + .NET Core desteklediğini doğrulayan ekran görüntüsü/metin.
+Alınca bana **sadece domain adını** yaz. DNS’e henüz dokunma.
 
 ---
 
-### 3) Birlikte yapacağız (alma, ayar)
+### 2) Sonra: Hosting — hangisini al?
 
-| Adım | Ne |
+#### Önerilen: Natro **XCloud VPS** (Linux)
+
+Paylaşımlı Windows hosting’de Natro tarafında ASP.NET Core / Application Pool kısıtları sık görülüyor. Bu proje için en temiz yol VPS.
+
+| | |
 | --- | --- |
-| DNS | Domain `A` kaydı → VPS/hosting IP |
-| SSL | Let’s Encrypt / panel SSL (HTTPS) |
-| Publish | `dotnet publish` veya Docker image |
-| `PublicBaseUrl` | `appsettings.Production.json` içine senin domain |
+| Paket | **XCloud Mini** (başlangıç için yeter) |
+| Kaynak | 1 vCPU · **1 GB RAM** · 20 GB SSD |
+| İşletim sistemi | **Ubuntu 22.04** veya **24.04** (Linux) |
+| Panel | İstersen yok / Lite — Docker kuracağız |
+
+Link: [Natro VPS / XCloud](https://www.natro.com/sunucu-kiralama/vps-cloud-server)
+
+Alınca bana ver:
+- sunucu **IP**
+- **root / SSH** şifresi veya key  
+→ Docker + nginx + SSL kurulumunu yönlendiririm.
+
+#### Alternatif: Natro Windows Hosting
+
+Sadece şunu alırsan dene:
+- Paket açıklamasında açıkça **.NET Core / ASP.NET Core / .NET 8** yazmalı  
+- Klasik “ASP.NET” / sadece .NET Framework **yetmez**
+
+Satın almadan Natro destek’e sor:  
+*“ASP.NET Core 8 Razor Pages yayınlayabilir miyim? Ayrı Application Pool var mı?”*  
+Cevap net “evet” değilse **VPS al**.
 
 ---
 
-## Almaman gerekenler
+### 3) Almaman gerekenler
 
-- Azure App Service / Azure Domain  
-- Ayrı veritabanı (bu portföy şu an DB’siz)  
-- Pahalı “sınırsız” paketler — 1 GB VPS yeter
+- Azure  
+- Ayrı SQL / veritabanı (bu site DB’siz)  
+- Pahalı “sınırsız” paylaşımlı paket (Core için riskli)
 
 ---
 
-## Teknik not (benim tarafım hazır)
+### 4) Sen alınca birlikte yapacağız
+
+1. Domain DNS → VPS IP (`A` kaydı)  
+2. SSL (Let’s Encrypt / panel)  
+3. Siteyi publish / Docker ile koyma  
+4. Telefondan `https://senin-domainin.com` testi  
+
+---
+
+## Teknik (hazır)
 
 ```bash
-# Linux VPS
+# Linux VPS (Natro XCloud)
 docker build -t hmd-portfolio .
 docker run -d --restart unless-stopped -p 8080:8080 --name portfolio hmd-portfolio
 
-# Windows / IIS
+# Windows IIS (Core destekliyse)
 dotnet publish -c Release -o ./publish
 ```
 
-Domain’i alınca yaz → 2. adıma geçeriz.
+`web.config`, `Dockerfile`, `deploy/nginx.conf.example` repoda hazır.
+
+---
+
+## Özet checklist
+
+- [ ] Natro’dan **domain** al → bana adını yaz  
+- [ ] Natro’dan **XCloud Mini (Ubuntu)** al → IP + SSH ver  
+- [ ] Birlikte DNS + SSL + yayın  
