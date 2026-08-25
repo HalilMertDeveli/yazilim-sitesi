@@ -1,68 +1,76 @@
-# Canlıya alma — Vercel + domain
+# Canlıya alma — Vercel + DNS (acil düzeltme)
 
-Bu site **ASP.NET Core 8** (Razor Pages). Vercel’de **Docker container** olarak yayınlanır.
+## Neden `https://halilmertdeveli.com.tr` açılmıyor?
 
 | | |
 | --- | --- |
-| **Production domain (Vercel)** | **`www.halilmertdeveli.com.tr`** |
-| **Apex** | `halilmertdeveli.com.tr` → **308 redirect → www** |
-| **Canlı URL** | `https://www.halilmertdeveli.com.tr` |
-| **Hosting** | **Vercel** (container, Hobby, **HMD TEAM**, proje `yazilim-sitesi`) |
-| **GitHub** | https://github.com/HalilMertDeveli/yazilim-sitesi |
-| **DNS paneli** | İsimTescil → **DnsEnable** |
-| **Önizleme (çalışıyor)** | https://yazilim-sitesi.vercel.app |
+| DNS şu an | **A → `93.89.230.125`** (İsimTescil) |
+| Sonuç | **502** / site yok |
+| Vercel site | **çalışıyor:** https://yazilim-sitesi.vercel.app |
+| Kod | Hazır — sorun sadece DNS |
 
-Kod: `Site:PublicBaseUrl` = `https://www.halilmertdeveli.com.tr`
+Tarayıcı İsimTescil IP’sine gidiyor; Vercel’e hiç ulaşmıyor. Bunu **ben panelinden değiştiremem** — sen İsimTescil DnsEnable’da kayıtları değiştirince düzelir.
 
 ---
 
-## Invalid Configuration — şimdi ne yapacaksın?
+## 1) İsimTescil’de DNS (zorunlu — şimdi)
 
-Vercel Domains’te kırmızı **Invalid Configuration** görünmesinin sebebi: DnsEnable hâlâ **A → `93.89.230.125`** (İsimTescil). Vercel’in istediği CNAME yok.
+1. https://www.isimtescil.net → giriş  
+2. **halilmertdeveli.com.tr** → **DNS Yönetimi** / **DnsEnable**  
+3. Şunları **sil**:
 
-### İsimTescil DnsEnable’da (tam değerler — Vercel kartından)
-
-1. [isimtescil.net](https://www.isimtescil.net) → **halilmertdeveli.com.tr** → **DNS Yönetimi / DnsEnable**
-2. **Sil:**
-   - **A** `www` → `93.89.230.125`
-   - **A** `@` → `93.89.230.125` (apex için aşağıda yenisini yaz)
-3. **Ekle / kaydet:**
-
-| Tip | Name / Host | Value |
+| Tip | Host | Değer |
 | --- | --- | --- |
+| A | `@` | `93.89.230.125` |
+| A | `www` | `93.89.230.125` |
+
+4. Şunları **ekle** (Vercel Domains kartındaki değerler):
+
+| Tip | Host | Değer |
+| --- | --- | --- |
+| **A** | `@` | **`76.76.21.21`** *(apex satırında Refresh → farklı IP yazıyorsa onu yaz)* |
 | **CNAME** | `www` | **`d0c3035e77d2cff7.vercel-dns-017.com`** |
-| **A** | `@` | Apex satırında Vercel’in gösterdiği IP *(Refresh’e basıp apex kartındaki A değerini kopyala; yoksa geçici `76.76.21.21`)* |
 
-> `www` için **A kaydı bırakma** — sadece CNAME olsun.  
-> CNAME değerinin sonundaki nokta panellerde genelde yazılmaz.
+5. **Kaydet**  
+6. Vercel → Domains → her domainde **Refresh**  
+7. 5–30 dk bekle → **Valid Configuration** + yeşil kilit (HTTPS)
 
-4. Kaydet → Vercel Domains’te **Refresh** → **Valid Configuration** (5–30 dk) + SSL otomatik.
-
-Kontrol:
-
-```bash
-dig @8.8.8.8 CNAME +short www.halilmertdeveli.com.tr
-# beklenen: d0c3035e77d2cff7.vercel-dns-017.com.
-```
-
-`yazilim-sitesi.vercel.app` zaten **Valid** — site orada çalışıyor; domain DNS düzelince `www` de açılır.
+NS’lere (`tr.dnsenable.com` / `eu.dnsenable.com`) dokunma.
 
 ---
 
-## Vercel env (Production)
+## 2) Vercel Domains (senin ekranın)
 
-| Name | Value |
+Şu an Production = `www`, apex → www redirect. İkisi de Invalid çünkü DNS eski.
+
+DNS düzelince:
+
+- `https://www.halilmertdeveli.com.tr` açılır  
+- `https://halilmertdeveli.com.tr` Vercel’de **308 → www** yapar (senin ayarın)
+
+Apex’i birincil istersen: Domains → `halilmertdeveli.com.tr` → **Edit** → Production yap; `www` → Redirect to apex.
+
+---
+
+## 3) Site env (Production)
+
+| Key | Value |
 | --- | --- |
 | `PORT` | `8080` |
-| `ASPNETCORE_ENVIRONMENT` | `Production` |
-| `Site__PublicBaseUrl` | `https://www.halilmertdeveli.com.tr` |
+| `Site__PublicBaseUrl` | `https://www.halilmertdeveli.com.tr` *(veya apex birincilse `https://halilmertdeveli.com.tr`)* |
 
 ---
 
-## Checklist
+## Kontrol
 
-- [x] Vercel deploy (`yazilim-sitesi.vercel.app` Valid)  
-- [x] Domains’te `www` = Production, apex → www redirect  
-- [ ] DnsEnable: `www` **CNAME** → `d0c3035e77d2cff7.vercel-dns-017.com`  
-- [ ] Eski **A `93.89.230.125`** kayıtlarını sil  
-- [ ] Vercel’de **Refresh** → Valid + SSL  
+```bash
+dig @8.8.8.8 A +short halilmertdeveli.com.tr
+# 93.89.230.125 OLMAMALI → 76.76.21.21 (veya Vercel IP)
+
+dig @8.8.8.8 CNAME +short www.halilmertdeveli.com.tr
+# d0c3035e77d2cff7.vercel-dns-017.com.
+```
+
+**Şimdilik siteyi buradan gör:** https://yazilim-sitesi.vercel.app  
+
+DnsEnable’da eski A’yı silmeden canlı domain **açılmaz** — kod tarafında başka yapılacak iş yok.

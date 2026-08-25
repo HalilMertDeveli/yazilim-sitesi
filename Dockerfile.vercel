@@ -16,5 +16,5 @@ ENV DOTNET_EnableDiagnostics=0
 ENV PORT=8080
 ENV ASPNETCORE_HTTP_PORTS=8080
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
-ENV Site__PublicBaseUrl=https://www.halilmertdeveli.com.tr
+ENV Site__PublicBaseUrl=https://halilmertdeveli.com.tr
 ENTRYPOINT ["dotnet", "Portfolio.dll"]
