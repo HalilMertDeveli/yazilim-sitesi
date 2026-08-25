@@ -8,7 +8,8 @@
 Tek sayfalık, **koyu temalı** kişisel **yazılım vitrini / CV**.
 
 İş başvurusunda veya sana ulaşmak isteyen biri için: *“Bu da benim sitem.”*  
-Sadece .NET değil — **Flutter mobil**, **Kotlin**, **Mevora / Mevora 2**, LED ve GitHub’daki gerçek projeler bir arada.
+Sadece .NET değil — **Flutter mobil**, **Kotlin**, LED ve GitHub’daki gerçek projeler bir arada.
+Öne çıkan proje: **Mevora** (Flutter eşleşme uygulaması).
 
 ---
 
@@ -52,7 +53,7 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 - **Hero** — Flutter · .NET · Kotlin rozetleri, animasyonlu arka plan  
 - **Hakkımda** — kim olduğum, yazılım odaklı CV metni  
 - **Yığın** — GitHub dil dağılımı (canlı API)  
-- **Projeler** — Mevora, Mevora 2, Flutter/Kotlin mobil, ClearPay, LED…  
+- **Projeler** — Mevora (Flutter eşleşme), Mevora 2, mobil, ClearPay, LED…  
 - **Öne çıkan** — proje hikâyeleri + küçük animasyonlar  
 - **İletişim** — e-posta + GitHub  
 
