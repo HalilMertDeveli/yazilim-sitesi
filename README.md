@@ -20,7 +20,7 @@ Sadece .NET değil — **Flutter mobil**, **Kotlin**, **Mevora / Mevora 2**, LED
 | **Framework** | ASP.NET Core 8 · Razor Pages · C# |
 | **UI** | Özel CSS/JS (animasyonlu hero, particles, typewriter…) |
 | **İçerik** | Hakkımda, yığın, projeler, GitHub listesi, iletişim |
-| **Canlıya alma** | Domain + VPS veya Windows ASP.NET Core 8 (Azure yok) |
+| **Canlıya alma** | **Vercel** (Docker container) · domain: halilmertdeveli.com.tr |
 
 ---
 
@@ -69,11 +69,13 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 │   ├── css/site.css          # Koyu tema
 │   └── js/site.js            # Animasyonlar
 ├── Dockerfile                # Linux VPS / Docker
+├── Dockerfile.vercel         # Vercel container image
+├── vercel.json               # Vercel service + rewrites
 ├── web.config                # Windows / IIS
 ├── deploy/
 │   ├── nginx.conf.example
 │   └── publish.sh
-├── HOSTING.md                # Canlıya alma alış listesi
+├── HOSTING.md                # Canlıya alma (Vercel + domain)
 └── README.md                 # Bu dosya
 ```
 
@@ -82,11 +84,13 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 ## Canlıya alma (özet)
 
 - **Domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr) (alındı)  
-- **Sıradaki:** Linux VPS (Natro XCloud Mini) → DNS + SSL + publish  
+- **Hosting:** **Vercel** — GitHub `yazilim-sitesi` → Import → Deploy  
+- **Dosyalar:** `Dockerfile.vercel` + `vercel.json`  
 
 Detaylı adımlar: **[HOSTING.md](./HOSTING.md)**
 
 ```bash
+# Yerel Docker (VPS alternatifi)
 docker build -t hmd-portfolio .
 docker run --rm -p 8080:8080 hmd-portfolio
 ```

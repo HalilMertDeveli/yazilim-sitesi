@@ -1,74 +1,67 @@
-# Canlıya alma — İsimTescil (domain) + Natro (hosting)
+# Canlıya alma — Vercel (önerilen) + domain
 
-Bu site **ASP.NET Core 8** (Razor Pages). WordPress / sadece HTML hosting yetmez.
+Bu site **ASP.NET Core 8** (Razor Pages). Vercel’de **Docker container** olarak yayınlanır.
 
 | | |
 | --- | --- |
 | **Alan adı** | **`halilmertdeveli.com.tr`** (alındı) |
 | **Canlı URL** | `https://halilmertdeveli.com.tr` |
-| **Hosting** | Natro XCloud Mini (Linux VPS) — henüz bekleniyor |
+| **Hosting** | **Vercel** (container) — kodda hazır |
+| **GitHub** | https://github.com/HalilMertDeveli/yazilim-sitesi |
 
 ---
 
-## 1) Domain — tamam
+## 1) Vercel’e bağla (hızlı yol)
 
-- Domain: **halilmertdeveli.com.tr**
-- Production ayarı: `appsettings.Production.json` → `Site:PublicBaseUrl`
-- nginx örneği: `deploy/nginx.conf.example`
+Repo’da zaten var:
 
-**Şimdilik DNS’e dokunma** (A kaydı / NS). VPS IP’si gelince birlikte bağlayacağız.
+- `Dockerfile.vercel` — .NET 8 build + runtime
+- `vercel.json` — container service + tüm trafiği uygulamaya yönlendirir
+- `Program.cs` — Vercel `$PORT` dinler
 
----
+### A) Dashboard (en kolay)
 
-## 2) Sıradaki: Natro VPS (sunucu)
+1. [vercel.com](https://vercel.com) → GitHub ile giriş (**HalilMertDeveli**)
+2. **Add New… → Project** → `yazilim-sitesi` reposunu Import
+3. Framework preset: **Other** (otomatik `vercel.json` okunur)
+4. **Deploy**
 
-### Önerilen: Natro **XCloud Mini** (Linux VPS)
+Environment (Project → Settings → Environment Variables):
 
-| | |
+| Name | Value |
 | --- | --- |
-| Paket | **XCloud Mini** |
-| Kaynak | 1 vCPU · **1 GB RAM** · 20 GB SSD |
-| OS | **Ubuntu 22.04** veya **24.04** |
+| `PORT` | `8080` |
+| `ASPNETCORE_ENVIRONMENT` | `Production` |
+| `Site__PublicBaseUrl` | `https://halilmertdeveli.com.tr` |
 
-Link: [Natro VPS / XCloud](https://www.natro.com/sunucu-kiralama/vps-cloud-server)
+### B) CLI
 
-Alınca bana yaz: **IP adresi** + **SSH (root şifre veya key)**
-
-> Not: Sadece domain aldın; siteyi yayınlamak için ayrıca bir **sunucu (VPS)** gerekir. Paylaşımlı “sınırsız Windows” paketlerde ASP.NET Core sık sorun çıkarır — bu proje için Linux VPS daha güvenli.
-
-Eğer İsimTescil / Natro’da domain ile birlikte bir hosting paketi de aldıysan, panelde **IP** veya **sunucu bilgisi** var mı bak; varsa onu da yaz.
-
----
-
-## 3) Birlikte: Domain → sunucu (İsimTescil DNS)
-
-VPS IP’si elimizde olunca İsimTescil’de:
-
-1. Giriş → **Kontrol Paneli** → **Domain Yönetimi**
-2. **halilmertdeveli.com.tr** → **Detaylı Yönetim**
-3. **DNS Yönetimi**
-4. **A kaydı**: `@` → VPS **IP**  
-   İsteğe bağlı: `www` → aynı IP (veya CNAME → `@`)
-5. Yayılmayı bekle (dakika–saat)
-6. SSL (Let’s Encrypt) + Docker ile siteyi koyarız
-
-Rehber: [Domain DNS yönlendirme](https://www.isimtescil.net/bilgibankasi/domain-dns-yonlendirme)
+```bash
+npm i -g vercel
+vercel login
+vercel link
+vercel env add PORT
+# 8080
+vercel --prod
+```
 
 ---
 
-## Almaman gerekenler
+## 2) Domain’i Vercel’e bağla
 
-- Azure  
-- Ayrı veritabanı (bu site DB’siz)  
-- Domain’i alır almaz rastgele NS değiştirme (IP gelince yapacağız)
+1. Vercel → Project → **Settings → Domains** → `halilmertdeveli.com.tr` ekle  
+2. İsimTescil DNS’te Vercel’in verdiği kaydı uygula (genelde):
+   - **A** `@` → `76.76.21.21`  
+   - veya **CNAME** `www` → `cname.vercel-dns.com`  
+3. SSL Vercel’de otomatik gelir
+
+> DNS’i Vercel’e yönlendirmeden önce paneldeki talimatları bire bir uygula; Vercel bazen proje için özel kayıt gösterir.
 
 ---
 
-## Checklist
+## 3) Alternatif: Natro VPS (isteğe bağlı)
 
-- [x] Domain: **halilmertdeveli.com.tr**  
-- [ ] Natro **XCloud Mini (Ubuntu)** → IP + SSH ver  
-- [ ] Birlikte DNS (İsimTescil) + SSL + yayın  
+Vercel kullanmazsan Linux VPS + Docker:
 
 ```bash
 docker build -t hmd-portfolio .
@@ -76,3 +69,22 @@ docker run -d --restart unless-stopped -p 8080:8080 \
   -e Site__PublicBaseUrl=https://halilmertdeveli.com.tr \
   --name portfolio hmd-portfolio
 ```
+
+Detaylı VPS yolu: Natro **XCloud Mini (Ubuntu)** → IP + SSH → nginx + Let’s Encrypt.
+
+---
+
+## Checklist
+
+- [x] Domain: **halilmertdeveli.com.tr**  
+- [x] GitHub public: [yazilim-sitesi](https://github.com/HalilMertDeveli/yazilim-sitesi)  
+- [x] Vercel dosyaları: `Dockerfile.vercel` + `vercel.json`  
+- [ ] Vercel’de Import + Deploy  
+- [ ] Domain → Vercel DNS  
+- [ ] (Opsiyonel) Natro VPS  
+
+## Almaman gerekenler
+
+- Azure  
+- Ayrı veritabanı (bu site DB’siz)  
+- Domain’i alır almaz rastgele NS değiştirme (Vercel kaydı netleşince yap)

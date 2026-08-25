@@ -23,6 +23,10 @@ appsettings.*.local.json
 .env
 .env.*
 
+## Vercel
+.vercel
+.vercel/
+
 ## Build artifacts
 project.lock.json
 project.fragment.lock.json
