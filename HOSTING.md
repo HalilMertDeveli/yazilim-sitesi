@@ -1,88 +1,71 @@
-# Canlıya alma — Natro
+# Canlıya alma — İsimTescil (domain) + Natro (hosting)
 
 Bu site **ASP.NET Core 8** (Razor Pages). WordPress / sadece HTML hosting yetmez.
 
-Satın almayı **Natro** üzerinden yapacaksan aşağıdaki sırayı izle.
+Senin planın:
+1. **Alan adı** → [İsimTescil](https://www.isimtescil.net/)
+2. **Hosting** → Natro (önerilen: XCloud VPS)
 
 ---
 
-## Natro’dan sırayla al
+## 1) Şimdi: İsimTescil’den domain al
 
-### 1) Şimdi: Alan adı (domain)
+1. [isimtescil.net](https://www.isimtescil.net/) → beğendiğin adı ara (örn. `halilmertdeveli.com`)
+2. Sepete ekle → satın al / tescil et
+3. Alınca bana **sadece domain adını** yaz (örn. `ornek.com`)
 
-Natro → **Alan Adı** / Domain kaydı  
-Örnek: `halilmertdeveli.com`
-
-Alınca bana **sadece domain adını** yaz. DNS’e henüz dokunma.
+**Şimdilik DNS’e dokunma.** Hosting IP’si gelince yönlendireceğiz.
 
 ---
 
-### 2) Sonra: Hosting — hangisini al?
+## 2) Sonra: Natro’dan hosting al
 
-#### Önerilen: Natro **XCloud VPS** (Linux)
-
-Paylaşımlı Windows hosting’de Natro tarafında ASP.NET Core / Application Pool kısıtları sık görülüyor. Bu proje için en temiz yol VPS.
+### Önerilen: Natro **XCloud Mini** (Linux VPS)
 
 | | |
 | --- | --- |
-| Paket | **XCloud Mini** (başlangıç için yeter) |
+| Paket | **XCloud Mini** |
 | Kaynak | 1 vCPU · **1 GB RAM** · 20 GB SSD |
-| İşletim sistemi | **Ubuntu 22.04** veya **24.04** (Linux) |
-| Panel | İstersen yok / Lite — Docker kuracağız |
+| OS | **Ubuntu 22.04** veya **24.04** |
 
 Link: [Natro VPS / XCloud](https://www.natro.com/sunucu-kiralama/vps-cloud-server)
 
-Alınca bana ver:
-- sunucu **IP**
-- **root / SSH** şifresi veya key  
-→ Docker + nginx + SSL kurulumunu yönlendiririm.
+Alınca bana ver: **IP** + **SSH (root şifre veya key)**
 
-#### Alternatif: Natro Windows Hosting
-
-Sadece şunu alırsan dene:
-- Paket açıklamasında açıkça **.NET Core / ASP.NET Core / .NET 8** yazmalı  
-- Klasik “ASP.NET” / sadece .NET Framework **yetmez**
-
-Satın almadan Natro destek’e sor:  
-*“ASP.NET Core 8 Razor Pages yayınlayabilir miyim? Ayrı Application Pool var mı?”*  
-Cevap net “evet” değilse **VPS al**.
+> Natro paylaşımlı Windows “sınırsız” paketlerde ASP.NET Core sık sorun çıkarıyor. Bu proje için VPS daha güvenli.
 
 ---
 
-### 3) Almaman gerekenler
+## 3) Birlikte: Domain’i sunucuya bağlama (İsimTescil paneli)
+
+Hosting IP’si elimizde olunca İsimTescil’de:
+
+1. Giriş → **Kontrol Paneli** → **Domain Yönetimi**
+2. Domain yanında **Detaylı Yönetim**
+3. **DNS Yönetimi** → müşteri özel DNS / kayıt ekle
+4. **A kaydı**: `@` (ve isteğe `www`) → Natro VPS **IP**
+5. Birkaç dakika–birkaç saat yayılır
+6. SSL (Let’s Encrypt) + siteyi Docker ile koyarız
+
+(İsimTescil DNS rehberi: [Domain DNS yönlendirme](https://www.isimtescil.net/bilgibankasi/domain-dns-yonlendirme))
+
+---
+
+## Almaman gerekenler
 
 - Azure  
-- Ayrı SQL / veritabanı (bu site DB’siz)  
-- Pahalı “sınırsız” paylaşımlı paket (Core için riskli)
+- Ayrı veritabanı (bu site DB’siz)  
+- Domain’i alır almaz rastgele NS değiştirme (IP gelince yapacağız)
 
 ---
 
-### 4) Sen alınca birlikte yapacağız
+## Checklist
 
-1. Domain DNS → VPS IP (`A` kaydı)  
-2. SSL (Let’s Encrypt / panel)  
-3. Siteyi publish / Docker ile koyma  
-4. Telefondan `https://senin-domainin.com` testi  
-
----
-
-## Teknik (hazır)
+- [ ] İsimTescil’den **domain** → bana adı yaz  
+- [ ] Natro **XCloud Mini (Ubuntu)** → IP + SSH ver  
+- [ ] Birlikte DNS (İsimTescil) + SSL + yayın  
 
 ```bash
-# Linux VPS (Natro XCloud)
 docker build -t hmd-portfolio .
 docker run -d --restart unless-stopped -p 8080:8080 --name portfolio hmd-portfolio
-
-# Windows IIS (Core destekliyse)
-dotnet publish -c Release -o ./publish
 ```
-
-`web.config`, `Dockerfile`, `deploy/nginx.conf.example` repoda hazır.
-
----
-
-## Özet checklist
-
-- [ ] Natro’dan **domain** al → bana adını yaz  
-- [ ] Natro’dan **XCloud Mini (Ubuntu)** al → IP + SSH ver  
-- [ ] Birlikte DNS + SSL + yayın  
