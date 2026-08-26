@@ -7,19 +7,23 @@
 
 ---
 
-## Mevcut durum (2026-08-26 kontrol)
+## Mevcut durum (2026-08-26 06:48–06:52 UTC yeniden doğrulandı)
 
 | Kontrol | Sonuç |
 | --- | --- |
-| `yazilim-sitesi.vercel.app` | **200 OK** — production ayakta |
-| WHOIS NS | `tr.dnsenable.com` / `us.dnsenable.com` / `eu.dnsenable.com` |
-| Google DNS | Hâlâ Vercel NS’e gidiyor → **REFUSED / SERVFAIL** (yayılım / lame delegation) |
-| `https://halilmertdeveli.com.tr` | **çözülmüyor** |
+| `yazilim-sitesi.vercel.app` | **HTTP/2 200** — production ayakta (bozulmadı) |
+| Canlı HTML canonical / og:url | `https://halilmertdeveli.com.tr` (kod zaten yeni domaine bakıyor) |
+| WHOIS Domain Servers | `tr.dnsenable.com` / `us.dnsenable.com` / `eu.dnsenable.com` |
+| Public DNS (Google/Cloudflare) | Delegation hâlâ **Vercel NS** (`198.51.44.13` / `198.51.45.13`) → **REFUSED** → **SERVFAIL** |
+| `https://halilmertdeveli.com.tr` | Çözülmüyor (bağlantı yok) |
+| Vercel CLI / `VERCEL_TOKEN` | **Yok** (logged out) |
+| Vercel MCP `list_projects` (HMD TEAM) | **Boş dizi** — proje domain API’sine erişim yok |
+| İsimTescil paneli | Bu ortamdan **erişim yok** |
 | Kod `Site:PublicBaseUrl` | `https://halilmertdeveli.com.tr` |
 | OAuth / CORS / auth | Yok — değişiklik gerekmez |
 | `yazilim-sitesi.vercel.app` kod içinde | Sadece README/HOSTING dokümantasyonu |
 
-**Kök neden:** Domain internette sağlıklı A/CNAME ile Vercel’e bağlı değil. (Önce Vercel NS denendi → zone REFUSED; sonra DnsEnable’a dönüldü ama resolver önbelleği / delegation hâlâ karışık.)
+**Kök neden (katman: DNS / nameserver delegation):** WHOIS DnsEnable gösteriyor; public resolver’lar ise Vercel NS’e gidip **REFUSED** alıyor (lame / stale delegation). A/CNAME doğrulanamaz, SSL ve Vercel “Valid” olamaz.
 
 ---
 
