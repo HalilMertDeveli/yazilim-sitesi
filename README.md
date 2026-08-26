@@ -21,7 +21,7 @@ Sadece .NET değil — **Flutter mobil**, **Kotlin**, LED ve GitHub’daki gerç
 | **Framework** | ASP.NET Core 8 · Razor Pages · C# |
 | **UI** | Özel CSS/JS (animasyonlu hero, particles, typewriter…) |
 | **İçerik** | Hakkımda, yığın, projeler, GitHub listesi, iletişim |
-| **Canlıya alma** | **Vercel** · production: www.halilmertdeveli.com.tr |
+| **Canlıya alma** | **Vercel** · canonical: https://halilmertdeveli.com.tr |
 
 ---
 
@@ -84,11 +84,10 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 
 ## Canlıya alma (özet)
 
-- **Domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr) (alındı)  
-- **Hosting:** **Vercel** — GitHub `yazilim-sitesi` → Import → Deploy  
+- **Canonical domain:** [halilmertdeveli.com.tr](https://halilmertdeveli.com.tr)  
+- **Çalışan şimdilik:** [yazilim-sitesi.vercel.app](https://yazilim-sitesi.vercel.app)  
 - **Dosyalar:** `Dockerfile.vercel` + `vercel.json`  
-- **Önizleme:** https://yazilim-sitesi.vercel.app (deploy OK)  
-- **DNS:** apex/`www` hâlâ İsimTescil `93.89.230.125` ise site açılmaz → kayıtları Vercel’e çevir ([HOSTING.md](./HOSTING.md))
+- DNS adımları: **[HOSTING.md](./HOSTING.md)**
 
 Detaylı adımlar: **[HOSTING.md](./HOSTING.md)**
 
