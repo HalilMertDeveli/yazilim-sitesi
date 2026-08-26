@@ -1,101 +1,63 @@
 # Domain geçişi — Vercel + İsimTescil
 
-**Canonical production URL:** `https://halilmertdeveli.com.tr`  
+**Canonical / ana domain (tek):** `https://halilmertdeveli.com.tr`  
 **Çalışan deployment (bozma):** https://yazilim-sitesi.vercel.app  
-**Vercel project:** HMD TEAM → `yazilim-sitesi`  
-**Yöntem:** A/CNAME (nameserver değiştirme — Method B yok)
+**www:** yalnızca apex’e redirect (ana domain değil)  
+**Nameserver:** DnsEnable kalsın (Vercel NS’e çevirme — Method A: A/CNAME)
 
 ---
 
-## Mevcut durum (2026-08-26 06:54–06:59 UTC — dış işlemler sonrası)
-
-Kullanıcı İsimTescil + Vercel Domains dış işlemlerini “tamamlandı” işaretledi; `VERCEL_TOKEN` **atlanmış**.
+## Mevcut durum (2026-08-26 07:40 UTC — canlı ölçüm)
 
 | Kontrol | Sonuç |
 | --- | --- |
-| `yazilim-sitesi.vercel.app` | **HTTP/2 200** — production ayakta (bozulmadı) |
-| WHOIS Domain Servers | `tr.dnsenable.com` / `us.dnsenable.com` / `eu.dnsenable.com` |
-| Public DNS (Google + Cloudflare, 90 sn sonra tekrar) | Delegation hâlâ **Vercel NS** (`ns1/ns2.vercel-dns.com` → `198.51.44.13` / `198.51.45.13`) → **REFUSED** → **SERVFAIL** |
-| `https://halilmertdeveli.com.tr` / `www` / HTTP | **Bağlantı yok** (`curl` boş / fail) |
-| DnsEnable NS’e doğrudan dig (bu VM) | Timeout (egress); public DoH yine Vercel REFUSED |
-| Vercel MCP `list_projects` | Hâlâ boş — domain status API yok |
-| Kod / canonical | `https://halilmertdeveli.com.tr` (uygulama tarafı hazır) |
+| `yazilim-sitesi.vercel.app` | **HTTP/2 200**, Server: Vercel |
+| Canlı HTML `canonical` / `og:url` | `https://halilmertdeveli.com.tr/` |
+| WHOIS / public NS | `tr.dnsenable.com` / `us.dnsenable.com` / `eu.dnsenable.com` |
+| Apex `A` (Google/CF) | **`93.89.226.17`** — AS51557 **İsimTescil** (park/hosting) |
+| `www` | CNAME → `halilmertdeveli.com.tr` → aynı park IP |
+| HTTP `@` (Host header → park IP) | **200** İsimTescil park sayfası (IIS) — **Vercel değil** |
+| HTTPS `@` → park IP | TLS handshake **fail** |
+| Vercel CLI / MCP proje erişimi | **Yok** (token yok; `list_projects` boş) |
 
-**Kök neden (katman: DNS nameserver delegation — A/CNAME değil):**  
-WHOIS DnsEnable diyor; internetteki resolver’lar ise hâlâ Vercel NS’e gidiyor ve zone **REFUSED**. Bu durumda DnsEnable’daki A/CNAME kayıtları hiç sorulmaz → SSL / Valid / site açılmaz.
+**Kök neden (katman: DNS A/CNAME hedefi):** Nameserver artık sağlıklı. Apex hâlâ İsimTescil park IP’sine bakıyor; Vercel’e işaret etmiyor. Bu yüzden domain Vercel production’a bağlanmıyor.
 
-**Sonraki blokaj:** İsimTescil NameServer ekranı + DNS satırları + Vercel Domains status’unun kanıtı (ekran görüntüsü / metin). NS gerçekten DnsEnable’a yayılmadan ADIM 5+ devam edemez.
+**Nameserver değiştirme:** Gerekmiyor ve istenmiyor. Sadece DnsEnable zone içinde A/CNAME düzelt.
 
 ---
 
-## SENİN YAPMAN GEREKENLER (İsimTescil + Vercel)
-
-### Adım 0 — Vercel’den GERÇEK değerleri kopyala
+## Vercel’de yapılacaklar (agent API’siz — sen veya `VERCEL_TOKEN`)
 
 1. Aç: https://vercel.com/hmd-team/yazilim-sitesi/settings/domains  
-2. `halilmertdeveli.com.tr` satırında **Edit**:
-   - **Production** yap (primary)
-   - Redirect **kapalı** (www’ye yönlendirme olmasın)
-3. `www.halilmertdeveli.com.tr` satırında **Edit**:
-   - **Redirect to** → `halilmertdeveli.com.tr`
-4. Her iki satırda **View DNS configuration** aç  
-5. Gösterilen **Type / Name / Value** tablosunu olduğu gibi kullan (uydurma yok)
+2. `halilmertdeveli.com.tr` ekli değilse ekle → **Production**, redirect **kapalı**  
+3. `www.halilmertdeveli.com.tr` → **Redirect to** `halilmertdeveli.com.tr`  
+4. Her satırda **View DNS Records** → Type / Name / Value’yu kopyala (**uydurma IP yok**)  
+5. `yazilim-sitesi.vercel.app` **silme**
 
-Daha önce Vercel kartında görülen (senin ekran görüntünden, proje-spesifik) `www` değeri:
-
-| Type | Name | Value |
-| --- | --- | --- |
-| CNAME | `www` | `d0c3035e77d2cff7.vercel-dns-017.com` |
-
-Apex **A** değeri için **View DNS configuration** satırındaki IP’yi kullan.  
-(Vercel notu: legacy `76.76.21.21` hâlâ çalışır; kart farklı IP gösteriyorsa **kartı** kullan.)
-
-### Adım 1 — İsimTescil NameServer (DnsEnable kalsın)
-
-NameServer ekranında şunlar olmalı (Vercel NS **olmamalı**):
-
-- `tr.dnsenable.com`
-- `eu.dnsenable.com`
-- (isteğe `us.dnsenable.com`)
-
-Vercel `ns1`/`ns2` varsa **DnsEnable’a geri al** → Güncelle → 1–24 saat yayılım bekle.
-
-### Adım 2 — İsimTescil DNS kayıtları (A / CNAME)
-
-**DNS Yönetimi / DnsEnable zone** ekranında (nameserver ekranı değil):
-
-| Host | Type | Current (bilinen) | Required | Action |
-| --- | --- | --- | --- | --- |
-| `@` | A | eski park IP / yok / bozuk | **Vercel Apex kartındaki A IP** | DEĞİŞTİR / EKLE |
-| `www` | A | varsa `93.89…` | — | **SİL** (CNAME ile çakışmasın) |
-| `www` | CNAME | yok / yanlış | **`d0c3035e77d2cff7.vercel-dns-017.com`** *(veya karttaki CNAME)* | EKLE / DEĞİŞTİR |
-| `@` | MX | varsa | aynı | **DOKUNMA** |
-| `@` | TXT (SPF/DKIM/DMARC) | varsa | aynı | **DOKUNMA** |
-| NS | — | DnsEnable | DnsEnable | **DOKUNMA** (Vercel NS’e çevirme) |
-
-Kaydet → Vercel Domains → **Refresh**.
-
-### Adım 3 — Doğrulama
-
-```bash
-dig @8.8.8.8 NS halilmertdeveli.com.tr +short
-dig @8.8.8.8 A halilmertdeveli.com.tr +short
-dig @8.8.8.8 CNAME www.halilmertdeveli.com.tr +short
-```
-
-Beklenen:
-
-- NS → `*.dnsenable.com` (Vercel NS değil)
-- A `@` → Vercel IP (SERVFAIL / REFUSED olmamalı)
-- CNAME `www` → `d0c3035e77d2cff7.vercel-dns-017.com.`
-- Vercel Domains → **Valid Configuration** + SSL
-- `https://halilmertdeveli.com.tr` → site
-- `https://www.halilmertdeveli.com.tr` → apex’e 308
-- `https://yazilim-sitesi.vercel.app` → hâlâ çalışır
+CLI login (opsiyonel): agent `vercel login` bekliyorsa https://vercel.com/oauth/device kodunu onayla.
 
 ---
 
-## Kod / env (bu repoda)
+## İsimTescil’de yapılacaklar (A/CNAME — NS’e dokunma)
+
+### Dokunma
+
+- NameServer (DnsEnable kalsın)
+- MX / SPF / DKIM / DMARC / diğer TXT (varsa)
+
+### Değiştir (değerler = Vercel kartından)
+
+| Host | Type | Current (ölçülen) | Required | Action |
+| --- | --- | --- | --- | --- |
+| `@` | A | `93.89.226.17` (İsimTescil) | **Vercel apex kartındaki A IP** | DEĞİŞTİR |
+| `www` | CNAME | `halilmertdeveli.com.tr` | **Vercel www kartındaki CNAME** | DEĞİŞTİR |
+| `www` | A (varsa) | — | — | SİL (CNAME ile çakışmasın) |
+
+Kaydet → Vercel Domains → Refresh → Valid + SSL bekle.
+
+---
+
+## Kod / env (repo)
 
 | Öğe | Durum |
 | --- | --- |
@@ -103,7 +65,7 @@ Beklenen:
 | Canonical / og:url | PublicBaseUrl |
 | ForwardedHeaders | Ayarlı |
 | AllowedHosts | `*` |
-| OAuth | Yok |
-| Env (Vercel Production) önerisi | `PORT=8080`, `ASPNETCORE_ENVIRONMENT=Production`, `Site__PublicBaseUrl=https://halilmertdeveli.com.tr` |
+| OAuth / CORS callbacks | Yok |
+| `yazilim-sitesi.vercel.app` kodda | Sadece README/HOSTING |
 
-`yazilim-sitesi.vercel.app` kodda hardcoded production URL değil; dokümantasyon önizleme linki olarak kalabilir.
+Production env önerisi (Vercel UI): `PORT=8080`, `ASPNETCORE_ENVIRONMENT=Production`, `Site__PublicBaseUrl=https://halilmertdeveli.com.tr`
