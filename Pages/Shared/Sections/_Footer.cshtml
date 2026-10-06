@@ -1,0 +1,11 @@
+@model IndexModel
+<footer class="footer">
+    <div class="container footer__inner">
+        <p class="footer__brand"><span class="nav__mark" aria-hidden="true">HMD</span> Halil Mert Develi</p>
+        <p class="footer__note">
+            © @DateTime.UtcNow.Year · @Model.T("ASP.NET Core 8 ve Razor Pages ile geliştirildi.", "Built with ASP.NET Core 8 and Razor Pages.")
+            <a href="https://github.com/HalilMertDeveli/yazilim-sitesi" target="_blank" rel="noopener">@Model.T("Kaynak kodu", "Source")</a>
+        </p>
+        <a class="footer__top" href="#top">@Model.T("Başa dön", "Back to top") ↑</a>
+    </div>
+</footer>

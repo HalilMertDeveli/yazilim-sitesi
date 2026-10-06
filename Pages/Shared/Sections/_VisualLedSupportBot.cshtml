@@ -1,0 +1,45 @@
+@model IndexModel
+@{
+    var slots = new (string Label, bool Done)[]
+    {
+        (Model.T("Ekran ölçüsü", "Screen size"), true),
+        (Model.T("Panel etiket fotoğrafı", "Panel label photo"), true),
+        (Model.T("Receiver sayısı", "Receiver count"), true),
+        (Model.T("Config bağlantısı", "Config connection"), false),
+        ("AnyDesk ID", false)
+    };
+}
+<figure class="viz viz--diagram" data-tilt>
+    <div class="viz__stage diagram">
+        <p class="diagram__title">@Model.T("Mesajın yolu", "Message path")</p>
+        <ol class="flow">
+            <li class="flow__node"><span class="flow__kicker">@Model.T("Müşteri", "Customer")</span><span class="flow__name">WhatsApp</span></li>
+            <li class="flow__node"><span class="flow__kicker">Node.js</span><span class="flow__name">@Model.T("Bağlayıcı", "Connector")</span></li>
+            <li class="flow__node flow__node--accent"><span class="flow__kicker">ASP.NET Core</span><span class="flow__name">@Model.T("İş akışı motoru", "Workflow engine")</span></li>
+            <li class="flow__node"><span class="flow__kicker">EF Core</span><span class="flow__name">PostgreSQL</span></li>
+        </ol>
+
+        <div class="engine">
+            <div class="engine__col">
+                <p class="diagram__title">@Model.T("Çıkarım sırası", "Extraction order")</p>
+                <ol class="engine__steps">
+                    <li><span>1</span>@Model.T("Kural tabanlı ayrıştırıcılar", "Deterministic parsers")</li>
+                    <li><span>2</span>@Model.T("Maliyet kapısı", "Cost gate")</li>
+                    <li><span>3</span>LLM · JSON schema</li>
+                    <li><span>4</span>@Model.T("Doğrulama + denetim kaydı", "Validation + audit")</li>
+                </ol>
+            </div>
+            <div class="engine__col">
+                <p class="diagram__title">@Model.T("Vaka slotları", "Case slots")</p>
+                <ul class="slots">
+                    @foreach (var slot in slots)
+                    {
+                        <li class="@(slot.Done ? "is-done" : "")">@(slot.Done ? Icons.Check : Icons.Circle)<span>@slot.Label</span></li>
+                    }
+                </ul>
+                <p class="handoff">@Icons.ArrowRight @Model.T("Vaka tamamlanınca teknisyene devir", "Hand-off to a technician when complete")</p>
+            </div>
+        </div>
+    </div>
+    <figcaption class="viz__caption">@Model.T("Akış diyagramı; slotlar sistemin topladığı bilgi türlerini gösterir. Özel proje.", "Flow diagram; the slots show the kinds of details the system collects. Private project.")</figcaption>
+</figure>

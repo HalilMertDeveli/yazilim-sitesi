@@ -5,11 +5,8 @@
 [![Flutter](https://img.shields.io/badge/Flutter-mobil-02569B?logo=flutter)](https://flutter.dev/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-Android-7F52FF?logo=kotlin)](https://kotlinlang.org/)
 
-Tek sayfalık, **koyu temalı** kişisel **yazılım vitrini / CV**.
-
-İş başvurusunda veya sana ulaşmak isteyen biri için: *“Bu da benim sitem.”*  
-Sadece .NET değil — **Flutter mobil**, **Kotlin**, LED ve GitHub’daki gerçek projeler bir arada.
-Öne çıkan proje: **Mevora** (Flutter eşleşme uygulaması).
+Halil Mert Develi'nin kişisel yazılım mühendisi portföyü (TR + EN): **ürünler ve sistemler**, depo listesi değil.
+Öne çıkan vaka çalışmaları: **Mevora** (Flutter + Firebase), **LED-COM** (B2B LED ticaret platformu) ve **LED Support Bot** (WhatsApp destek karşılama).
 
 ---
 
@@ -17,13 +14,12 @@ Sadece .NET değil — **Flutter mobil**, **Kotlin**, LED ve GitHub’daki gerç
 
 | | |
 | --- | --- |
-| **Tür** | Tek sayfa portföy / CV web sitesi |
-| **Framework** | ASP.NET Core 8 · Razor Pages · C# |
-| **UI** | Özel CSS/JS (animasyonlu hero, particles, typewriter…) |
-| **İçerik** | Hakkımda, yığın, projeler, GitHub listesi, iletişim |
+| **Tür** | Tek sayfa portföy, Türkçe `/` ve İngilizce `/en` |
+| **Framework** | ASP.NET Core 8 · Razor Pages · C# (frontend framework yok) |
+| **UI** | Özel CSS + küçük vanilla JS (LED-matris hero, scroll reveal, `prefers-reduced-motion` desteği) |
+| **İçerik** | Vaka çalışmaları, diğer projeler, hakkımda, yetkinlikler, yolculuk, GitHub, iletişim |
+| **GitHub verisi** | Sunucu tarafında 30 dk önbellekli; API düşerse kayıtlı özet gösterilir |
 | **Canlıya alma** | **Vercel** · canonical: https://halilmertdeveli.com.tr |
-
----
 
 ## Hızlı çalıştır
 
@@ -48,36 +44,43 @@ Tarayıcı: [http://127.0.0.1:45217](http://127.0.0.1:45217)
 
 ---
 
-## Sitede neler var?
+## İçeriği güncelleme
 
-- **Hero** — Flutter · .NET · Kotlin rozetleri, animasyonlu arka plan  
-- **Hakkımda** — kim olduğum, yazılım odaklı CV metni  
-- **Yığın** — GitHub dil dağılımı (canlı API)  
-- **Projeler** — Mevora (Flutter eşleşme), Mevora 2, mobil, ClearPay, LED…  
-- **Öne çıkan** — proje hikâyeleri + küçük animasyonlar  
-- **İletişim** — e-posta + GitHub  
+Metinlerin ve projelerin tamamı tek dosyada: **`Services/PortfolioContent.cs`**.
+Her metin `new("Türkçe", "English")` şeklinde iki dillidir. Yol haritasındaki işler
+`Roadmap` listesinde tutulur, böylece biten işlerle karışmaz.
+
+- **Portre:** `wwwroot/img/profile/halil-mert-develi.webp` dosyasını aynı adla değiştirmen yeterli (kare, ~460px).
+- **Proje görselleri:** `wwwroot/img/projects/` (WebP).
+- **GitHub token (opsiyonel):** Rate limit için Vercel'de `GitHub__Token` ortam değişkeni tanımlanabilir. Sadece sunucuda kullanılır, tarayıcıya gönderilmez.
 
 ---
 
 ## Klasör yapısı
 
 ```text
-├── Portfolio.csproj          # Visual Studio giriş noktası
-├── Program.cs
+├── Portfolio.csproj              # Visual Studio giriş noktası
+├── Program.cs                    # Pipeline: sıkıştırma, cache, güvenlik başlıkları
+├── Models/                       # İçerik ve GitHub view modelleri
+├── Services/
+│   ├── PortfolioContent.cs       # Tüm portföy içeriği (TR + EN)
+│   ├── GitHubService.cs          # Önbellekli GitHub API + fallback
+│   └── Icons.cs                  # Inline SVG ikonlar
 ├── Pages/
-│   └── Index.cshtml          # Tek sayfa içerik
+│   ├── Index.cshtml(.cs)         # "/" ve "/en"
+│   └── Shared/Sections/          # Hero, vaka çalışması, projeler… partial'ları
 ├── wwwroot/
-│   ├── css/site.css          # Koyu tema
-│   └── js/site.js            # Animasyonlar
-├── Dockerfile                # Linux VPS / Docker
-├── Dockerfile.vercel         # Vercel container image
-├── vercel.json               # Vercel service + rewrites
-├── web.config                # Windows / IIS
+│   ├── css/site.css
+│   ├── js/site.js
+│   ├── img/                      # Portre, proje ekranları, OG görseli
+│   ├── robots.txt · sitemap.xml · favicon.svg
+├── Dockerfile                    # Linux VPS / Docker
+├── Dockerfile.vercel             # Vercel container image
+├── vercel.json                   # Vercel service + rewrites
+├── web.config                    # Windows / IIS
 ├── deploy/
-│   ├── nginx.conf.example
-│   └── publish.sh
-├── HOSTING.md                # Canlıya alma (Vercel + domain)
-└── README.md                 # Bu dosya
+├── HOSTING.md                    # Canlıya alma (Vercel + domain)
+└── README.md
 ```
 
 ---

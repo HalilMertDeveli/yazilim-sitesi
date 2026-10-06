@@ -1,0 +1,64 @@
+@model IndexModel
+<section id="projects" class="section" aria-labelledby="projects-title">
+    <div class="container">
+        <header class="section-head section-head--row" data-reveal>
+            <div>
+                <p class="eyebrow"><span class="eyebrow__index">02</span>@Model.T("Diğer projeler", "More projects")</p>
+                <h2 id="projects-title" class="section-title">@Model.T("Teknik genişliği gösteren işler", "Work that shows the range")</h2>
+            </div>
+            <a class="btn btn--text" href="@PortfolioContent.GitHubReposUrl" target="_blank" rel="noopener">
+                @Model.T("Tüm depolar", "All repositories") @Icons.ArrowUpRight
+            </a>
+        </header>
+
+        <ul class="project-grid">
+            @foreach (var p in PortfolioContent.MoreProjects)
+            {
+                var repo = Model.GitHub.Find(p.RepoName);
+                var repoUrl = repo?.Url ?? $"{PortfolioContent.GitHubUrl}/{p.RepoName}";
+                <li class="project @(p.Image is null ? "project--glyph" : "")" data-reveal data-tilt>
+                    <div class="project__media" aria-hidden="@(p.Image is null ? "true" : "false")">
+                        @if (p.Image is not null)
+                        {
+                            <img src="@p.Image.Src" width="@p.Image.Width" height="@p.Image.Height" alt="@Model.T(p.Image.Alt)" loading="lazy" decoding="async" />
+                        }
+                        else
+                        {
+                            <partial name="Sections/_Glyph" model="p.Glyph" />
+                        }
+                    </div>
+                    <div class="project__body">
+                        <p class="project__category">
+                            <span>@Model.T(p.Category)</span>
+                            @if (p.Status is not null)
+                            {
+                                <span class="badge badge--sm @Model.ToneClass(p.Status.Tone)">@Model.T(p.Status.Label)</span>
+                            }
+                        </p>
+                        <h3 class="project__name">
+                            <a href="@repoUrl" target="_blank" rel="noopener" class="project__link">@p.Name</a>
+                        </h3>
+                        <p class="project__summary">@Model.T(p.Summary)</p>
+                        <ul class="chips chips--sm">
+                            @foreach (var tech in p.Stack)
+                            {
+                                <li>@tech</li>
+                            }
+                        </ul>
+                        <div class="project__foot">
+                            <span class="project__repo">@Icons.GitHub @p.RepoName</span>
+                            @if (repo is { Stars: > 0 })
+                            {
+                                <span class="project__stars" title="GitHub stars">@Icons.Star @repo.Stars</span>
+                            }
+                            @if (p.Live is not null)
+                            {
+                                <a class="project__live" href="@p.Live.Url" target="_blank" rel="noopener">@Model.T(p.Live.Label) @Icons.ArrowUpRight</a>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>

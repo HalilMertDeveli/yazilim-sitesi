@@ -1,0 +1,44 @@
+@model IndexModel
+@{
+    var links = new (string Href, string Label)[]
+    {
+        ("#work", Model.T("İşler", "Work")),
+        ("#about", Model.T("Hakkımda", "About")),
+        ("#skills", Model.T("Yetkinlikler", "Skills")),
+        ("#journey", Model.T("Yolculuk", "Journey")),
+        ("#contact", Model.T("İletişim", "Contact"))
+    };
+}
+<header class="nav" data-nav>
+    <div class="nav__inner container">
+        <a class="nav__brand" href="@Model.HomePath#top" aria-label="Halil Mert Develi — @Model.T("ana sayfa", "home")">
+            <span class="nav__mark" aria-hidden="true">HMD</span>
+            <span class="nav__name">Halil Mert Develi</span>
+        </a>
+
+        <nav class="nav__links" id="nav-menu" aria-label="@Model.T("Ana menü", "Main menu")" data-nav-menu>
+            <ul>
+                @foreach (var link in links)
+                {
+                    <li><a href="@link.Href" data-nav-link>@link.Label</a></li>
+                }
+            </ul>
+            <div class="nav__menu-foot">
+                <a class="btn btn--primary btn--block" href="mailto:@Model.ContactEmail">@Icons.Mail @Model.T("E-posta gönder", "Send an email")</a>
+            </div>
+        </nav>
+
+        <div class="nav__actions">
+            <div class="lang-switch" role="group" aria-label="@Model.T("Dil", "Language")">
+                <a href="/" hreflang="tr" lang="tr" class="@(Model.IsEn ? "" : "is-active")" aria-current="@(Model.IsEn ? null : "page")">TR</a>
+                <a href="/en" hreflang="en" lang="en" class="@(Model.IsEn ? "is-active" : "")" aria-current="@(Model.IsEn ? "page" : null)">EN</a>
+            </div>
+            <a class="btn btn--ghost btn--sm nav__cta" href="#contact">@Model.T("İletişime geç", "Get in touch")</a>
+            <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+                <span class="sr-only" data-label-open="@Model.T("Menüyü aç", "Open menu")" data-label-close="@Model.T("Menüyü kapat", "Close menu")">@Model.T("Menüyü aç", "Open menu")</span>
+                <span class="nav__toggle-bar" aria-hidden="true"></span>
+                <span class="nav__toggle-bar" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</header>

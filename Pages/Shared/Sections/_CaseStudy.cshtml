@@ -1,0 +1,99 @@
+@model CaseStudyView
+@{
+    var vm = Model.Page;
+    var s = Model.Study;
+    var repo = vm.GitHub.Find(s.RepoName);
+    var flip = Model.Index % 2 == 0;
+}
+<article id="@s.Id" class="case @(flip ? "case--flip" : "")" aria-labelledby="@s.Id-title" data-reveal>
+    <header class="case__head">
+        <span class="case__index" aria-hidden="true">0@(Model.Index)</span>
+        <div class="case__heading">
+            <h3 id="@s.Id-title" class="case__name">@s.Name</h3>
+            <ul class="badges" aria-label="@vm.T("Durum", "Status")">
+                @foreach (var badge in s.Statuses)
+                {
+                    <li class="badge @vm.ToneClass(badge.Tone)">@if (badge.Tone == StatusTone.Private) { @Icons.Lock }@vm.T(badge.Label)</li>
+                }
+            </ul>
+        </div>
+        <p class="case__tagline">@vm.T(s.Tagline)</p>
+    </header>
+
+    <div class="case__body">
+        <div class="case__visual">
+            <partial name="@("Sections/" + s.Visual)" model="vm" />
+        </div>
+
+        <div class="case__content">
+            <dl class="case__facts">
+                <div>
+                    <dt>@vm.T("Problem", "Problem")</dt>
+                    <dd>@vm.T(s.Problem)</dd>
+                </div>
+                <div>
+                    <dt>@vm.T("Katkım", "My contribution")</dt>
+                    <dd>@vm.T(s.Contribution)</dd>
+                </div>
+            </dl>
+
+            <h4 class="case__subhead">@vm.T("Mühendislik", "Engineering highlights")</h4>
+            <ul class="highlights">
+                @foreach (var h in s.Highlights)
+                {
+                    <li>
+                        <strong>@vm.T(h.Title)</strong>
+                        <span>@vm.T(h.Body)</span>
+                    </li>
+                }
+            </ul>
+
+            @if (s.Implemented.Count > 0)
+            {
+                <div class="progress-split">
+                    <div>
+                        <h4 class="case__subhead">@vm.T("Hazır olanlar", "Built so far")</h4>
+                        <ul class="checklist">
+                            @foreach (var item in s.Implemented)
+                            {
+                                <li class="is-done">@Icons.Check<span>@vm.T(item)</span></li>
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="case__subhead">@vm.T("Yol haritası", "On the roadmap")</h4>
+                        <ul class="checklist">
+                            @foreach (var item in s.Roadmap)
+                            {
+                                <li class="is-planned">@Icons.Circle<span>@vm.T(item)</span></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+            <h4 class="case__subhead">@vm.T("Teknolojiler", "Stack")</h4>
+            <ul class="chips" aria-label="@vm.T("Teknolojiler", "Stack")">
+                @foreach (var tech in s.Stack)
+                {
+                    <li>@tech</li>
+                }
+            </ul>
+
+            <div class="case__links">
+                @foreach (var link in s.Links)
+                {
+                    <a class="btn btn--ghost btn--sm" href="@link.Url" target="_blank" rel="noopener">@Icons.GitHub @vm.T(link.Label) @Icons.ArrowUpRight</a>
+                }
+                @if (repo is not null)
+                {
+                    <span class="case__meta">@vm.T("Son güncelleme", "Last push"): @vm.FormatMonth(repo.PushedAt)</span>
+                }
+                @if (s.PrivateNote is not null)
+                {
+                    <p class="case__private">@Icons.Lock <span>@vm.T(s.PrivateNote)</span></p>
+                }
+            </div>
+        </div>
+    </div>
+</article>

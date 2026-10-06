@@ -1,22 +1,23 @@
-﻿@page
+@page
 @model ErrorModel
 @{
-    ViewData["Title"] = "Bir şeyler ters gitti";
+    ViewData["Title"] = Model.IsNotFound ? "Sayfa bulunamadı · Page not found — Halil Mert Develi" : "Bir şeyler ters gitti · Something went wrong — Halil Mert Develi";
+    ViewData["Description"] = "Halil Mert Develi";
 }
-
-<section class="section">
-    <div class="section__inner section__inner--narrow">
-        <p class="section__eyebrow">Hata</p>
-        <h1 class="section__title">Sayfa yüklenemedi</h1>
-        <p class="section__copy">
-            Geçici bir sorun oluşmuş olabilir. Ana sayfaya dönüp tekrar dene.
-        </p>
+<main id="main" class="error-page">
+    <div class="container error-page__inner">
+        <p class="eyebrow">@(Model.IsNotFound ? "404" : "Hata · Error")</p>
+        <h1 class="section-title">
+            @(Model.IsNotFound ? "Bu sayfa yok." : "Sayfa yüklenemedi.")
+            <span class="error-page__en" lang="en">@(Model.IsNotFound ? "This page doesn't exist." : "The page could not be loaded.")</span>
+        </h1>
         @if (Model.ShowRequestId)
         {
-            <p class="contact-email"><strong>İstek kimliği:</strong> <code>@Model.RequestId</code></p>
+            <p class="error-page__id">Request ID: <code>@Model.RequestId</code></p>
         }
-        <p style="margin-top: 2rem">
-            <a class="btn btn--primary" asp-page="/Index">Ana sayfaya dön</a>
-        </p>
+        <div class="hero__actions">
+            <a class="btn btn--primary" href="/">Ana sayfa</a>
+            <a class="btn btn--ghost" href="/en" lang="en">Home (EN)</a>
+        </div>
     </div>
-</section>
+</main>

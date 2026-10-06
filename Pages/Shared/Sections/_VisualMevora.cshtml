@@ -1,0 +1,45 @@
+@model IndexModel
+@{
+    var music = new (string Label, int Weight)[]
+    {
+        (Model.T("Şarkılar", "Tracks"), 40),
+        (Model.T("Sanatçılar", "Artists"), 30),
+        (Model.T("Türler", "Genres"), 20),
+        (Model.T("Son dinlenen", "Recent"), 10)
+    };
+}
+<figure class="viz viz--mevora" data-tilt>
+    <div class="viz__stage">
+        <div class="phone">
+            <div class="phone__screen">
+                <img src="/img/projects/mevora-login.webp" width="560" height="1176" loading="lazy" decoding="async"
+                     alt="@Model.T("Mevora giriş ekranı: Google, Apple, Spotify, telefon ve e-posta ile giriş", "Mevora sign-in screen with Google, Apple, Spotify, phone and email sign-in")" />
+            </div>
+        </div>
+
+        <div class="float-card float-card--score" aria-hidden="true">
+            <p class="float-card__label">@Model.T("Müzik uyumu ağırlıkları", "Music compatibility weights")</p>
+            <ul class="weights">
+                @foreach (var m in music)
+                {
+                    <li>
+                        <span>@m.Label</span>
+                        <span class="weights__bar"><span style="--w:@(m.Weight)%"></span></span>
+                        <span class="weights__num">@m.Weight%</span>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="float-card float-card--rules" aria-hidden="true">
+            <p class="float-card__label">@Model.T("Sunucu tarafı", "Server-side")</p>
+            <code>getDiscoveryCandidates()</code>
+            <code>recordSwipe()</code>
+            <code>deleteUserAccount()</code>
+        </div>
+    </div>
+    <figcaption class="viz__caption">
+        @Model.T("Gerçek uygulama ekranı (geliştirme sürümü) ve kod tabanındaki uyum ağırlıkları.",
+                 "Real app screen (development build) and the compatibility weights from the codebase.")
+    </figcaption>
+</figure>

@@ -1,0 +1,71 @@
+@model IndexModel
+@{
+    var problems = new (string Title, string Body)[]
+    {
+        (Model.T("Backend ve alan modeli", "Backends and domain models"),
+         Model.T("ASP.NET Core ile katmanlı, test edilebilir API'ler; para, rol ve fiyat gibi kuralları tiplerle koruyan alan modelleri.",
+                 "Layered, testable ASP.NET Core APIs, with domain models that protect rules such as money, roles and pricing through types.")),
+        (Model.T("Uçtan uca mobil ürün", "End-to-end mobile products"),
+         Model.T("Flutter + Firebase ile kimlik doğrulamadan satın almaya, mağazaya hazır mimariye kadar.",
+                 "Flutter + Firebase apps from authentication to in-app purchases and a store-ready architecture.")),
+        (Model.T("Güveni sunucuya taşımak", "Moving trust to the server"),
+         Model.T("Eşleşme, ödeme, moderasyon ve silme gibi kritik kararları Cloud Functions ve güvenlik kurallarıyla istemciden çıkarmak.",
+                 "Taking critical decisions like matching, payments, moderation and deletion off the client with Cloud Functions and security rules.")),
+        (Model.T("Entegrasyonlar", "Integrations"),
+         Model.T("WhatsApp, Spotify, uygulama içi satın alma, e-posta ve LLM servislerini doğrulama ve hata senaryolarıyla bağlamak.",
+                 "Connecting WhatsApp, Spotify, in-app purchases, email and LLM services, with validation and failure handling.")),
+        (Model.T("Saha iş akışlarını yazılıma dökmek", "Turning field workflows into software"),
+         Model.T("LED teknik servisinde elle yürüyen destek süreçlerini yapılandırılmış, izlenebilir sistemlere dönüştürmek.",
+                 "Turning manual LED technical-support processes into structured, traceable systems."))
+    };
+}
+<section id="about" class="section section--about" aria-labelledby="about-title">
+    <div class="container about">
+        <div class="about__intro" data-reveal>
+            <p class="eyebrow"><span class="eyebrow__index">03</span>@Model.T("Hakkımda", "About")</p>
+            <h2 id="about-title" class="section-title">
+                @Model.T("Dağınık bir alanı doğru modellemek, framework seçmekten daha zor.",
+                         "Modelling a messy domain correctly is harder than picking a framework.")
+            </h2>
+            <div class="prose">
+                <p>
+                    @Model.T(
+                        "İstanbul'da yaşayan bir Bilgisayar Mühendisiyim. .NET ile backend servisleri, Flutter ile çok platformlu mobil uygulamalar geliştiriyorum.",
+                        "I'm a Computer Engineer based in Istanbul. I build backend services with .NET and cross-platform mobile apps with Flutter.")
+                </p>
+                <p>
+                    @Model.T(
+                        "İşimin büyük kısmı LED ekran sektöründe geçiyor: teknik destek araçları, B2B ticaret ve donanıma yakın sistemler. Bu alanda gerçek müşteriler, gerçek arızalar ve gerçek fiyatlar var; yazılımın sahada işe yaraması gerekiyor.",
+                        "Most of my work sits in the LED display industry: support tooling, B2B commerce and hardware-adjacent systems. There are real customers, real faults and real prices involved, so the software has to work in the field.")
+                </p>
+                <p>
+                    @Model.T(
+                        "Katmanlı mimariyi, açık alan modellerini ve kullanması sıkıcı derecede öngörülebilir API'leri önemsiyorum. Güvenlik kuralları, testler ve dokümantasyon benim için sonradan eklenen değil, işin kendisi.",
+                        "I care about layered architecture, explicit domain models and APIs that are boringly predictable to consume. Security rules, tests and documentation are part of the work, not something added later.")
+                </p>
+            </div>
+            <dl class="facts">
+                <div><dt>@Model.T("Konum", "Location")</dt><dd>@Model.T("İstanbul, Türkiye", "Istanbul, Türkiye")</dd></div>
+                <div><dt>@Model.T("Eğitim", "Education")</dt><dd>@Model.T("Bilgisayar Mühendisliği", "Computer Engineering")</dd></div>
+                <div><dt>@Model.T("Odak", "Focus")</dt><dd>Backend · @Model.T("Mobil", "Mobile")</dd></div>
+                <div><dt>@Model.T("Sektör", "Industry")</dt><dd>@Model.T("LED ekran teknolojileri", "LED display technology")</dd></div>
+            </dl>
+        </div>
+
+        <div class="about__solve" data-reveal>
+            <h3 class="about__solve-title">@Model.T("Çözebildiğim problemler", "Problems I can take on")</h3>
+            <ol class="solve-list">
+                @for (var i = 0; i < problems.Length; i++)
+                {
+                    <li>
+                        <span class="solve-list__num" aria-hidden="true">@((i + 1).ToString("00"))</span>
+                        <div>
+                            <strong>@problems[i].Title</strong>
+                            <p>@problems[i].Body</p>
+                        </div>
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+</section>
