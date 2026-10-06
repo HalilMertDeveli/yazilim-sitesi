@@ -1,0 +1,75 @@
+@model IndexModel
+<section id="top" class="hero" aria-labelledby="hero-title">
+    <canvas class="hero__matrix" data-matrix aria-hidden="true"></canvas>
+    <div class="hero__fade" aria-hidden="true"></div>
+
+    <div class="container hero__grid">
+        <div class="hero__copy">
+            <p class="hero__meta" data-reveal>
+                <span class="pulse-dot" aria-hidden="true"></span>
+                @Model.T("Yazılım Mühendisi", "Software Engineer")
+                <span class="hero__meta-sep" aria-hidden="true">/</span>
+                <span class="hero__meta-loc">@Icons.MapPin @Model.T("İstanbul, Türkiye", "Istanbul, Türkiye")</span>
+            </p>
+
+            <h1 id="hero-title" class="hero__title" data-reveal>
+                Halil Mert<br />Develi
+            </h1>
+
+            <p class="hero__role" data-reveal>
+                <span>Backend</span><span class="dot" aria-hidden="true"></span><span>@Model.T("Mobil", "Mobile")</span><span class="dot" aria-hidden="true"></span><span>@Model.T("Ürün mühendisliği", "Product engineering")</span>
+            </p>
+
+            <p class="hero__lead" data-reveal>
+                @Model.T(
+                    "ASP.NET Core ile backend sistemleri, Flutter ile mobil uygulamalar geliştiriyorum. Gerçek bir problemi çözen, testleri yazılmış ve canlıya çıkmaya hazır yazılımlar üretiyorum: bir eşleşme uygulamasından LED ekran sektörü için destek ve ticaret sistemlerine kadar.",
+                    "I build backend systems with ASP.NET Core and mobile apps with Flutter. I focus on software that solves a real problem, comes with tests and is ready to ship, from a matching app to support and commerce systems for the LED display industry.")
+            </p>
+
+            <div class="hero__actions" data-reveal>
+                <a class="btn btn--primary" href="#work">@Model.T("Projeleri incele", "View projects") @Icons.ArrowRight</a>
+                <a class="btn btn--ghost" href="@PortfolioContent.GitHubUrl" target="_blank" rel="noopener">@Icons.GitHub GitHub</a>
+                <a class="btn btn--text" href="#contact">@Model.T("İletişime geç", "Contact me")</a>
+            </div>
+        </div>
+
+        <aside class="hero__profile" aria-label="@Model.T("Profil", "Profile")" data-reveal>
+            <figure class="portrait" data-tilt>
+                <img src="@PortfolioContent.Portrait" width="460" height="460"
+                     alt="@Model.T("Halil Mert Develi portresi", "Portrait of Halil Mert Develi")"
+                     fetchpriority="high" decoding="async" />
+                <figcaption class="portrait__caption">
+                    <span class="portrait__name">Halil Mert Develi</span>
+                    <span class="portrait__title">@Model.T("Bilgisayar Mühendisi", "Computer Engineer")</span>
+                </figcaption>
+            </figure>
+
+            <div class="console" role="group" aria-label="@Model.T("Şu an üzerinde çalıştıklarım", "What I'm working on now")">
+                <div class="console__bar" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                    <code>~/@Model.T("simdi", "now")</code>
+                </div>
+                <ul class="console__list">
+                    @foreach (var study in PortfolioContent.CaseStudies)
+                    {
+                        <li>
+                            <a href="#@study.Id">
+                                <span class="console__prompt" aria-hidden="true">›</span>
+                                <span class="console__name">@study.Name.ToLowerInvariant().Replace(' ', '-')</span>
+                                <span class="console__stack">@string.Join(" · ", study.Stack.Take(2))</span>
+                                <span class="console__state console__state--@study.Statuses[^1].Tone.ToString().ToLowerInvariant()">@Model.T(study.Statuses[^1].Label)</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <div class="container hero__stack" data-reveal>
+        <p class="hero__stack-label">@Model.T("Çalıştığım teknolojiler", "Daily stack")</p>
+        <ul class="hero__stack-list">
+            <li>C#</li><li>.NET 8</li><li>ASP.NET Core</li><li>EF Core</li><li>Flutter</li><li>Dart</li><li>Firebase</li><li>PostgreSQL</li><li>Docker</li>
+        </ul>
+    </div>
+</section>

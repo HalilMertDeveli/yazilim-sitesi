@@ -1,0 +1,29 @@
+@model IndexModel
+<section id="journey" class="section" aria-labelledby="journey-title">
+    <div class="container journey">
+        <header class="section-head journey__head" data-reveal>
+            <p class="eyebrow"><span class="eyebrow__index">05</span>@Model.T("Yolculuk", "Journey")</p>
+            <h2 id="journey-title" class="section-title">@Model.T("Mobil denemelerden ürün ölçeğinde sistemlere", "From mobile experiments to product-scale systems")</h2>
+            <p class="section-lead">@Model.T("GitHub geçmişimden çıkan mühendislik kilometre taşları.", "Engineering milestones taken from my GitHub history.")</p>
+        </header>
+
+        <ol class="timeline">
+            @foreach (var m in PortfolioContent.Journey)
+            {
+                <li class="timeline__item" data-reveal>
+                    <span class="timeline__period">@m.Period</span>
+                    <div class="timeline__card">
+                        <h3 class="timeline__title">@Model.T(m.Title)</h3>
+                        <p>@Model.T(m.Body)</p>
+                        <ul class="chips chips--sm">
+                            @foreach (var tag in m.Tags)
+                            {
+                                <li>@tag</li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ol>
+    </div>
+</section>

@@ -10,7 +10,9 @@ public class ErrorModel : PageModel
 {
     public string? RequestId { get; set; }
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId) && !IsNotFound;
+
+    public bool IsNotFound { get; private set; }
 
     private readonly ILogger<ErrorModel> _logger;
 
@@ -19,8 +21,9 @@ public class ErrorModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet()
+    public void OnGet(int? code)
     {
+        IsNotFound = code == 404;
         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
     }
 }

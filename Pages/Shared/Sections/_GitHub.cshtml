@@ -1,0 +1,71 @@
+@model IndexModel
+@{
+    var gh = Model.GitHub;
+}
+<section id="github" class="section" aria-labelledby="github-title">
+    <div class="container">
+        <div class="gh" data-reveal>
+            <div class="gh__intro">
+                <p class="eyebrow"><span class="eyebrow__index">06</span>GitHub</p>
+                <h2 id="github-title" class="section-title">@Model.T("Açık kaynak ve öğrenme arşivi", "Open source and learning archive")</h2>
+                <p class="section-lead">
+                    @Model.T(
+                        "Seçili işlerin dışında kalan her şey GitHub'da: kurs çalışmaları, denemeler ve küçük araçlar.",
+                        "Everything outside the selected work lives on GitHub: course work, experiments and small tools.")
+                </p>
+                <a class="btn btn--ghost" href="@PortfolioContent.GitHubUrl" target="_blank" rel="noopener">@Icons.GitHub github.com/HalilMertDeveli @Icons.ArrowUpRight</a>
+            </div>
+
+            <div class="gh__data">
+                <dl class="gh__stats">
+                    <div>
+                        <dt>@Model.T("Herkese açık depo", "Public repositories")</dt>
+                        <dd>@gh.PublicRepos</dd>
+                    </div>
+                    <div>
+                        <dt>@Model.T("Son push", "Last push")</dt>
+                        <dd>@Model.FormatMonth(gh.LastPush)</dd>
+                    </div>
+                </dl>
+
+                <div class="gh__langs">
+                    <p class="gh__label">@Model.T("Depolara göre diller", "Languages by repository")</p>
+                    <div class="lang-bar" role="img" aria-label="@string.Join(", ", gh.Languages.Select(l => $"{l.Name} {l.Percent}%"))">
+                        @for (var i = 0; i < gh.Languages.Count; i++)
+                        {
+                            <span class="lang-bar__seg lang-bar__seg--@i" style="--p:@(gh.Languages[i].Percent)"></span>
+                        }
+                    </div>
+                    <ul class="lang-legend">
+                        @for (var i = 0; i < gh.Languages.Count; i++)
+                        {
+                            <li><span class="lang-legend__dot lang-bar__seg--@i"></span>@gh.Languages[i].Name <span class="lang-legend__pct">@gh.Languages[i].Percent%</span></li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="gh__recent">
+                    <p class="gh__label">@Model.T("Son güncellenen açık depolar", "Recently pushed public repositories")</p>
+                    <ul>
+                        @foreach (var repo in gh.RecentRepos)
+                        {
+                            <li>
+                                <a href="@repo.Url" target="_blank" rel="noopener">
+                                    <span class="gh__repo">@repo.Name</span>
+                                    <span class="gh__repo-meta">@(repo.Language ?? "—") · @Model.FormatMonth(repo.PushedAt)</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <p class="gh__source">
+                    <span class="gh__dot @(gh.IsLive ? "is-live" : "")" aria-hidden="true"></span>
+                    @(gh.IsLive
+                        ? Model.T("GitHub API'den canlı veri (30 dk önbellek)", "Live data from the GitHub API (cached for 30 min)")
+                        : Model.T("GitHub şu an yanıt vermiyor; kayıtlı özet gösteriliyor", "GitHub is unavailable right now; showing a saved snapshot"))
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

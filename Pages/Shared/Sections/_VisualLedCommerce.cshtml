@@ -1,0 +1,48 @@
+@model IndexModel
+<figure class="viz viz--diagram" data-tilt>
+    <div class="viz__stage diagram">
+        <p class="diagram__title">@Model.T("Fiyat zinciri", "Price chain")</p>
+        <ol class="price-chain">
+            <li class="price-chain__item price-chain__item--hidden">
+                <span class="price-chain__type">SupplierCost</span>
+                <span class="price-chain__label">@Model.T("Tedarikçi maliyeti", "Supplier cost")</span>
+                <span class="price-chain__note">@Icons.Lock @Model.T("müşteriye gizli", "hidden from customer")</span>
+            </li>
+            <li class="price-chain__op" aria-hidden="true">+</li>
+            <li class="price-chain__item price-chain__item--planned">
+                <span class="price-chain__type">@Model.T("plan", "planned")</span>
+                <span class="price-chain__label">@Model.T("Operasyon", "Operations")</span>
+            </li>
+            <li class="price-chain__op" aria-hidden="true">+</li>
+            <li class="price-chain__item">
+                <span class="price-chain__type">PlatformMargin</span>
+                <span class="price-chain__label">@Model.T("Platform marjı", "Platform margin")</span>
+            </li>
+            <li class="price-chain__item price-chain__item--result">
+                <span class="price-chain__type"><span aria-hidden="true">= </span>CustomerPrice</span>
+                <span class="price-chain__label">@Model.T("Müşteri fiyatı", "Customer price")</span>
+            </li>
+        </ol>
+
+        <p class="diagram__title">@Model.T("Katmanlar", "Layers")</p>
+        <div class="layers">
+            <div class="layers__row"><span class="layers__name">API</span><span class="layers__desc">@Model.T("Sürümleme · JWT · ProblemDetails · health", "Versioning · JWT · ProblemDetails · health")</span></div>
+            <div class="layers__row"><span class="layers__name">Application</span><span class="layers__desc">Result&lt;T&gt; · FluentValidation · @Model.T("portlar", "ports")</span></div>
+            <div class="layers__row layers__row--core"><span class="layers__name">Domain</span><span class="layers__desc">Money · @Model.T("fiyat tipleri", "price types") · @Model.T("roller", "roles")</span></div>
+            <div class="layers__row layers__row--split">
+                <span><span class="layers__name">Infrastructure</span></span>
+                <span><span class="layers__name">Persistence</span><span class="layers__desc">EF Core · PostgreSQL</span></span>
+            </div>
+            <div class="layers__planned">
+                <span>@Model.T("Yapılandırma motoru", "Configuration engine")</span>
+                <span>@Model.T("Fiyatlandırma motoru", "Pricing engine")</span>
+                <span>@Model.T("Ödeme", "Payments")</span>
+            </div>
+        </div>
+        <ul class="legend">
+            <li><span class="legend__swatch legend__swatch--built"></span>@Model.T("Kurulu", "Built")</li>
+            <li><span class="legend__swatch legend__swatch--planned"></span>@Model.T("Planlanan (port hazır)", "Planned (port in place)")</li>
+        </ul>
+    </div>
+    <figcaption class="viz__caption">@Model.T("Mimari diyagramı. Özel proje olduğu için ekran görüntüsü yerine yapı gösteriliyor.", "Architecture diagram. As a private project, the structure is shown instead of screenshots.")</figcaption>
+</figure>

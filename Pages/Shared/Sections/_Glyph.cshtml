@@ -1,0 +1,37 @@
+@model string?
+@* Technical representations for projects without screenshots. Drawn from what the code does, not mock UIs. *@
+@switch (Model)
+{
+    case "mediator":
+        <div class="glyph glyph--code">
+            <code><span class="k">public class</span> <span class="t">DashboardHandler</span></code>
+            <code>    : <span class="t">IRequestHandler</span>&lt;<span class="t">DashboardRequest</span>, …&gt;</code>
+            <code class="c">// Admin · Member · [Authorize(Roles)]</code>
+            <code class="c">// Domain → Application → Persistence → UI</code>
+        </div>
+        break;
+    case "chat":
+        <div class="glyph glyph--code">
+            <code><span class="k">return</span> groupCollection.doc(groupId)</code>
+            <code>    .collection(<span class="s">"messages"</span>)</code>
+            <code>    .orderBy(<span class="s">"time"</span>).snapshots();</code>
+            <code class="c">// Firebase Auth · Cloud Firestore</code>
+        </div>
+        break;
+    case "finance":
+        <div class="glyph glyph--code">
+            <code><span class="k">await</span> FirebaseAuth.instance</code>
+            <code>    .signInWithCredential(credential);</code>
+            <code class="c">// email · Google · Apple</code>
+            <code class="c">// Firestore · Storage · responsive layout</code>
+        </div>
+        break;
+    case "android":
+        <div class="glyph glyph--code">
+            <code><span class="k">@@Composable</span></code>
+            <code><span class="k">fun</span> <span class="t">HomePageConnect</span>() {</code>
+            <code>    <span class="t">Scaffold</span>(topBar = { … }) { … }</code>
+            <code>}</code>
+        </div>
+        break;
+}

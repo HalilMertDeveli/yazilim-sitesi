@@ -1,0 +1,8 @@
+{
+  "name": "Halil Mert Develi",
+  "short_name": "HMD",
+  "icons": [{ "src": "/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }],
+  "theme_color": "#0a0b0d",
+  "background_color": "#0a0b0d",
+  "display": "browser"
+}

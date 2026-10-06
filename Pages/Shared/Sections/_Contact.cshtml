@@ -1,0 +1,38 @@
+@model IndexModel
+<section id="contact" class="section section--contact" aria-labelledby="contact-title">
+    <div class="container">
+        <div class="contact" data-reveal>
+            <p class="eyebrow"><span class="eyebrow__index">07</span>@Model.T("İletişim", "Contact")</p>
+            <h2 id="contact-title" class="contact__title">
+                @Model.T("Bir ürün, rol ya da fikir üzerine konuşalım.", "Let's talk about a product, a role or an idea.")
+            </h2>
+            <p class="contact__lead">
+                @Model.T(
+                    ".NET backend'leri, Flutter uygulamaları ve LED sektörü yazılımları hakkındaki konuşmalara açığım. En hızlı yol e-posta.",
+                    "I'm open to conversations about .NET backends, Flutter apps and software for the LED industry. Email is the fastest way to reach me.")
+            </p>
+
+            <div class="contact__actions">
+                <a class="btn btn--primary btn--lg" href="mailto:@Model.ContactEmail">@Icons.Mail @Model.ContactEmail</a>
+                <button class="btn btn--ghost btn--lg" type="button" data-copy="@Model.ContactEmail"
+                        data-copied-label="@Model.T("Kopyalandı", "Copied")">
+                    @Icons.Copy <span data-copy-label>@Model.T("Adresi kopyala", "Copy address")</span>
+                </button>
+            </div>
+
+            <ul class="contact__links">
+                <li>
+                    <a href="@PortfolioContent.LinkedInUrl" target="_blank" rel="noopener">
+                        @Icons.LinkedIn <span>LinkedIn</span> <span class="contact__handle">halil-mert-develi</span> @Icons.ArrowUpRight
+                    </a>
+                </li>
+                <li>
+                    <a href="@PortfolioContent.GitHubUrl" target="_blank" rel="noopener">
+                        @Icons.GitHub <span>GitHub</span> <span class="contact__handle">HalilMertDeveli</span> @Icons.ArrowUpRight
+                    </a>
+                </li>
+            </ul>
+            <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
+        </div>
+    </div>
+</section>

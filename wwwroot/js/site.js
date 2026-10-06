@@ -1,283 +1,231 @@
-﻿(() => {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Halil Mert Develi — portfolio v2 interactions.
+// Small, dependency-free, and every effect degrades to a static page.
+(() => {
+  "use strict";
+
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+  /* ---------- Navigation ---------- */
   const nav = document.querySelector("[data-nav]");
   const toggle = document.querySelector("[data-nav-toggle]");
-  const progress = document.querySelector("[data-progress]");
-  const cursor = document.querySelector("[data-cursor]");
-  const canvas = document.querySelector("[data-particles]");
-  const links = nav?.querySelectorAll("a[href^='#']") ?? [];
+  const menu = document.querySelector("[data-nav-menu]");
 
-  const onScroll = () => {
-    if (nav) {
-      nav.classList.toggle("is-scrolled", window.scrollY > 12);
-    }
-    if (progress) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = max > 0 ? window.scrollY / max : 0;
-      progress.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
-    }
-  };
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  toggle?.addEventListener("click", () => {
-    const open = nav?.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", open ? "true" : "false");
-  });
-
-  links.forEach((link) => {
-    link.addEventListener("click", () => {
-      nav?.classList.remove("is-open");
-      toggle?.setAttribute("aria-expanded", "false");
-    });
-  });
-
-  // Split brand letters
-  document.querySelectorAll("[data-split]").forEach((el) => {
-    const text = el.textContent ?? "";
-    el.textContent = "";
-    [...text].forEach((ch, i) => {
-      const span = document.createElement("span");
-      span.className = "char";
-      span.textContent = ch === " " ? "\u00A0" : ch;
-      span.style.animationDelay = `${0.04 * i + 0.15}s`;
-      el.appendChild(span);
-    });
-  });
-
-  // Typewriter headline
-  const typeEl = document.querySelector("[data-type]");
-  if (typeEl && !reduce) {
-    const words = (typeEl.getAttribute("words") || "")
-      .split("|")
-      .map((w) => w.trim())
-      .filter(Boolean);
-    let wordIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    const tick = () => {
-      const current = words[wordIndex] || "";
-      typeEl.textContent = current.slice(0, charIndex);
-      if (!deleting && charIndex < current.length) {
-        charIndex += 1;
-        setTimeout(tick, 42);
-        return;
-      }
-      if (!deleting && charIndex === current.length) {
-        deleting = true;
-        setTimeout(tick, 1400);
-        return;
-      }
-      if (deleting && charIndex > 0) {
-        charIndex -= 1;
-        setTimeout(tick, 24);
-        return;
-      }
-      deleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      setTimeout(tick, 280);
-    };
-    tick();
-  } else if (typeEl) {
-    const first = (typeEl.getAttribute("words") || "").split("|")[0] || "";
-    typeEl.textContent = first;
+  if (nav) {
+    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Reveal on scroll
-  const reveals = document.querySelectorAll("[data-reveal]");
-  if (!("IntersectionObserver" in window) || reduce) {
-    reveals.forEach((el) => el.classList.add("is-visible"));
-  } else {
-    const observer = new IntersectionObserver(
+  if (nav && toggle && menu) {
+    const label = toggle.querySelector(".sr-only");
+    const setOpen = (open) => {
+      nav.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      document.body.style.overflow = open ? "hidden" : "";
+      if (label) label.textContent = open ? label.dataset.labelClose : label.dataset.labelOpen;
+    };
+
+    toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    window.matchMedia("(min-width: 961px)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+
+  /* ---------- Current section in nav ---------- */
+  const navLinks = [...document.querySelectorAll("[data-nav-link]")];
+  const sections = navLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => {
+            const active = link.getAttribute("href") === `#${entry.target.id}`;
+            link.classList.toggle("is-current", active);
+            if (active) link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+          });
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => spy.observe(s));
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  const revealables = document.querySelectorAll("main [data-reveal]:not(.hero [data-reveal])");
+  if ("IntersectionObserver" in window && !reduceMotion.matches) {
+    const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+          entry.target.querySelectorAll(".viz").forEach((v) => v.classList.add("is-visible"));
+          io.unobserve(entry.target);
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
     );
-    reveals.forEach((el, i) => {
-      el.style.transitionDelay = `${Math.min(i % 6, 5) * 0.07}s`;
-      observer.observe(el);
+
+    // Stagger siblings in grids so cards arrive in sequence.
+    revealables.forEach((el) => {
+      const siblings = el.parentElement ? [...el.parentElement.children].filter((c) => c.hasAttribute("data-reveal")) : [];
+      const index = siblings.indexOf(el);
+      if (index > 0) el.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
+      io.observe(el);
     });
-  }
-
-  // Count-up stats
-  const counters = document.querySelectorAll("[data-count]");
-  const animateCount = (el) => {
-    const target = Number(el.getAttribute("data-count") || "0");
-    if (reduce) {
-      el.textContent = String(target);
-      return;
-    }
-    const start = performance.now();
-    const duration = 1200;
-    const step = (now) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = String(Math.round(target * eased));
-      if (t < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-
-  if ("IntersectionObserver" in window) {
-    const countObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          animateCount(entry.target);
-          countObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.5 }
-    );
-    counters.forEach((el) => countObserver.observe(el));
   } else {
-    counters.forEach(animateCount);
+    revealables.forEach((el) => el.classList.add("is-visible"));
+    document.querySelectorAll(".viz").forEach((v) => v.classList.add("is-visible"));
   }
 
-  // Magnetic buttons
-  if (!reduce) {
-    document.querySelectorAll("[data-magnetic]").forEach((btn) => {
-      btn.addEventListener("mousemove", (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.18}px, ${y * 0.22}px)`;
-      });
-      btn.addEventListener("mouseleave", () => {
-        btn.style.transform = "";
-      });
-    });
-  }
-
-  // Card tilt
-  if (!reduce) {
-    document.querySelectorAll("[data-tilt]").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const px = (e.clientX - rect.left) / rect.width;
-        const py = (e.clientY - rect.top) / rect.height;
-        const rx = (0.5 - py) * 10;
-        const ry = (px - 0.5) * 12;
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-      });
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "";
-      });
-    });
-  }
-
-  // Soft cursor glow
-  if (cursor && !reduce && window.matchMedia("(pointer: fine)").matches) {
-    let mx = -9999;
-    let my = -9999;
-    let cx = mx;
-    let cy = my;
-    window.addEventListener(
-      "pointermove",
-      (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        cursor.classList.add("is-on");
-      },
-      { passive: true }
-    );
-    const loopCursor = () => {
-      cx += (mx - cx) * 0.12;
-      cy += (my - cy) * 0.12;
-      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      requestAnimationFrame(loopCursor);
-    };
-    requestAnimationFrame(loopCursor);
-  }
-
-
-  // Language bar fills
-  const bars = document.querySelectorAll("[data-bar-width]");
-  if ("IntersectionObserver" in window && !reduce) {
-    const barObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          const w = el.getAttribute("data-bar-width") || "0";
-          el.style.width = `${w}%`;
-          barObserver.unobserve(el);
+  /* ---------- Subtle depth on cards (fine pointers only) ---------- */
+  if (finePointer.matches && !reduceMotion.matches) {
+    document.querySelectorAll("[data-tilt]").forEach((el) => {
+      const max = el.classList.contains("project") ? 2.5 : 3.5;
+      let frame = 0;
+      el.addEventListener("pointermove", (e) => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.setProperty("--ry", `${(x * max).toFixed(2)}deg`);
+          el.style.setProperty("--rx", `${(-y * max).toFixed(2)}deg`);
         });
-      },
-      { threshold: 0.4 }
-    );
-    bars.forEach((el) => barObserver.observe(el));
-  } else {
-    bars.forEach((el) => {
-      el.style.width = `${el.getAttribute("data-bar-width") || 0}%`;
+      });
+      el.addEventListener("pointerleave", () => {
+        cancelAnimationFrame(frame);
+        el.style.setProperty("--ry", "0deg");
+        el.style.setProperty("--rx", "0deg");
+      });
     });
   }
 
-  // Particles
-  if (canvas instanceof HTMLCanvasElement && !reduce) {
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  /* ---------- Copy email ---------- */
+  const status = document.querySelector("[data-copy-status]");
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const value = btn.getAttribute("data-copy");
+      const label = btn.querySelector("[data-copy-label]");
+      const original = label ? label.textContent : "";
+      try {
+        await navigator.clipboard.writeText(value);
+        if (label) label.textContent = btn.dataset.copiedLabel;
+        if (status) status.textContent = btn.dataset.copiedLabel;
+        setTimeout(() => {
+          if (label) label.textContent = original;
+        }, 2000);
+      } catch {
+        window.location.href = `mailto:${value}`;
+      }
+    });
+  });
 
-    let w = 0;
-    let h = 0;
-    let particles = [];
+  /* ---------- LED matrix background ---------- */
+  // A dot grid that reads like an LED panel. Dots near the pointer light up,
+  // and a slow diagonal wave passes through. Paused off-screen and when hidden.
+  const canvas = document.querySelector("[data-matrix]");
+  if (canvas && canvas.getContext) {
+    const ctx = canvas.getContext("2d", { alpha: true });
+    const hero = canvas.parentElement;
+    const gap = 22;
+    let w = 0, h = 0, dpr = 1, cols = 0, rows = 0;
+    let pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999 };
+    let running = false, visible = true, raf = 0, start = performance.now();
 
     const resize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      const count = Math.min(70, Math.floor((w * h) / 28000));
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 1.6 + 0.4,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        a: Math.random() * 0.35 + 0.1
-      }));
+      const rect = hero.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = rect.width;
+      h = rect.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / gap) + 1;
+      rows = Math.ceil(h / gap) + 1;
+      draw(performance.now());
     };
 
-    const draw = () => {
+    const draw = (now) => {
+      const t = (now - start) / 1000;
       ctx.clearRect(0, 0, w, h);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(61, 255, 224, ${p.a})`;
-        ctx.fill();
-      }
-      for (let i = 0; i < particles.length; i += 1) {
-        for (let j = i + 1; j < particles.length; j += 1) {
-          const a = particles[i];
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 110) {
-            ctx.strokeStyle = `rgba(61, 255, 224, ${0.08 * (1 - dist / 110)})`;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
+      pointer.x += (pointer.tx - pointer.x) * 0.12;
+      pointer.y += (pointer.ty - pointer.y) * 0.12;
+      const animate = !reduceMotion.matches;
+
+      for (let i = 0; i < cols; i++) {
+        const x = i * gap + 4;
+        for (let j = 0; j < rows; j++) {
+          const y = j * gap + 4;
+          let glow = 0;
+          if (animate) {
+            const wave = Math.sin((x * 0.6 + y) * 0.012 - t * 0.9);
+            glow = Math.max(0, wave - 0.82) * 1.6;
+            const dx = x - pointer.x;
+            const dy = y - pointer.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < 32000) glow += (1 - d2 / 32000) * 0.75;
           }
+          const a = 0.07 + glow * 0.5;
+          ctx.fillStyle = glow > 0.04 ? `rgba(243,181,98,${Math.min(a, 0.7).toFixed(3)})` : "rgba(255,255,255,0.07)";
+          ctx.fillRect(x, y, 1.6, 1.6);
         }
       }
-      requestAnimationFrame(draw);
     };
 
-    window.addEventListener("resize", resize, { passive: true });
+    const loop = (now) => {
+      draw(now);
+      raf = requestAnimationFrame(loop);
+    };
+
+    const play = () => {
+      if (running || reduceMotion.matches || !visible || document.hidden) return;
+      running = true;
+      raf = requestAnimationFrame(loop);
+    };
+
+    const pause = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
     resize();
-    draw();
+    window.addEventListener("resize", () => {
+      clearTimeout(resize.t);
+      resize.t = setTimeout(resize, 120);
+    }, { passive: true });
+
+    if (finePointer.matches) {
+      hero.addEventListener("pointermove", (e) => {
+        const rect = hero.getBoundingClientRect();
+        pointer.tx = e.clientX - rect.left;
+        pointer.ty = e.clientY - rect.top;
+        if (pointer.x < -9000) { pointer.x = pointer.tx; pointer.y = pointer.ty; }
+      });
+      hero.addEventListener("pointerleave", () => { pointer.tx = pointer.ty = pointer.x = pointer.y = -9999; });
+    }
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        visible ? play() : pause();
+      }).observe(hero);
+    }
+    document.addEventListener("visibilitychange", () => (document.hidden ? pause() : play()));
+    reduceMotion.addEventListener("change", () => (reduceMotion.matches ? (pause(), draw(performance.now())) : play()));
+    play();
   }
 })();
