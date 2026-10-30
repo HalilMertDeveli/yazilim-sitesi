@@ -1,0 +1,62 @@
+@model IndexModel
+@{
+    var bikes = new (string Brand, string Model, string Key)[]
+    {
+        ("Honda", "CB650R", "cb650r"),
+        ("Yamaha", "MT-07", "mt07"),
+        ("Kawasaki", "Z650", "z650")
+    };
+    var parts = new (string Name, string Models, int From)[]
+    {
+        (Model.T("Ön fren diski seti", "Front brake disc set"), "cb650r mt07", 2021),
+        (Model.T("Zincir ve dişli seti", "Chain and sprocket set"), "mt07 z650", 2021),
+        (Model.T("Ayarlı arka amortisör", "Adjustable rear shock"), "cb650r z650", 2022),
+        (Model.T("Yağ filtresi", "Oil filter"), "cb650r mt07 z650", 2021),
+        (Model.T("LED ön far ünitesi", "LED headlight unit"), "mt07", 2023)
+    };
+}
+<div class="demo demo--motor" data-demo-motor>
+    <p class="demo__kicker"><span class="pulse-dot" aria-hidden="true"></span>@Model.T("Dene: motoruna uyan parçayı bul", "Try it: find parts that fit your bike")</p>
+    <div class="browser">
+        <div class="browser__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+        <img src="/img/projects/motor-store.webp" width="800" height="500" loading="lazy" decoding="async"
+             alt="@Model.T("Motor e-ticaret sitesinin ana sayfası", "Home page of the Motor e-commerce site")" />
+    </div>
+    <div class="fit">
+        <label>
+            <span>@Model.T("Marka", "Make")</span>
+            <select data-fit-brand>
+                @foreach (var brand in bikes.Select(b => b.Brand))
+                {
+                    <option selected="@(brand == "Yamaha")">@brand</option>
+                }
+            </select>
+        </label>
+        <label>
+            <span>Model</span>
+            <select data-fit-model>
+                @foreach (var bike in bikes)
+                {
+                    <option value="@bike.Key" data-brand="@bike.Brand" selected="@(bike.Key == "mt07")">@bike.Model</option>
+                }
+            </select>
+        </label>
+        <label>
+            <span>@Model.T("Yıl", "Year")</span>
+            <select data-fit-year>
+                @for (var year = 2024; year >= 2021; year--)
+                {
+                    <option selected="@(year == 2023)">@year</option>
+                }
+            </select>
+        </label>
+    </div>
+    <p class="fit__count" role="status" aria-live="polite"><span data-fit-count>4</span> @Model.T("uyumlu parça", "matching parts")</p>
+    <ul class="fit__parts">
+        @foreach (var part in parts)
+        {
+            <li data-models="@part.Models" data-from="@part.From">@Icons.Check<span>@part.Name</span></li>
+        }
+    </ul>
+    <p class="demo__note">@Model.T("Örnek veriyle küçük demo; arama mantığını gösterir.", "A small demo with sample data, showing how the search works.")</p>
+</div>

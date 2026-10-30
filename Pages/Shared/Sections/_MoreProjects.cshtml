@@ -16,7 +16,7 @@
     <div class="container">
         <header class="section-head section-head--row" data-reveal>
             <div>
-                <p class="eyebrow"><span class="eyebrow__index">03</span>@Model.T("GitHub'daki diğer projeler", "More on GitHub")</p>
+                <p class="eyebrow"><span class="eyebrow__index">02</span>@Model.T("GitHub'daki diğer projeler", "More on GitHub")</p>
                 <h2 id="projects-title" class="section-title">@Model.T("Canlı siteler, demolar ve öğrenme yolculuğu", "Live sites, demos and the road here")</h2>
             </div>
             <a class="btn btn--text" href="@PortfolioContent.GitHubReposUrl" target="_blank" rel="noopener">
@@ -59,10 +59,6 @@
                         </p>
                         <h3 class="project__name">
                             <a href="@mainUrl" target="_blank" rel="noopener" class="project__link">@p.Name</a>
-                            @if (p.WithClaude)
-                            {
-                                <span class="badge badge--sm badge--claude">@Model.T("Claude ile", "With Claude")</span>
-                            }
                         </h3>
                         <p class="project__summary">@Model.T(p.Summary)</p>
                         <ul class="chips chips--sm">

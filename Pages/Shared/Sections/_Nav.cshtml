@@ -2,7 +2,6 @@
 @{
     var links = new (string Href, string Label)[]
     {
-        ("#claude", "Claude"),
         ("#work", Model.T("Ürünler", "Products")),
         ("#projects", Model.T("Projeler", "Projects")),
         ("#about", Model.T("Hakkımda", "About")),
@@ -35,7 +34,7 @@
                 <a href="/" hreflang="tr" lang="tr" class="@(Model.IsEn ? "" : "is-active")" aria-current="@(Model.IsEn ? null : "page")">TR</a>
                 <a href="/en" hreflang="en" lang="en" class="@(Model.IsEn ? "is-active" : "")" aria-current="@(Model.IsEn ? "page" : null)">EN</a>
             </div>
-            <a class="btn btn--ghost btn--sm nav__cta" href="#contact">@Model.T("İletişime geç", "Get in touch")</a>
+            <button class="btn btn--primary btn--sm nav__cta" type="button" data-open="brief">@Model.T("30 sn özet", "30s brief")</button>
             <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
                 <span class="sr-only" data-label-open="@Model.T("Menüyü aç", "Open menu")" data-label-close="@Model.T("Menüyü kapat", "Close menu")">@Model.T("Menüyü aç", "Open menu")</span>
                 <span class="nav__toggle-bar" aria-hidden="true"></span>

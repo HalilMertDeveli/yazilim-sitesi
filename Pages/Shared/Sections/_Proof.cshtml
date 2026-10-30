@@ -1,0 +1,25 @@
+@model IndexModel
+<section class="proof" aria-labelledby="proof-title">
+    <div class="container proof__grid">
+        <div class="proof__who" data-reveal data-spot>
+            <img src="@PortfolioContent.Portrait" width="96" height="96" alt="@Model.T("Halil Mert Develi portresi", "Portrait of Halil Mert Develi")" loading="lazy" decoding="async" />
+            <div>
+                <h2 id="proof-title" class="proof__title">@Model.T("30 saniyede ben", "Me in 30 seconds")</h2>
+                <p>@Model.T(".NET ile backend, Flutter ile mobil. Tek başıma tasarlayıp geliştirdiğim, testleri yazılmış ürünler.", "Backend with .NET, mobile with Flutter. Products I design and build myself, with tests.")</p>
+            </div>
+            <div class="proof__actions">
+                <button class="btn btn--primary btn--sm" type="button" data-open="brief">@Model.T("Özeti aç", "Open brief")</button>
+                <a class="btn btn--ghost btn--sm" href="mailto:@Model.ContactEmail">@Icons.Mail @Model.T("E-posta", "Email")</a>
+                <a class="btn btn--ghost btn--sm" href="@PortfolioContent.LinkedInUrl" target="_blank" rel="noopener">@Icons.LinkedIn LinkedIn</a>
+            </div>
+        </div>
+
+        @foreach (var stat in PortfolioContent.ProofStats)
+        {
+            <div class="proof__stat" data-reveal data-spot>
+                <span class="proof__value"><span data-count="@stat.Value">@Model.FormatNumber(stat.Value)</span>@stat.Suffix</span>
+                <span class="proof__label">@Model.T(stat.Label)</span>
+            </div>
+        }
+    </div>
+</section>

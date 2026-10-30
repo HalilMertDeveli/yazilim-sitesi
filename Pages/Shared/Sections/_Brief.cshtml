@@ -1,0 +1,40 @@
+@model IndexModel
+<dialog id="brief" class="sheet brief" aria-labelledby="brief-title">
+    <div class="sheet__bar">
+        <p class="sheet__kicker">@Model.T("İşe alım özeti", "Recruiter brief")</p>
+        <button class="sheet__close" type="button" data-close aria-label="@Model.T("Kapat", "Close")">×</button>
+    </div>
+
+    <header class="brief__head">
+        <img src="@PortfolioContent.Portrait" width="88" height="88" alt="" loading="lazy" decoding="async" />
+        <div>
+            <h2 id="brief-title">@PortfolioContent.FullName</h2>
+            <p>@Model.T("Yazılım Mühendisi · İstanbul, Türkiye", "Software Engineer · Istanbul, Türkiye")</p>
+        </div>
+    </header>
+
+    <dl class="brief__facts">
+        <div><dt>@Model.T("Odak", "Focus")</dt><dd>@Model.T("Backend (.NET) ve mobil (Flutter)", "Backend (.NET) and mobile (Flutter)")</dd></div>
+        <div><dt>@Model.T("Temel teknolojiler", "Core stack")</dt><dd>C#, ASP.NET Core, EF Core, PostgreSQL, Flutter, Dart, Firebase, Docker</dd></div>
+        <div><dt>@Model.T("Eğitim", "Education")</dt><dd>@Model.T("Bilgisayar Mühendisliği", "Computer Engineering")</dd></div>
+    </dl>
+
+    <h3 class="brief__sub">@Model.T("Öne çıkan ürünler", "Featured products")</h3>
+    <ul class="brief__products">
+        @foreach (var study in PortfolioContent.CaseStudies)
+        {
+            <li>
+                <strong>@study.Name</strong>
+                <span class="brief__status">@Model.T(study.Statuses[^1].Label)</span>
+                <p>@Model.T(study.Tagline)</p>
+            </li>
+        }
+    </ul>
+
+    <footer class="brief__foot">
+        <a class="btn btn--primary btn--sm" href="mailto:@Model.ContactEmail">@Icons.Mail @Model.ContactEmail</a>
+        <a class="btn btn--ghost btn--sm" href="@PortfolioContent.LinkedInUrl" target="_blank" rel="noopener">@Icons.LinkedIn LinkedIn</a>
+        <a class="btn btn--ghost btn--sm" href="@PortfolioContent.GitHubUrl" target="_blank" rel="noopener">@Icons.GitHub GitHub</a>
+        <button class="btn btn--ghost btn--sm brief__print" type="button" data-print>@Model.T("PDF olarak kaydet", "Save as PDF")</button>
+    </footer>
+</dialog>
