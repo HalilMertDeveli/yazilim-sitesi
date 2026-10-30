@@ -27,7 +27,7 @@ public static class PortfolioContent
         new(new("LED B2B Platform", "LED B2B Platform"), 264, new("LED ekran alımı için yönetilen B2B platform", "Managed B2B platform for buying LED screens"), "#led-platform", IsPrivate: true),
         new(new("Motor", "Motor"), 125, new("Smartstore tabanlı motosiklet parça mağazası", "Smartstore-based motorcycle parts store"), "#motor"),
         new(new("Motor Vitrin", "Motor Vitrin"), 5, new("Mağazanın canlı arayüz prototipi", "Live UI prototype of the store"), "https://motor-vitrin.vercel.app/motor/"),
-        new(new("Bu site", "This site"), 2, new("Okuduğun portfolyo", "The portfolio you're reading"), "https://github.com/HalilMertDeveli/yazilim-sitesi"),
+        new(new("Bu site", "This site"), 3, new("Okuduğun portfolyo", "The portfolio you're reading"), "https://github.com/HalilMertDeveli/yazilim-sitesi"),
         new(new("GitHub profili", "GitHub profile"), 1, new("Profil README'si", "Profile README"), "https://github.com/HalilMertDeveli/HalilMertDeveli")
     ];
 

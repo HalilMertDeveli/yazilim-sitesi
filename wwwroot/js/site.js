@@ -329,7 +329,8 @@
     };
 
     const loop = (now) => {
-      offset = (offset + Math.min(now - last, 50) * 0.022) % textCols;
+      // A frame's timestamp can precede the performance.now() taken in play(), so clamp at zero.
+      offset = (offset + Math.max(0, Math.min(now - last, 50)) * 0.022) % textCols;
       last = now;
       draw();
       raf = requestAnimationFrame(loop);
