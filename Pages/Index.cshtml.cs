@@ -38,8 +38,8 @@ public class IndexModel : PageModel
         "Halil Mert Develi — Software Engineer · ASP.NET Core & Flutter");
 
     public string MetaDescription => T(
-        "İstanbul'da yazılım mühendisi Halil Mert Develi'nin portföyü: ASP.NET Core backend sistemleri, Flutter mobil uygulamalar ve LED ekran sektörü için yazılımlar. Mevora, LED B2B Platform, Motor ve LED Support Bot projeleri ile Claude ile birlikte geliştirdiklerim.",
-        "Portfolio of Halil Mert Develi, a software engineer in Istanbul building ASP.NET Core backends, Flutter mobile apps and software for the LED display industry. Projects: Mevora, LED B2B Platform, Motor and LED Support Bot, including what I build with Claude.");
+        "İstanbul'da yazılım mühendisi Halil Mert Develi'nin portföyü: ASP.NET Core backend sistemleri, Flutter mobil uygulamalar ve LED ekran sektörü için yazılımlar. Mevora, LED B2B Platform, Motor ve LED Support Bot projeleri.",
+        "Portfolio of Halil Mert Develi, a software engineer in Istanbul building ASP.NET Core backends, Flutter mobile apps and software for the LED display industry. Projects: Mevora, LED B2B Platform, Motor and LED Support Bot.");
 
     /// <summary>schema.org Person + WebSite graph. Serialized with the default encoder, which escapes &lt; and &gt;.</summary>
     public string JsonLd => JsonSerializer.Serialize(new Dictionary<string, object>

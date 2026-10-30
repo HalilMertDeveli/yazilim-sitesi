@@ -32,8 +32,8 @@ public sealed record ProjectImage(string Src, Text Alt, int Width, int Height);
 /// <summary>A headline number on a case study. Value is rendered in full and counted up by script.</summary>
 public sealed record Metric(int Value, string Suffix, Text Label);
 
-/// <summary>A repository with commits co-authored by Claude.</summary>
-public sealed record ClaudeProject(Text Name, int Commits, Text Summary, string Href, bool IsPrivate = false);
+/// <summary>A product in the overview, with my commit count.</summary>
+public sealed record BuiltProject(string Name, int Commits, Text Summary, string Href, bool IsPrivate = false);
 
 /// <summary>A smaller or earlier repository, listed as one line.</summary>
 public sealed record ArchiveRepo(string RepoName, string Language, Text Summary, string Tags);
@@ -48,9 +48,6 @@ public sealed class CaseStudy
 
     /// <summary>CSS custom property holding the project's accent colour.</summary>
     public required string Accent { get; init; }
-
-    /// <summary>Commits co-authored by Claude, when the project has any.</summary>
-    public int? ClaudeCommits { get; init; }
     public required Text Problem { get; init; }
     public required Text Contribution { get; init; }
     public required IReadOnlyList<Highlight> Highlights { get; init; }
@@ -76,7 +73,6 @@ public sealed class ProjectCard
 
     /// <summary>Space-separated filter tags.</summary>
     public required string Tags { get; init; }
-    public bool WithClaude { get; init; }
     public ProjectImage? Image { get; init; }
     public string? Glyph { get; init; }
     public ProjectLink? Live { get; init; }

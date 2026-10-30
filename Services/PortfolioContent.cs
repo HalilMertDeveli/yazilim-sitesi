@@ -18,20 +18,19 @@ public static class PortfolioContent
     private static readonly StatusBadge PrivateProject = new(new("Özel proje", "Private project"), StatusTone.Private);
 
     /// <summary>
-    /// Commits on each default branch whose message carries a Claude co-author trailer.
-    /// Counted from GitHub history on 2026-10-30; update by hand, private repos can't be read at runtime.
+    /// My commits on each default branch, counted from GitHub history on 2026-10-30.
+    /// Update by hand; private repositories can't be read at runtime.
     /// </summary>
-    public static readonly IReadOnlyList<ClaudeProject> ClaudeProjects =
+    public static readonly IReadOnlyList<BuiltProject> BuiltProjects =
     [
-        new(new("Mevora", "Mevora"), 418, new("Flutter + Firebase tanışma uygulaması", "Flutter + Firebase dating app"), "#mevora", IsPrivate: true),
-        new(new("LED B2B Platform", "LED B2B Platform"), 264, new("LED ekran alımı için yönetilen B2B platform", "Managed B2B platform for buying LED screens"), "#led-platform", IsPrivate: true),
-        new(new("Motor", "Motor"), 125, new("Smartstore tabanlı motosiklet parça mağazası", "Smartstore-based motorcycle parts store"), "#motor"),
-        new(new("Motor Vitrin", "Motor Vitrin"), 5, new("Mağazanın canlı arayüz prototipi", "Live UI prototype of the store"), "https://motor-vitrin.vercel.app/motor/"),
-        new(new("Bu site", "This site"), 3, new("Okuduğun portfolyo", "The portfolio you're reading"), "https://github.com/HalilMertDeveli/yazilim-sitesi"),
-        new(new("GitHub profili", "GitHub profile"), 1, new("Profil README'si", "Profile README"), "https://github.com/HalilMertDeveli/HalilMertDeveli")
+        new("Mevora", 716, new("Flutter + Firebase tanışma uygulaması", "Flutter + Firebase dating app"), "#mevora", IsPrivate: true),
+        new("LED B2B Platform", 440, new("LED ekran alımı için yönetilen B2B platform", "Managed B2B platform for buying LED screens"), "#led-platform", IsPrivate: true),
+        new("Motor", 213, new("Motosiklet parçası satan e-ticaret sitesi", "E-commerce site selling motorcycle parts"), "#motor"),
+        new("ClearPay", 58, new("Çift taraflı defterli demo dijital cüzdan", "Demo digital wallet on a double-entry ledger"), "https://github.com/HalilMertDeveli/clearpay"),
+        new("LED Teknik Destek", 30, new("LED kontrol sistemleri için canlı destek sitesi", "Live support site for LED control systems"), "https://asp-net-app-for-led.vercel.app")
     ];
 
-    public static int ClaudeCommitTotal => ClaudeProjects.Sum(p => p.Commits);
+    public static int CommitTotal => BuiltProjects.Sum(p => p.Commits);
 
     public static readonly IReadOnlyList<CaseStudy> CaseStudies =
     [
@@ -41,7 +40,6 @@ public static class PortfolioContent
             Name = "Mevora",
             Visual = "_VisualMevora",
             Accent = "--violet",
-            ClaudeCommits = 418,
             Tagline = new(
                 "İki kişinin neden uyumlu olduğunu açıkça gösteren, kesin konumu gizli tutan, iOS ve Android için bir tanışma uygulaması.",
                 "A dating app for iOS and Android that shows exactly why two people are compatible and keeps precise location private."),
@@ -49,7 +47,7 @@ public static class PortfolioContent
             [
                 new(283, "", new("Flutter test dosyası", "Flutter test files")),
                 new(120, "", new("Cloud Functions test dosyası", "Cloud Functions test files")),
-                new(418, "", new("Claude ile commit", "commits with Claude"))
+                new(716, "", new("commit", "commits"))
             ],
             Problem = new(
                 "Çoğu tanışma uygulaması kişileri kapalı kutu skorlarla sıralar ve gerekenden fazla kişisel veri açar. Mevora uyumun nedenini gösterir, kesin konumu saklar ve güvenlik açısından kritik kuralları istemciden alıp sunucuya taşır.",
@@ -89,7 +87,6 @@ public static class PortfolioContent
             Name = "LED B2B Platform",
             Visual = "_VisualLedCommerce",
             Accent = "--accent",
-            ClaudeCommits = 264,
             Tagline = new(
                 "LED ekran almak isteyen firmalar için yapılandırma, teklif ve siparişi tek çatıda toplayan B2B platform. Tedarikçiler ve maliyetleri müşteriye görünmez.",
                 "A B2B platform that brings configuration, quotes and orders for LED screens under one roof, with suppliers and their costs hidden from the customer."),
@@ -97,7 +94,7 @@ public static class PortfolioContent
             [
                 new(2600, "+", new("otomatik test", "automated tests")),
                 new(10, "", new("tamamlanan geliştirme fazı", "completed development phases")),
-                new(264, "", new("Claude ile commit", "commits with Claude"))
+                new(440, "", new("commit", "commits"))
             ],
             Problem = new(
                 "Bir LED ekran almak; piksel aralığı, kabin, kontrol kartı, güç ve kurulumu farklı tedarikçiler arasında eşleştirmek demek. Platform bunu tek bir yapılandırılmış, fiyatlandırılmış ve yönetilen siparişe dönüştürüyor.",
@@ -148,22 +145,21 @@ public static class PortfolioContent
             Name = "Motor",
             Visual = "_VisualMotor",
             Accent = "--ember",
-            ClaudeCommits = 125,
             Tagline = new(
-                "Motosiklet parçası satan bir işletme için açık kaynak Smartstore üzerine kurulu, marka, model ve yıla göre parça aranan e-ticaret mağazası.",
-                "An e-commerce store for a motorcycle parts business, built on open-source Smartstore, where parts are searched by make, model and year."),
+                "Motosiklet parçası satan bir işletme için e-ticaret sitesi: ürün kataloğu, sepet, ödeme ve yönetim paneli bir arada; parçalar marka, model ve yıla göre aranır.",
+                "An e-commerce site for a motorcycle parts business, with catalogue, cart, checkout and admin panel in one place, and parts searched by make, model and year."),
             Metrics =
             [
                 new(10, "", new("MotorShop modülü", "MotorShop modules")),
                 new(823, "", new("test senaryosu", "test cases")),
-                new(125, "", new("Claude ile commit", "commits with Claude"))
+                new(213, "", new("commit", "commits"))
             ],
             Problem = new(
-                "Motosiklet parçasında doğru ürün; motorun markasına, modeline ve yılına bağlı. Müşterinin motoruna uyan parçayı hızlıca bulabilmesi gerekiyor.",
-                "With motorcycle parts, the right product depends on the bike's make, model and year. Customers need to find what fits their bike quickly."),
+                "Motosiklet parçasında doğru ürün; motorun markasına, modeline ve yılına bağlı. Müşterinin motoruna uyan parçayı hızlıca bulup tek yerden satın alabilmesi gerekiyor.",
+                "With motorcycle parts, the right product depends on the bike's make, model and year. Customers need to find what fits their bike quickly and buy it in one place."),
             Contribution = new(
-                "Smartstore'u temel alarak MotorShop modüllerini ve MotorDark temasını geliştiriyorum; mağaza arayüzünü önce statik bir vitrin prototipiyle sınadım.",
-                "Starting from Smartstore, I'm building the MotorShop modules and the MotorDark theme. I first tried out the storefront as a static prototype."),
+                "İşletmeye özel e-ticaret sitesini geliştiriyorum: MotorShop modülleri, MotorDark teması, uyumlu parça araması ve ödeme akışı.",
+                "I'm building the business's e-commerce site: the MotorShop modules, the MotorDark theme, fitment search and the payment flow."),
             Highlights =
             [
                 new(new("Uyumlu parça araması", "Fitment search"),
@@ -171,17 +167,13 @@ public static class PortfolioContent
                         "Parts are linked to motorcycles by make, model and year.")),
                 new(new("Modüler geliştirme", "Modular development"),
                     new("Mağazaya özel işlevler 10 ayrı MotorShop modülünde ve MotorDark temasında toplanıyor.",
-                        "Store-specific features live in 10 separate MotorShop modules and the MotorDark theme.")),
-                new(new("Açık kaynak temel", "Open-source foundation"),
-                    new("Smartstore 6.4 (AGPL-3.0) üzerine kurulu; temel e-ticaret altyapısı Smartstore projesine ait.",
-                        "Built on Smartstore 6.4 (AGPL-3.0); the core e-commerce platform comes from the Smartstore project."))
+                        "Store-specific features live in 10 separate MotorShop modules and the MotorDark theme."))
             ],
             Implemented =
             [
                 new("10 MotorShop modülü ve MotorDark teması", "10 MotorShop modules and the MotorDark theme"),
                 new("Marka, model ve yıla göre parça araması", "Search by make, model and year"),
-                new("Ödeme modülü (mock testlerle)", "Payment module (tested with mocks)"),
-                new("Canlı statik vitrin prototipi", "Live static storefront prototype")
+                new("Ödeme modülü (mock testlerle)", "Payment module (tested with mocks)")
             ],
             Roadmap =
             [
@@ -189,9 +181,9 @@ public static class PortfolioContent
                 new("İşletme verilerinin tamamlanması", "Completing the business data"),
                 new("Canlı ortama geçiş", "Going to production")
             ],
-            Stack = [".NET 10", "ASP.NET Core", "EF Core", "Smartstore 6.4", "PostgreSQL", "Docker"],
+            Stack = [".NET 10", "ASP.NET Core", "EF Core", "PostgreSQL", "Docker"],
             Statuses = [new(new("Müşteri projesi", "Client project"), StatusTone.Neutral), new(new("Demo aşaması", "Demo stage"), StatusTone.Active)],
-            Links = [new(new("Vitrin prototipi", "Storefront prototype"), "https://motor-vitrin.vercel.app/motor/")]
+            Links = [new(new("Arayüz önizlemesi", "Interface preview"), "https://motor-vitrin.vercel.app/motor/")]
         },
         new()
         {
@@ -263,21 +255,6 @@ public static class PortfolioContent
             Image = new("/img/projects/led-support-home.webp", new("LED Teknik Destek ana sayfası", "LED Teknik Destek home page"), 960, 600),
             Live = new(new("Canlı site", "Live site"), "https://asp-net-app-for-led.vercel.app"),
             Status = new(new("Canlıda", "Live"), StatusTone.Live)
-        },
-        new()
-        {
-            Name = "Motor Vitrin",
-            RepoName = "halilmertdeveli.github.io",
-            Category = new("E-ticaret · Web", "E-commerce · Web"),
-            Tags = "web",
-            WithClaude = true,
-            Summary = new(
-                "Motor mağazasının tarayıcıda gezilebilen statik arayüz prototipi: kategoriler, öne çıkan ürünler ve yeni gelenler. Fiyatlar ve görseller örnektir.",
-                "A static UI prototype of the Motor store you can browse: categories, featured products and new arrivals. Prices and images are placeholders."),
-            Stack = ["HTML", "CSS", "JavaScript", "Vercel"],
-            Image = new("/img/projects/motor-vitrin.webp", new("Motor Vitrin prototipinin ana sayfası", "Home page of the Motor Vitrin prototype"), 800, 500),
-            Live = new(new("Prototipi aç", "Open prototype"), "https://motor-vitrin.vercel.app/motor/"),
-            Status = new(new("Canlı prototip", "Live prototype"), StatusTone.Live)
         },
         new()
         {
@@ -355,7 +332,7 @@ public static class PortfolioContent
         new(new("Altyapı", "Infrastructure"), new("Geliştirmeden canlıya", "From local to production"),
             ["Docker", "Vercel", "Cloud Functions", "GitHub Actions", "Testcontainers", "Firebase Emulator Suite"]),
         new(new("Mimari ve mühendislik", "Architecture & engineering"), new("Kodun nasıl ayakta kaldığı", "How the code holds up"),
-            ["Clean / Onion Architecture", "Domain modelling", "Authentication & authorization", "Security rules", "Idempotency", "Automated testing", "Third-party integrations", "Claude Code"])
+            ["Clean / Onion Architecture", "Domain modelling", "Authentication & authorization", "Security rules", "Idempotency", "Automated testing", "Third-party integrations"])
     ];
 
     public static readonly IReadOnlyList<Milestone> Journey =
@@ -376,9 +353,9 @@ public static class PortfolioContent
             new("LED kontrol sistemleri için destek sitesi canlıya çıktı (Supabase, Resend, Vercel). Ardından çift taraflı defterli ClearPay ve WhatsApp destek botu geldi.",
                 "Shipped a live support site for LED control systems (Supabase, Resend, Vercel), followed by the double-entry ClearPay wallet and the WhatsApp support bot."),
             ["Supabase", "Vercel", "PostgreSQL", "Node.js"]),
-        new("2026 →", new("Claude ile ürün ölçeğinde işler", "Product-scale work with Claude"),
-            new("Mevora'yı lansmana hazırlıyorum; LED B2B platformunu ve Motor mağazasını Claude ile birlikte geliştiriyorum.",
-                "Preparing Mevora for launch and building the LED B2B platform and the Motor store together with Claude."),
-            ["Flutter", "Cloud Functions", ".NET 10", "Claude Code"])
+        new("2026 →", new("Ürün ölçeğinde işler", "Product-scale work"),
+            new("Mevora'yı lansmana hazırlıyorum; LED B2B platformunu ve Motor e-ticaret sitesini geliştiriyorum.",
+                "Preparing Mevora for launch and building the LED B2B platform and the Motor e-commerce site."),
+            ["Flutter", "Cloud Functions", ".NET 10"])
     ];
 }

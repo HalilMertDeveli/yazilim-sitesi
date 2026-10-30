@@ -1,0 +1,56 @@
+@model IndexModel
+@{
+    var projects = PortfolioContent.BuiltProjects;
+    var total = PortfolioContent.CommitTotal;
+    var max = projects.Max(p => p.Commits);
+    var width = projects.Max(p => p.Name.Length) + 2;
+}
+<section id="built" class="section section--built" aria-labelledby="built-title">
+    <div class="container">
+        <header class="section-head" data-reveal>
+            <p class="eyebrow"><span class="eyebrow__index">01</span>@Model.T("Geliştirdiklerim", "What I've built")</p>
+            <h2 id="built-title" class="section-title">@Model.T("Geliştirdiklerim", "What I've built")</h2>
+            <p class="section-lead">
+                @Model.T(
+                    "Mobil uygulamadan e-ticarete, geliştirdiğim ürünler. Sayılar GitHub geçmişimden: her depodaki commit'lerim.",
+                    "From mobile apps to e-commerce, the products I've built. The numbers come from my GitHub history: my commits in each repository.")
+            </p>
+        </header>
+
+        <div class="built" data-reveal>
+            <div class="term" role="group" aria-label="@Model.T("Commit sayıları", "Commit counts")" data-terminal>
+                <div class="term__bar" aria-hidden="true"><span></span><span></span><span></span><code>~/github</code></div>
+                <div class="term__body">
+                    <span class="term__cmd" data-line data-typed>$ git log --author="HalilMertDeveli" --oneline | wc -l</span>
+                    @foreach (var p in projects)
+                    {
+                        <span class="term__row" data-line>@(p.Name.PadRight(width, '.')) @p.Commits.ToString().PadLeft(4)</span>
+                    }
+                    <span class="term__total" data-line>@(Model.T("toplam", "total").PadRight(width, '.')) @total.ToString().PadLeft(4)</span>
+                </div>
+            </div>
+
+            <div class="built__list">
+                <p class="built__total">
+                    <span class="built__number" data-count="@total">@Model.FormatNumber(total)</span>
+                    <span class="built__caption">commit</span>
+                </p>
+                <ul class="repo-bars">
+                    @foreach (var p in projects)
+                    {
+                        var external = p.Href.StartsWith("http");
+                        <li style="--w:@((p.Commits * 100 / max).ToString())%">
+                            <a href="@p.Href" target="@(external ? "_blank" : null)" rel="@(external ? "noopener" : null)">
+                                <span class="repo-bars__name">@p.Name @if (p.IsPrivate) { @Icons.Lock }</span>
+                                <span class="repo-bars__count">@Model.FormatNumber(p.Commits)</span>
+                                <span class="repo-bars__summary">@Model.T(p.Summary)</span>
+                                <span class="repo-bars__track" aria-hidden="true"><span></span></span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <p class="built__note">@Model.T("30 Ekim 2026 itibarıyla, depoların varsayılan dalları. Kilitli depolar özel; kaynak kodları herkese açık değil.", "As of 30 October 2026, on each repository's default branch. Locked repositories are private, so their source isn't public.")</p>
+            </div>
+        </div>
+    </div>
+</section>

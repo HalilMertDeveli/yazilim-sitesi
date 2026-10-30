@@ -2410,11 +2410,11 @@ code {
 }
 
 /* ==========================================================================
-   v3: Claude section, animated project panels, LED ticker
+   v3: overview section, animated project panels, LED ticker
    ========================================================================== */
 :root {
   --ember: #ff7a45;
-  --claude: #e08a6a;
+  --warm: #e08a6a;
 }
 
 @property --spin {
@@ -2498,13 +2498,13 @@ code {
   height: 75px;
 }
 
-/* ---------- Claude section ---------- */
-.section--claude {
+/* ---------- Overview section ---------- */
+.section--built {
   overflow: clip;
   border-top: 0;
 }
 
-.section--claude::before {
+.section--built::before {
   content: "";
   position: absolute;
   top: -10%;
@@ -2520,7 +2520,7 @@ code {
   50% { transform: scale(1.14) translate(-3%, 4%); opacity: 0.65; }
 }
 
-.claude {
+.built {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
@@ -2544,7 +2544,7 @@ code {
   z-index: -1;
   padding: 1px;
   border-radius: inherit;
-  background: conic-gradient(from var(--spin), var(--line-strong) 0 62%, var(--claude) 78%, var(--accent-strong) 86%, var(--line-strong) 100%);
+  background: conic-gradient(from var(--spin), var(--line-strong) 0 62%, var(--warm) 78%, var(--accent-strong) 86%, var(--line-strong) 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
@@ -2604,7 +2604,7 @@ code {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px dashed var(--line-strong);
-  color: var(--claude);
+  color: var(--warm);
   font-weight: 500;
 }
 
@@ -2624,7 +2624,7 @@ code {
   50% { opacity: 0; }
 }
 
-.claude__total {
+.built__total {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -2632,8 +2632,8 @@ code {
   margin-bottom: 20px;
 }
 
-.claude__number {
-  background: linear-gradient(120deg, var(--claude), var(--accent-strong));
+.built__number {
+  background: linear-gradient(120deg, var(--warm), var(--accent-strong));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -2644,7 +2644,7 @@ code {
   font-variant-numeric: tabular-nums;
 }
 
-.claude__caption {
+.built__caption {
   color: var(--text-2);
 }
 
@@ -2703,26 +2703,21 @@ code {
   width: max(var(--w), 1.5%);
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--claude), var(--accent-strong));
+  background: linear-gradient(90deg, var(--warm), var(--accent-strong));
   transform-origin: left;
   transition: transform 1.5s var(--ease) 0.25s;
 }
 
-.js .claude:not(.is-visible) .repo-bars__track span {
+.js .built:not(.is-visible) .repo-bars__track span {
   transform: scaleX(0);
 }
 
-.claude__note {
+.built__note {
   margin-top: 14px;
   color: var(--text-3);
   font-size: 0.78rem;
 }
 
-.badge--claude {
-  color: var(--claude);
-  background: rgba(224, 138, 106, 0.1);
-  border-color: rgba(224, 138, 106, 0.38);
-}
 
 /* ---------- Case panels ---------- */
 .cases {
@@ -3123,7 +3118,7 @@ code {
 }
 
 @media (max-width: 960px) {
-  .claude {
+  .built {
     grid-template-columns: 1fr;
   }
 
@@ -3197,7 +3192,7 @@ code {
 
   .float-card,
   .term::before,
-  .section--claude::before {
+  .section--built::before {
     animation: none;
   }
 
@@ -3209,5 +3204,25 @@ code {
   .marquee {
     -webkit-mask-image: none;
     mask-image: none;
+  }
+}
+
+/* The lead card spans two columns so five cards fill the grid evenly. */
+@media (min-width: 641px) {
+  .project-grid > .project:first-child {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 641px) {
+  .project-grid > .project:first-child {
+    flex-direction: row;
+  }
+
+  .project-grid > .project:first-child .project__media {
+    flex: 0 0 56%;
+    aspect-ratio: auto;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
   }
 }

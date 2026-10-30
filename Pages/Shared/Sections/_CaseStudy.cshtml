@@ -14,10 +14,6 @@
                 {
                     <li class="badge @vm.ToneClass(badge.Tone)">@if (badge.Tone == StatusTone.Private) { @Icons.Lock }@vm.T(badge.Label)</li>
                 }
-                @if (s.ClaudeCommits is not null)
-                {
-                    <li class="badge badge--claude">@vm.T("Claude ile", "With Claude")</li>
-                }
             </ul>
         </div>
         <p class="case__tagline">@vm.T(s.Tagline)</p>
