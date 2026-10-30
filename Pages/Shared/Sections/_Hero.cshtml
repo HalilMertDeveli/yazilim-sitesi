@@ -1,4 +1,7 @@
 @model IndexModel
+@{
+    var stack = new[] { "C#", ".NET", "ASP.NET Core", "EF Core", "Flutter", "Dart", "Firebase", "PostgreSQL", "Docker", "Claude Code" };
+}
 <section id="top" class="hero" aria-labelledby="hero-title">
     <canvas class="hero__matrix" data-matrix aria-hidden="true"></canvas>
     <div class="hero__fade" aria-hidden="true"></div>
@@ -22,8 +25,8 @@
 
             <p class="hero__lead" data-reveal>
                 @Model.T(
-                    "ASP.NET Core ile backend sistemleri, Flutter ile mobil uygulamalar geliştiriyorum. Gerçek bir problemi çözen, testleri yazılmış ve canlıya çıkmaya hazır yazılımlar üretiyorum: bir eşleşme uygulamasından LED ekran sektörü için destek ve ticaret sistemlerine kadar.",
-                    "I build backend systems with ASP.NET Core and mobile apps with Flutter. I focus on software that solves a real problem, comes with tests and is ready to ship, from a matching app to support and commerce systems for the LED display industry.")
+                    "ASP.NET Core ile backend sistemleri, Flutter ile mobil uygulamalar geliştiriyorum. Gerçek bir problemi çözen ve testleri yazılmış yazılımlar üretiyorum: bir tanışma uygulamasından LED ekran sektörü için destek ve ticaret sistemlerine, motosiklet parça mağazasına kadar.",
+                    "I build backend systems with ASP.NET Core and mobile apps with Flutter. I focus on software that solves a real problem and comes with tests, from a dating app to support and commerce systems for the LED display industry and a motorcycle parts store.")
             </p>
 
             <div class="hero__actions" data-reveal>
@@ -68,8 +71,17 @@
 
     <div class="container hero__stack" data-reveal>
         <p class="hero__stack-label">@Model.T("Çalıştığım teknolojiler", "Daily stack")</p>
-        <ul class="hero__stack-list">
-            <li>C#</li><li>.NET 8</li><li>ASP.NET Core</li><li>EF Core</li><li>Flutter</li><li>Dart</li><li>Firebase</li><li>PostgreSQL</li><li>Docker</li>
-        </ul>
+        <div class="marquee">
+            <ul class="hero__stack-list">
+                @foreach (var tech in stack)
+                {
+                    <li>@tech</li>
+                }
+                @foreach (var tech in stack)
+                {
+                    <li aria-hidden="true">@tech</li>
+                }
+            </ul>
+        </div>
     </div>
 </section>

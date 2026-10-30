@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Portfolio.Models;
@@ -37,8 +38,8 @@ public class IndexModel : PageModel
         "Halil Mert Develi — Software Engineer · ASP.NET Core & Flutter");
 
     public string MetaDescription => T(
-        "İstanbul'da yazılım mühendisi Halil Mert Develi'nin portföyü: ASP.NET Core backend sistemleri, Flutter mobil uygulamalar ve LED ekran sektörü için yazılımlar. Mevora, LED-COM ve LED Support Bot vaka çalışmaları.",
-        "Portfolio of Halil Mert Develi, a software engineer in Istanbul building ASP.NET Core backends, Flutter mobile apps and software for the LED display industry. Case studies: Mevora, LED-COM and LED Support Bot.");
+        "İstanbul'da yazılım mühendisi Halil Mert Develi'nin portföyü: ASP.NET Core backend sistemleri, Flutter mobil uygulamalar ve LED ekran sektörü için yazılımlar. Mevora, LED B2B Platform, Motor ve LED Support Bot projeleri ile Claude ile birlikte geliştirdiklerim.",
+        "Portfolio of Halil Mert Develi, a software engineer in Istanbul building ASP.NET Core backends, Flutter mobile apps and software for the LED display industry. Projects: Mevora, LED B2B Platform, Motor and LED Support Bot, including what I build with Claude.");
 
     /// <summary>schema.org Person + WebSite graph. Serialized with the default encoder, which escapes &lt; and &gt;.</summary>
     public string JsonLd => JsonSerializer.Serialize(new Dictionary<string, object>
@@ -80,6 +81,9 @@ public class IndexModel : PageModel
 
     public string T(Text text) => text.Get(Lang);
 
+    public string FormatNumber(int value) =>
+        value.ToString("N0", CultureInfo.GetCultureInfo(IsEn ? "en-US" : "tr-TR"));
+
     public string FormatMonth(DateTimeOffset? date) =>
         date is null
             ? "—"
@@ -96,4 +100,5 @@ public class IndexModel : PageModel
 }
 
 /// <summary>View model for one case study partial.</summary>
+ 
 public sealed record CaseStudyView(IndexModel Page, CaseStudy Study, int Index);

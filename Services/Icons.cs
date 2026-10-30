@@ -17,6 +17,7 @@ public static class Icons
     public static HtmlString Circle => Stroke("<circle cx=\"12\" cy=\"12\" r=\"7\" stroke-dasharray=\"3 3\"/>");
     public static HtmlString Copy => Stroke("<rect x=\"9\" y=\"9\" width=\"12\" height=\"12\" rx=\"2\"/><path d=\"M5 15V5a2 2 0 0 1 2-2h10\"/>");
     public static HtmlString MapPin => Stroke("<path d=\"M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z\"/><circle cx=\"12\" cy=\"9\" r=\"2.5\"/>");
+    public static HtmlString ChevronDown => Stroke("<path d=\"m6 9 6 6 6-6\"/>", "icon--chevron");
     public static HtmlString Menu => Stroke("<path d=\"M4 8h16\"/><path d=\"M4 16h16\"/>");
 
     public static HtmlString GitHub => new(

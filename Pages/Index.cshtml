@@ -8,20 +8,27 @@
     ViewData["JsonLd"] = Model.JsonLd;
 }
 
+<div class="scroll-progress" aria-hidden="true" data-progress></div>
 <partial name="Sections/_Nav" model="Model" />
 
 <main id="main">
     <partial name="Sections/_Hero" model="Model" />
 
+    <div class="led-ticker" aria-hidden="true">
+        <canvas data-ticker="@Model.T($"MEVORA  ///  LED B2B PLATFORM  ///  MOTOR  ///  LED SUPPORT BOT  ///  CLEARPAY  ///  CLAUDE İLE {PortfolioContent.ClaudeCommitTotal} COMMIT  ///  ", $"MEVORA  ///  LED B2B PLATFORM  ///  MOTOR  ///  LED SUPPORT BOT  ///  CLEARPAY  ///  {PortfolioContent.ClaudeCommitTotal} COMMITS WITH CLAUDE  ///  ")"></canvas>
+    </div>
+
+    <partial name="Sections/_Claude" model="Model" />
+
     <section id="work" class="section section--work" aria-labelledby="work-title">
         <div class="container">
             <header class="section-head" data-reveal>
-                <p class="eyebrow"><span class="eyebrow__index">01</span>@Model.T("Seçili işler", "Selected work")</p>
+                <p class="eyebrow"><span class="eyebrow__index">02</span>@Model.T("Öne çıkan ürünler", "Featured products")</p>
                 <h2 id="work-title" class="section-title">@Model.T("Ürettiğim ürünler ve sistemler", "Products and systems I've engineered")</h2>
                 <p class="section-lead">
                     @Model.T(
-                        "Üç vaka çalışması: problem, benim katkım, mühendislik kararları ve projenin bugünkü durumu. Biten ile planlanan ayrı gösterilir.",
-                        "Three case studies covering the problem, my contribution, the engineering decisions and where each project stands today. Shipped and planned work are shown separately.")
+                        "Her ürün için ne işe yaradığı, benim katkım ve bugünkü durumu. Teknik ayrıntılar ve biten ile planlanan işler \"Mühendislik detayları\" altında.",
+                        "For each product: what it does, my contribution and where it stands today. Technical depth and the split between built and planned work sit under \"Engineering details\".")
                 </p>
             </header>
 
