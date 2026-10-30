@@ -32,8 +32,8 @@ public sealed record ProjectImage(string Src, Text Alt, int Width, int Height);
 /// <summary>A headline number on a case study. Value is rendered in full and counted up by script.</summary>
 public sealed record Metric(int Value, string Suffix, Text Label);
 
-/// <summary>A product in the overview, with my commit count.</summary>
-public sealed record BuiltProject(string Name, int Commits, Text Summary, string Href, bool IsPrivate = false);
+/// <summary>A headline number in the recruiter summary.</summary>
+public sealed record ProofStat(int Value, string Suffix, Text Label);
 
 /// <summary>A smaller or earlier repository, listed as one line.</summary>
 public sealed record ArchiveRepo(string RepoName, string Language, Text Summary, string Tags);
@@ -58,8 +58,8 @@ public sealed class CaseStudy
     public IReadOnlyList<ProjectLink> Links { get; init; } = [];
     public Text? PrivateNote { get; init; }
 
-    /// <summary>Name of the partial under Pages/Shared/Portfolio that draws the visual.</summary>
-    public required string Visual { get; init; }
+    /// <summary>Name of the partial under Pages/Shared/Sections holding the playable demo.</summary>
+    public required string Demo { get; init; }
 }
 
 /// <summary>Secondary project rendered as a compact card.</summary>

@@ -1,0 +1,30 @@
+@model IndexModel
+@{
+    var signals = new (string Label, int Weight, int Start)[]
+    {
+        (Model.T("Şarkılar", "Tracks"), 40, 80),
+        (Model.T("Sanatçılar", "Artists"), 30, 55),
+        (Model.T("Türler", "Genres"), 20, 90),
+        (Model.T("Son dinlenen", "Recent"), 10, 30)
+    };
+    var score = signals.Sum(s => s.Weight * s.Start) / 100;
+}
+<div class="demo demo--mevora" data-demo-match data-best-label="@Model.T("En güçlü ortak nokta:", "Strongest match:")">
+    <p class="demo__kicker"><span class="pulse-dot" aria-hidden="true"></span>@Model.T("Dene: iki kişinin müzik uyumu", "Try it: two people's music match")</p>
+    <div class="match">
+        <div class="match__ring" style="--score: @score" role="status" aria-live="polite">
+            <span><span data-match-score>@score</span><small>%</small></span>
+        </div>
+        <div class="match__sliders">
+            @for (var i = 0; i < signals.Length; i++)
+            {
+                <label class="match__row">
+                    <span class="match__label">@signals[i].Label <small>×@signals[i].Weight%</small></span>
+                    <input type="range" min="0" max="100" value="@signals[i].Start" data-weight="@signals[i].Weight" data-name="@signals[i].Label" />
+                </label>
+            }
+        </div>
+    </div>
+    <p class="match__why" data-match-why>@Model.T("En güçlü ortak nokta:", "Strongest match:") @signals[2].Label</p>
+    <p class="demo__note">@Model.T("Ağırlıklar uygulamadakiyle aynı. Mevora'da bu skor sunucuda hesaplanır ve kullanıcıya nedeniyle gösterilir.", "Weights match the app. In Mevora this score is computed on the server and shown with its reasons.")</p>
+</div>

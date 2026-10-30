@@ -1,0 +1,30 @@
+@model IndexModel
+@{
+    var pitches = new[] { "1.86", "2.5", "3.91", "4.81" };
+}
+<div class="demo demo--wall" data-demo-wall>
+    <p class="demo__kicker"><span class="pulse-dot" aria-hidden="true"></span>@Model.T("Dene: kendi LED ekranını yapılandır", "Try it: configure your own LED wall")</p>
+    <canvas class="wallcfg__preview" aria-hidden="true" data-wall-preview></canvas>
+    <div class="wallcfg__controls">
+        <label class="match__row">
+            <span class="match__label">@Model.T("Genişlik", "Width") <small><span data-wall-w>5</span> m</small></span>
+            <input type="range" min="1" max="10" step="0.5" value="5" data-wall-width />
+        </label>
+        <label class="match__row">
+            <span class="match__label">@Model.T("Yükseklik", "Height") <small><span data-wall-h>3</span> m</small></span>
+            <input type="range" min="1" max="5" step="0.5" value="3" data-wall-height />
+        </label>
+        <div class="seg" role="group" aria-label="@Model.T("Piksel aralığı", "Pixel pitch")">
+            @foreach (var pitch in pitches)
+            {
+                <button type="button" class="seg__btn" data-pitch="@pitch" aria-pressed="@(pitch == "2.5" ? "true" : "false")">P@(pitch)</button>
+            }
+        </div>
+    </div>
+    <dl class="wallcfg__out" role="status" aria-live="polite">
+        <div><dt>@Model.T("Çözünürlük", "Resolution")</dt><dd data-wall-res>2000 × 1200</dd></div>
+        <div><dt>@Model.T("Piksel", "Pixels")</dt><dd data-wall-px>2,4 M</dd></div>
+        <div><dt>@Model.T("Kabin", "Cabinets")</dt><dd data-wall-cab>60</dd></div>
+    </dl>
+    <p class="demo__note">@Model.T("Temsili hesap: 500×500 mm kabin varsayımıyla. Gerçek motor ve fiyatlandırma özel.", "Illustrative maths, assuming 500×500 mm cabinets. The real engine and pricing are private.")</p>
+</div>

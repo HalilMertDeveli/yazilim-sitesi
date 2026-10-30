@@ -5,7 +5,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-mobil-02569B?logo=flutter)](https://flutter.dev/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-Android-7F52FF?logo=kotlin)](https://kotlinlang.org/)
 
-Halil Mert Develi'nin kişisel yazılım mühendisi portföyü (TR + EN): **ürünler ve sistemler**, depo listesi değil.
+Halil Mert Develi'nin kişisel yazılım mühendisi portföyü (TR + EN): **denenebilir ürünler**, depo listesi değil.
 Öne çıkan vaka çalışmaları: **Mevora** (Flutter + Firebase), **LED B2B Platform** (LED ticaret platformu), **Motor** (motosiklet parça mağazası) ve **LED Support Bot** (WhatsApp destek karşılama).
 
 ---

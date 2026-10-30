@@ -18,19 +18,16 @@ public static class PortfolioContent
     private static readonly StatusBadge PrivateProject = new(new("Özel proje", "Private project"), StatusTone.Private);
 
     /// <summary>
-    /// My commits on each default branch, counted from GitHub history on 2026-10-30.
-    /// Update by hand; private repositories can't be read at runtime.
+    /// Headline proof. Commits are mine on the default branches of Mevora, the LED platform, Motor,
+    /// ClearPay and LED Teknik Destek, counted from GitHub on 2026-10-30. Update by hand;
+    /// private repositories can't be read at runtime.
     /// </summary>
-    public static readonly IReadOnlyList<BuiltProject> BuiltProjects =
+    public static readonly IReadOnlyList<ProofStat> ProofStats =
     [
-        new("Mevora", 716, new("Flutter + Firebase tanışma uygulaması", "Flutter + Firebase dating app"), "#mevora", IsPrivate: true),
-        new("LED B2B Platform", 440, new("LED ekran alımı için yönetilen B2B platform", "Managed B2B platform for buying LED screens"), "#led-platform", IsPrivate: true),
-        new("Motor", 213, new("Motosiklet parçası satan e-ticaret sitesi", "E-commerce site selling motorcycle parts"), "#motor"),
-        new("ClearPay", 58, new("Çift taraflı defterli demo dijital cüzdan", "Demo digital wallet on a double-entry ledger"), "https://github.com/HalilMertDeveli/clearpay"),
-        new("LED Teknik Destek", 30, new("LED kontrol sistemleri için canlı destek sitesi", "Live support site for LED control systems"), "https://asp-net-app-for-led.vercel.app")
+        new(4, "", new("öne çıkan ürün", "featured products")),
+        new(1457, "", new("commit", "commits")),
+        new(2600, "+", new("otomatik test tek üründe", "automated tests in one product"))
     ];
-
-    public static int CommitTotal => BuiltProjects.Sum(p => p.Commits);
 
     public static readonly IReadOnlyList<CaseStudy> CaseStudies =
     [
@@ -38,7 +35,7 @@ public static class PortfolioContent
         {
             Id = "mevora",
             Name = "Mevora",
-            Visual = "_VisualMevora",
+            Demo = "_DemoMevora",
             Accent = "--violet",
             Tagline = new(
                 "İki kişinin neden uyumlu olduğunu açıkça gösteren, kesin konumu gizli tutan, iOS ve Android için bir tanışma uygulaması.",
@@ -85,7 +82,7 @@ public static class PortfolioContent
         {
             Id = "led-platform",
             Name = "LED B2B Platform",
-            Visual = "_VisualLedCommerce",
+            Demo = "_DemoWall",
             Accent = "--accent",
             Tagline = new(
                 "LED ekran almak isteyen firmalar için yapılandırma, teklif ve siparişi tek çatıda toplayan B2B platform. Tedarikçiler ve maliyetleri müşteriye görünmez.",
@@ -143,7 +140,7 @@ public static class PortfolioContent
         {
             Id = "motor",
             Name = "Motor",
-            Visual = "_VisualMotor",
+            Demo = "_DemoMotor",
             Accent = "--ember",
             Tagline = new(
                 "Motosiklet parçası satan bir işletme için e-ticaret sitesi: ürün kataloğu, sepet, ödeme ve yönetim paneli bir arada; parçalar marka, model ve yıla göre aranır.",
@@ -189,7 +186,7 @@ public static class PortfolioContent
         {
             Id = "led-support-bot",
             Name = "LED Support Bot",
-            Visual = "_VisualLedSupportBot",
+            Demo = "_DemoBot",
             Accent = "--live",
             Tagline = new(
                 "LED ekran teknik servisi için WhatsApp destek karşılama sistemi: teknisyenin ihtiyaç duyduğu bilgileri toplar, sonra konuşmayı bir insana devreder.",

@@ -1,0 +1,28 @@
+@model IndexModel
+<section id="top" class="hero wall" aria-labelledby="hero-title" data-wall>
+    <canvas class="wall__canvas" aria-hidden="true" data-wall-canvas></canvas>
+    <h1 id="hero-title" class="wall__title">Halil Mert Develi</h1>
+
+    <div class="container wall__copy" data-wall-copy>
+        <div class="wall__intro">
+            <p class="hero__meta" data-reveal>
+                <span class="pulse-dot" aria-hidden="true"></span>
+                @Model.T("Yazılım Mühendisi", "Software Engineer")
+                <span class="hero__meta-sep" aria-hidden="true">/</span>
+                ASP.NET Core &amp; Flutter
+                <span class="hero__meta-sep" aria-hidden="true">/</span>
+                <span class="hero__meta-loc">@Icons.MapPin @Model.T("İstanbul", "Istanbul")</span>
+            </p>
+            <p class="wall__lead" data-reveal>
+                @Model.T(
+                    "Backend'den mobile, fikri çalışan ürüne dönüştürüyorum. Ürünlerimi okumakla kalma: aşağıda dene.",
+                    "From backend to mobile, I turn ideas into working products. Don't just read about them: try them below.")
+            </p>
+        </div>
+        <div class="wall__actions" data-reveal>
+            <a class="btn btn--primary btn--lg" href="#work" data-magnetic>@Model.T("Ürünleri dene", "Try the products") @Icons.ArrowRight</a>
+            <button class="btn btn--ghost btn--lg" type="button" data-open="brief">@Model.T("30 saniyelik özet", "30-second brief")</button>
+            <a class="btn btn--ghost btn--lg" href="@PortfolioContent.GitHubUrl" target="_blank" rel="noopener">@Icons.GitHub GitHub</a>
+        </div>
+    </div>
+</section>

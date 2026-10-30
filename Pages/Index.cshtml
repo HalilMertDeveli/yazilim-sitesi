@@ -9,35 +9,35 @@
 }
 
 <div class="scroll-progress" aria-hidden="true" data-progress></div>
+<div class="cursor-glow" aria-hidden="true" data-cursor></div>
 <partial name="Sections/_Nav" model="Model" />
 
 <main id="main">
-    <partial name="Sections/_Hero" model="Model" />
+    <partial name="Sections/_Wall" model="Model" />
+    <partial name="Sections/_Proof" model="Model" />
 
     <div class="led-ticker" aria-hidden="true">
         <canvas data-ticker="MEVORA  ///  LED B2B PLATFORM  ///  MOTOR  ///  LED SUPPORT BOT  ///  CLEARPAY  ///  "></canvas>
     </div>
 
-    <partial name="Sections/_Built" model="Model" />
-
     <section id="work" class="section section--work" aria-labelledby="work-title">
         <div class="container">
             <header class="section-head" data-reveal>
-                <p class="eyebrow"><span class="eyebrow__index">02</span>@Model.T("Öne çıkan ürünler", "Featured products")</p>
-                <h2 id="work-title" class="section-title">@Model.T("Ürettiğim ürünler ve sistemler", "Products and systems I've engineered")</h2>
+                <p class="eyebrow"><span class="eyebrow__index">01</span>@Model.T("Ürünler", "Products")</p>
+                <h2 id="work-title" class="section-title section-title--xl">@Model.T("Okumakla kalma, dene.", "Don't just read. Try it.")</h2>
                 <p class="section-lead">
                     @Model.T(
-                        "Her ürün için ne işe yaradığı, benim katkım ve bugünkü durumu. Teknik ayrıntılar ve biten ile planlanan işler \"Mühendislik detayları\" altında.",
-                        "For each product: what it does, my contribution and where it stands today. Technical depth and the split between built and planned work sit under \"Engineering details\".")
+                        "Dört ürün, dört küçük demo. Her birinin ne işe yaradığını burada görüp kurcalayabilirsin; teknik ayrıntılar bir tık ötede.",
+                        "Four products, four small demos. See what each one does and play with it right here; the technical depth is one click away.")
                 </p>
             </header>
+        </div>
 
-            <div class="cases">
-                @for (var i = 0; i < PortfolioContent.CaseStudies.Count; i++)
-                {
-                    <partial name="Sections/_CaseStudy" model="new CaseStudyView(Model, PortfolioContent.CaseStudies[i], i + 1)" />
-                }
-            </div>
+        <div class="products">
+            @for (var i = 0; i < PortfolioContent.CaseStudies.Count; i++)
+            {
+                <partial name="Sections/_Product" model="new CaseStudyView(Model, PortfolioContent.CaseStudies[i], i + 1)" />
+            }
         </div>
     </section>
 
@@ -50,3 +50,4 @@
 </main>
 
 <partial name="Sections/_Footer" model="Model" />
+<partial name="Sections/_Brief" model="Model" />

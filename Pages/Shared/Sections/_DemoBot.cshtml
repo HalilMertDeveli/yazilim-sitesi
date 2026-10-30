@@ -1,0 +1,46 @@
+@model IndexModel
+@{
+    var script = new (string From, string Text, string? Slot)[]
+    {
+        ("in", Model.T("Merhaba, ekranın bir bölümü kapalı.", "Hi, part of the screen is off."), null),
+        ("out", Model.T("Yardımcı olayım. Ekran ölçüsü nedir?", "Happy to help. What size is the screen?"), null),
+        ("in", "4 × 3 m", "size"),
+        ("out", Model.T("Panel etiketinin fotoğrafını gönderir misiniz?", "Could you send a photo of the panel label?"), null),
+        ("in", Model.T("Fotoğraf gönderildi", "Photo sent"), "photo"),
+        ("out", Model.T("Kaç receiver kart var?", "How many receiver cards are there?"), null),
+        ("in", "12", "receiver"),
+        ("out", Model.T("Son olarak AnyDesk ID'nizi alabilir miyim?", "Finally, could I have your AnyDesk ID?"), null),
+        ("in", "000 000 000", "anydesk"),
+        ("out", Model.T("Teşekkürler, bilgileri teknisyene aktarıyorum.", "Thanks, I'm passing this to a technician."), null)
+    };
+    var slots = new (string Key, string Label)[]
+    {
+        ("size", Model.T("Ekran ölçüsü", "Screen size")),
+        ("photo", Model.T("Etiket fotoğrafı", "Label photo")),
+        ("receiver", Model.T("Receiver sayısı", "Receiver count")),
+        ("anydesk", "AnyDesk ID")
+    };
+}
+<div class="demo demo--bot" data-demo-bot>
+    <p class="demo__kicker"><span class="pulse-dot" aria-hidden="true"></span>@Model.T("İzle: bot vakayı nasıl topluyor", "Watch: how the bot builds a case")</p>
+    <div class="bot">
+        <ol class="bot__chat" data-bot-chat>
+            @foreach (var line in script)
+            {
+                <li class="bot__msg bot__msg--@line.From" data-slot="@line.Slot">@line.Text</li>
+            }
+            <li class="bot__msg bot__msg--system">@Model.T("Vaka tamam: teknisyene devredildi", "Case complete: handed to a technician")</li>
+        </ol>
+        <div class="bot__side">
+            <p class="bot__title">@Model.T("Vaka", "Case")</p>
+            <ul class="slots">
+                @foreach (var slot in slots)
+                {
+                    <li data-slot-key="@slot.Key">@Icons.Check<span>@slot.Label</span></li>
+                }
+            </ul>
+            <button class="btn btn--ghost btn--sm" type="button" data-bot-replay>@Model.T("Baştan oynat", "Replay")</button>
+        </div>
+    </div>
+    <p class="demo__note">@Model.T("Örnek konuşma; gerçek müşteri verisi içermez.", "A sample conversation with no real customer data.")</p>
+</div>
