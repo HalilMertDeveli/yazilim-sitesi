@@ -29,12 +29,28 @@ public sealed record Highlight(Text Title, Text Body);
 
 public sealed record ProjectImage(string Src, Text Alt, int Width, int Height);
 
+/// <summary>A headline number on a case study. Value is rendered in full and counted up by script.</summary>
+public sealed record Metric(int Value, string Suffix, Text Label);
+
+/// <summary>A repository with commits co-authored by Claude.</summary>
+public sealed record ClaudeProject(Text Name, int Commits, Text Summary, string Href, bool IsPrivate = false);
+
+/// <summary>A smaller or earlier repository, listed as one line.</summary>
+public sealed record ArchiveRepo(string RepoName, string Language, Text Summary, string Tags);
+
 /// <summary>Flagship project rendered as a case study.</summary>
 public sealed class CaseStudy
 {
     public required string Id { get; init; }
     public required string Name { get; init; }
     public required Text Tagline { get; init; }
+    public required IReadOnlyList<Metric> Metrics { get; init; }
+
+    /// <summary>CSS custom property holding the project's accent colour.</summary>
+    public required string Accent { get; init; }
+
+    /// <summary>Commits co-authored by Claude, when the project has any.</summary>
+    public int? ClaudeCommits { get; init; }
     public required Text Problem { get; init; }
     public required Text Contribution { get; init; }
     public required IReadOnlyList<Highlight> Highlights { get; init; }
@@ -44,9 +60,6 @@ public sealed class CaseStudy
     public IReadOnlyList<Text> Roadmap { get; init; } = [];
     public IReadOnlyList<ProjectLink> Links { get; init; } = [];
     public Text? PrivateNote { get; init; }
-
-    /// <summary>Public GitHub repository name used for live stats, if any.</summary>
-    public string? RepoName { get; init; }
 
     /// <summary>Name of the partial under Pages/Shared/Portfolio that draws the visual.</summary>
     public required string Visual { get; init; }
@@ -60,6 +73,10 @@ public sealed class ProjectCard
     public required Text Category { get; init; }
     public required IReadOnlyList<string> Stack { get; init; }
     public required string RepoName { get; init; }
+
+    /// <summary>Space-separated filter tags.</summary>
+    public required string Tags { get; init; }
+    public bool WithClaude { get; init; }
     public ProjectImage? Image { get; init; }
     public string? Glyph { get; init; }
     public ProjectLink? Live { get; init; }

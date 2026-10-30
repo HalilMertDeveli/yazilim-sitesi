@@ -114,6 +114,260 @@
     });
   }
 
+  const animate = !reduceMotion.matches;
+  const onceVisible = (el, fn, options = { threshold: 0.3 }) => {
+    if (!("IntersectionObserver" in window)) return fn(el);
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      fn(el);
+    }, options);
+    io.observe(el);
+  };
+
+  /* ---------- Scroll progress ---------- */
+  const progress = document.querySelector("[data-progress]");
+  if (progress) {
+    let queued = false;
+    const paint = () => {
+      queued = false;
+      const max = root.scrollHeight - window.innerHeight;
+      progress.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1).toFixed(4) : 0})`;
+    };
+    const queue = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paint);
+    };
+    paint();
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue, { passive: true });
+  }
+
+  /* ---------- Cursor light: lights up the LED dots under the pointer ---------- */
+  if (finePointer.matches && animate) {
+    document.querySelectorAll("[data-spot]").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", `${(e.clientX - r.left).toFixed(0)}px`);
+        el.style.setProperty("--my", `${(e.clientY - r.top).toFixed(0)}px`);
+      }, { passive: true });
+    });
+  }
+
+  /* ---------- Counters ---------- */
+  // The final number is already in the markup, so no-JS and reduced motion show the real value.
+  document.querySelectorAll("[data-count]").forEach((el) => {
+    if (!animate) return;
+    const target = Number(el.dataset.count);
+    const format = new Intl.NumberFormat(root.lang || "tr");
+    onceVisible(el, () => {
+      const started = performance.now();
+      const duration = 1400;
+      const tick = (now) => {
+        const p = Math.min((now - started) / duration, 1);
+        el.textContent = format.format(Math.round(target * (1 - Math.pow(1 - p, 4))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  });
+
+  /* ---------- Eyebrows decode like a controller boot line ---------- */
+  if (animate) {
+    const glyphs = "01#/<>_+*";
+    document.querySelectorAll(".eyebrow").forEach((el) => {
+      const node = [...el.childNodes].reverse().find((n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      if (!node) return;
+      const text = node.textContent;
+      onceVisible(el, () => {
+        const started = performance.now();
+        const tick = (now) => {
+          const shown = Math.floor((now - started) / 28);
+          if (shown >= text.length) {
+            node.textContent = text;
+            return;
+          }
+          node.textContent = text.slice(0, shown) + [...text.slice(shown)].map((c) => (c === " " ? " " : glyphs[Math.floor(Math.random() * glyphs.length)])).join("");
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, { threshold: 0.6 });
+    });
+  }
+
+  /* ---------- Terminal types its real output ---------- */
+  const terminal = document.querySelector("[data-terminal]");
+  if (terminal && animate) {
+    const lines = [...terminal.querySelectorAll("[data-line]")];
+    const full = lines.map((line) => line.textContent);
+    lines.forEach((line) => {
+      line.textContent = "";
+      line.classList.add("is-pending");
+    });
+    onceVisible(terminal, () => {
+      let index = 0;
+      const next = () => {
+        if (index >= lines.length) {
+          terminal.classList.add("is-done");
+          return;
+        }
+        const line = lines[index];
+        const text = full[index];
+        line.classList.remove("is-pending");
+        line.classList.add("is-typing");
+        const typed = line.hasAttribute("data-typed");
+        let shown = typed ? 0 : text.length;
+        const step = () => {
+          line.textContent = text.slice(0, shown);
+          if (shown < text.length) {
+            shown += 1;
+            setTimeout(step, 18);
+            return;
+          }
+          line.classList.remove("is-typing");
+          index += 1;
+          setTimeout(next, typed ? 240 : 110);
+        };
+        step();
+      };
+      next();
+    });
+  }
+
+  /* ---------- Project filter ---------- */
+  const filterBar = document.querySelector("[data-filters]");
+  if (filterBar) {
+    const buttons = [...filterBar.querySelectorAll("[data-filter]")];
+    const items = [...document.querySelectorAll("[data-tags]")];
+    const count = document.querySelector("[data-filter-count]");
+    const apply = (filter) => {
+      let visible = 0;
+      items.forEach((item) => {
+        const show = filter === "all" || item.dataset.tags.split(" ").includes(filter);
+        item.hidden = !show;
+        if (show) visible += 1;
+        // Reveal immediately: a card that was filtered out never crossed the observer.
+        item.classList.add("is-visible");
+      });
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === filter)));
+      if (count) count.textContent = String(visible);
+    };
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const run = () => apply(button.dataset.filter);
+        if (animate && !document.hidden && document.startViewTransition) {
+          // A skipped transition rejects these promises; the filter has still been applied.
+          const transition = document.startViewTransition(run);
+          transition.ready.catch(() => {});
+          transition.finished.catch(() => {});
+        } else {
+          run();
+        }
+      });
+    });
+  }
+
+  /* ---------- LED ticker ---------- */
+  // Rasterises the text once, then scrolls it across a dot grid like a real LED sign.
+  const ticker = document.querySelector("[data-ticker]");
+  if (ticker && ticker.getContext) {
+    const ctx = ticker.getContext("2d", { alpha: true });
+    const rows = 15;
+    const palette = [[243, 181, 98], [185, 163, 255], [141, 182, 255], [95, 211, 160]];
+    let lit = new Uint8Array(0), textCols = 1, gap = 5, cols = 0, w = 0, dpr = 1;
+    let running = false, visible = true, raf = 0, offset = 0, last = 0;
+
+    const rasterise = () => {
+      const source = document.createElement("canvas");
+      const sctx = source.getContext("2d", { willReadFrequently: true });
+      const font = `700 ${rows - 2}px ${getComputedStyle(root).getPropertyValue("--font-sans")}`;
+      sctx.font = font;
+      const text = ticker.dataset.ticker;
+      textCols = Math.ceil(sctx.measureText(text).width) + 40;
+      source.width = textCols;
+      source.height = rows;
+      sctx.font = font;
+      sctx.textBaseline = "middle";
+      sctx.fillStyle = "#fff";
+      sctx.fillText(text, 0, rows / 2 + 1);
+      const data = sctx.getImageData(0, 0, textCols, rows).data;
+      lit = new Uint8Array(textCols * rows);
+      for (let i = 0; i < lit.length; i++) lit[i] = data[i * 4 + 3] > 96 ? 1 : 0;
+    };
+
+    const resize = () => {
+      gap = window.innerWidth < 640 ? 4 : 5;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = ticker.getBoundingClientRect().width;
+      const h = rows * gap;
+      ticker.style.height = `${h}px`;
+      ticker.width = Math.round(w * dpr);
+      ticker.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / gap) + 1;
+      draw();
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, rows * gap);
+      const shift = Math.floor(offset);
+      const size = gap - 1.5;
+      const span = Math.max(cols, 1);
+      for (let x = 0; x < cols; x++) {
+        const col = (x + shift) % textCols;
+        const band = ((col / textCols) * palette.length * 3) % palette.length;
+        const [r, g, b] = palette[Math.floor(band)];
+        const edge = Math.min(x, span - x) / 14;
+        const fade = Math.min(edge, 1);
+        for (let y = 0; y < rows; y++) {
+          const on = lit[y * textCols + col];
+          ctx.fillStyle = on ? `rgba(${r},${g},${b},${(0.95 * fade).toFixed(3)})` : "rgba(255,255,255,0.045)";
+          ctx.fillRect(x * gap, y * gap, size, size);
+        }
+      }
+    };
+
+    const loop = (now) => {
+      offset = (offset + Math.min(now - last, 50) * 0.022) % textCols;
+      last = now;
+      draw();
+      raf = requestAnimationFrame(loop);
+    };
+
+    const play = () => {
+      if (running || reduceMotion.matches || !visible || document.hidden) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+
+    const pause = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    const boot = () => {
+      rasterise();
+      resize();
+      play();
+    };
+
+    // The webfont changes the letter shapes, so rasterise after it has loaded.
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(boot);
+    window.addEventListener("resize", () => {
+      clearTimeout(resize.t);
+      resize.t = setTimeout(resize, 120);
+    }, { passive: true });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        visible ? play() : pause();
+      }).observe(ticker);
+    }
+    document.addEventListener("visibilitychange", () => (document.hidden ? pause() : play()));
+  }
+
   /* ---------- Copy email ---------- */
   const status = document.querySelector("[data-copy-status]");
   document.querySelectorAll("[data-copy]").forEach((btn) => {

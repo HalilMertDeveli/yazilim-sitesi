@@ -6,7 +6,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-Android-7F52FF?logo=kotlin)](https://kotlinlang.org/)
 
 Halil Mert Develi'nin kişisel yazılım mühendisi portföyü (TR + EN): **ürünler ve sistemler**, depo listesi değil.
-Öne çıkan vaka çalışmaları: **Mevora** (Flutter + Firebase), **LED-COM** (B2B LED ticaret platformu) ve **LED Support Bot** (WhatsApp destek karşılama).
+Öne çıkan vaka çalışmaları: **Mevora** (Flutter + Firebase), **LED B2B Platform** (LED ticaret platformu), **Motor** (motosiklet parça mağazası) ve **LED Support Bot** (WhatsApp destek karşılama).
 
 ---
 

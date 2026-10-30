@@ -1,22 +1,44 @@
 @model IndexModel
+@{
+    var filters = new (string Key, string Label)[]
+    {
+        ("all", Model.T("Tümü", "All")),
+        ("backend", "Backend"),
+        ("mobile", Model.T("Mobil", "Mobile")),
+        ("web", "Web"),
+        ("led", "LED"),
+        ("learning", Model.T("Öğrenme", "Learning"))
+    };
+    var total = PortfolioContent.MoreProjects.Count + PortfolioContent.Archive.Count;
+    var transition = 0;
+}
 <section id="projects" class="section" aria-labelledby="projects-title">
     <div class="container">
         <header class="section-head section-head--row" data-reveal>
             <div>
-                <p class="eyebrow"><span class="eyebrow__index">02</span>@Model.T("Diğer projeler", "More projects")</p>
-                <h2 id="projects-title" class="section-title">@Model.T("Teknik genişliği gösteren işler", "Work that shows the range")</h2>
+                <p class="eyebrow"><span class="eyebrow__index">03</span>@Model.T("GitHub'daki diğer projeler", "More on GitHub")</p>
+                <h2 id="projects-title" class="section-title">@Model.T("Canlı siteler, demolar ve öğrenme yolculuğu", "Live sites, demos and the road here")</h2>
             </div>
             <a class="btn btn--text" href="@PortfolioContent.GitHubReposUrl" target="_blank" rel="noopener">
                 @Model.T("Tüm depolar", "All repositories") @Icons.ArrowUpRight
             </a>
         </header>
 
+        <div class="filters" role="group" aria-label="@Model.T("Projeleri filtrele", "Filter projects")" data-filters data-reveal>
+            @foreach (var f in filters)
+            {
+                <button class="filters__btn" type="button" data-filter="@f.Key" aria-pressed="@(f.Key == "all" ? "true" : "false")">@f.Label</button>
+            }
+            <span class="filters__count" aria-live="polite"><span data-filter-count>@total</span> @Model.T("proje", "projects")</span>
+        </div>
+
         <ul class="project-grid">
             @foreach (var p in PortfolioContent.MoreProjects)
             {
                 var repo = Model.GitHub.Find(p.RepoName);
                 var repoUrl = repo?.Url ?? $"{PortfolioContent.GitHubUrl}/{p.RepoName}";
-                <li class="project @(p.Image is null ? "project--glyph" : "")" data-reveal data-tilt>
+                var mainUrl = p.Live?.Url ?? repoUrl;
+                <li class="project @(p.Image is null ? "project--glyph" : "")" style="view-transition-name: project-@(transition++)" data-tags="@p.Tags" data-reveal data-tilt data-spot>
                     <div class="project__media" aria-hidden="@(p.Image is null ? "true" : "false")">
                         @if (p.Image is not null)
                         {
@@ -36,7 +58,11 @@
                             }
                         </p>
                         <h3 class="project__name">
-                            <a href="@repoUrl" target="_blank" rel="noopener" class="project__link">@p.Name</a>
+                            <a href="@mainUrl" target="_blank" rel="noopener" class="project__link">@p.Name</a>
+                            @if (p.WithClaude)
+                            {
+                                <span class="badge badge--sm badge--claude">@Model.T("Claude ile", "With Claude")</span>
+                            }
                         </h3>
                         <p class="project__summary">@Model.T(p.Summary)</p>
                         <ul class="chips chips--sm">
@@ -46,7 +72,7 @@
                             }
                         </ul>
                         <div class="project__foot">
-                            <span class="project__repo">@Icons.GitHub @p.RepoName</span>
+                            <a class="project__repo" href="@repoUrl" target="_blank" rel="noopener">@Icons.GitHub <span>@p.RepoName</span></a>
                             @if (repo is { Stars: > 0 })
                             {
                                 <span class="project__stars" title="GitHub stars">@Icons.Star @repo.Stars</span>
@@ -60,5 +86,22 @@
                 </li>
             }
         </ul>
+
+        <div class="archive">
+            <h3 class="archive__title" data-reveal>@Model.T("Arşivden", "From the archive")</h3>
+            <ul class="archive__list">
+                @foreach (var r in PortfolioContent.Archive)
+                {
+                    <li style="view-transition-name: project-@(transition++)" data-tags="@r.Tags" data-reveal>
+                        <a href="@PortfolioContent.GitHubUrl/@r.RepoName" target="_blank" rel="noopener">
+                            <span class="archive__name">@r.RepoName</span>
+                            <span class="archive__summary">@Model.T(r.Summary)</span>
+                            <span class="archive__lang">@r.Language</span>
+                            @Icons.ArrowUpRight
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 </section>
